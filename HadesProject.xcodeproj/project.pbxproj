@@ -81,13 +81,9 @@
 		0CA0CECB1B1E3F41002282DA /* HadesProject */ = {
 			isa = PBXGroup;
 			children = (
-				0CA0CECE1B1E3F41002282DA /* AppDelegate.swift */,
-				0CA0CED01B1E3F41002282DA /* GameScene.sks */,
-				0CA0CED21B1E3F41002282DA /* GameScene.swift */,
-				0CA0CED41B1E3F41002282DA /* GameViewController.swift */,
-				0CA0CED61B1E3F41002282DA /* Main.storyboard */,
-				0CA0CED91B1E3F41002282DA /* Images.xcassets */,
-				0CA0CEDB1B1E3F41002282DA /* LaunchScreen.xib */,
+				0CA0CEF41B1E3FE8002282DA /* Scenes */,
+				0CA0CEF31B1E3FC6002282DA /* ViewController */,
+				0CA0CEF21B1E3FC2002282DA /* UI */,
 				0CA0CECC1B1E3F41002282DA /* Supporting Files */,
 			);
 			path = HadesProject;
@@ -96,6 +92,7 @@
 		0CA0CECC1B1E3F41002282DA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0CA0CECE1B1E3F41002282DA /* AppDelegate.swift */,
 				0CA0CECD1B1E3F41002282DA /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -116,6 +113,41 @@
 				0CA0CEE71B1E3F41002282DA /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0CA0CEF21B1E3FC2002282DA /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				0CA0CED61B1E3F41002282DA /* Main.storyboard */,
+				0CA0CED91B1E3F41002282DA /* Images.xcassets */,
+				0CA0CEDB1B1E3F41002282DA /* LaunchScreen.xib */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		0CA0CEF31B1E3FC6002282DA /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0CA0CED41B1E3F41002282DA /* GameViewController.swift */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		0CA0CEF41B1E3FE8002282DA /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				0CA0CEF51B1E3FF3002282DA /* SKS */,
+				0CA0CED21B1E3F41002282DA /* GameScene.swift */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		0CA0CEF51B1E3FF3002282DA /* SKS */ = {
+			isa = PBXGroup;
+			children = (
+				0CA0CED01B1E3F41002282DA /* GameScene.sks */,
+			);
+			name = SKS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
