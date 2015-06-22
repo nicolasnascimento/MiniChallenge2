@@ -30,36 +30,90 @@ class GameScene: SKScene {
     //Controls
     var shouldMove: Bool = true
     
+    //Touches
+    var isTouching1: Bool = false
+    var isTouching2: Bool = false
     // MARK - Overriden Methods
     override func didMoveToView(view: SKView) {
         self.initialize()
         self.createHeros()
         self.createSceneFromSksFileNamed("GameScene")
+        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: CGRect(x: -5*WIDTH, y: -0/2, width: 10*WIDTH, height: HEIGHT))
     }
     
+    
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        /* Called when a touch begins */
+        
         for (i, obj) in enumerate(touches) {
             let touch = obj as! UITouch
             self.handleTouchAtLocation(touch.locationInNode(self))
         }
-    }
-    override func didFinishUpdate() {
-        if( shouldMove == true ) {
-            println("here")
-            if let body = self.leftHero.physicsBody {
-                body.velocity.dx = 100
+        
+        for touch: AnyObject in touches {
+            let location = touch.locationInNode(self)
+            
+            if location.x < self.frame.width/2 {
+                isTouching1 = true
             }
-            if let body = self.rightHero.physicsBody {
-                body.velocity.dx = 100
+            
+            if location.x > self.frame.width/2 {
+                isTouching2 = true
             }
         }
-        self.centerCameraOnNode(self.rightHero)
     }
+    
+    override func update(currentTime: CFTimeInterval) {
+        /* Called before each frame is rendered */
+        if isTouching1 {
+            leftHero.physicsBody?.applyImpulse(CGVectorMake(0, 200))
+        }
+        
+        if isTouching2 {
+            rightHero.physicsBody?.applyImpulse(CGVectorMake(0, 200))
+        }
+        
+    }
+    
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        for touch: AnyObject in touches {
+            let location = touch.locationInNode(self)
+            
+            if location.x < self.frame.width/2 {
+                isTouching1 = false
+            }
+            
+            if location.x > self.frame.width/2 {
+                isTouching2 = false
+            }
+        }
+        
+    }
+    
+    override func didFinishUpdate() {
+        
+        for child: AnyObject in world.children {
+            var node = child as! SKNode
+            if let body = node.physicsBody {
+                if node.name == "ground" {
+                     body.velocity.dx = -100
+                }
+
+            }
+        }
+       if let body = self.leftHero.physicsBody {
+            body.velocity.dx = 0
+        }
+        if let body = self.rightHero.physicsBody {
+                body.velocity.dx = 0
+            }
+    }
+
     // MARK - Private Methods
     // One time initialization
     private func initialize() {
         self.backgroundColor = self.BACKGROUND_COLOR
-        self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        //self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         self.world = SKNode()
         self.shouldMove = true
         self.addChild(world)
@@ -108,9 +162,9 @@ class GameScene: SKScene {
     //IMPLEMENT
     private func handleTouchAtLocation(location: CGPoint) {
     }
-    private func centerCameraOnNode(node: SKNode) {
-        
-        let cameraPositionInScene:CGPoint = self.convertPoint(node.position, fromNode: node.parent!)
-        node.parent!.position = CGPoint(x:node.parent!.position.x - cameraPositionInScene.x - WIDTH/7, y: node.parent!.position.y - cameraPositionInScene.y)
-    }
+//    private func centerCameraOnNode(node: SKNode) {
+//        
+//        let cameraPositionInScene:CGPoint = self.convertPoint(node.position, fromNode: node.parent!)
+//        node.parent!.position = CGPoint(x:node.parent!.position.x - cameraPositionInScene.x - WIDTH/7, y: node.parent!.position.y - cameraPositionInScene.y)
+//    }
 }
