@@ -8,8 +8,9 @@
 
 import SpriteKit
 
-let HERO_CATEGORY:UInt32 = 0x1 << 0
-let GROUND_CATEGORY:UInt32 = 0x1 << 1
+let HERO_CATEGORY: UInt32 = 0x1 << 0
+let GROUND_CATEGORY: UInt32 = 0x1 << 1
+let OBSTACLE_CATEGORY: UInt32 = 0x1 << 2
 
 class GameScene: SKScene {
     // Useful constants
@@ -71,11 +72,23 @@ class GameScene: SKScene {
             if let nodeName = node.name {
                 switch(nodeName) {
                     case "ground" :
+                        if let body = node.physicsBody {
+                            body.categoryBitMask = GROUND_CATEGORY
+                            body.contactTestBitMask = HERO_CATEGORY
+                            body.collisionBitMask = HERO_CATEGORY | OBSTACLE_CATEGORY
+                        }
                         world.addChild(node)
                     case "leftHero":
                         self.leftHero.position = node.position
                     case "rightHero":
                         self.rightHero.position = node.position
+                    case "obstacle":
+                        if let body = node.physicsBody {
+                            body.categoryBitMask = OBSTACLE_CATEGORY
+                            body.contactTestBitMask = HERO_CATEGORY
+                            body.collisionBitMask = GROUND_CATEGORY | HERO_CATEGORY | OBSTACLE_CATEGORY
+                        }
+                        world.addChild(node)
                     default :
                         println("name not mapped in swicth statement : \(nodeName)")
                 }
