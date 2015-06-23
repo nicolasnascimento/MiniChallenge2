@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../FirstLevel.swift">
+   </FileRef>
+   <FileRef
       location = "self:HadesProject.xcodeproj">
    </FileRef>
 </Workspace>
