@@ -38,7 +38,7 @@ class GameViewController: UIViewController {
         skView.showsPhysics = true
         
         // Creates Scene
-        let scene = EarthLevel(size: skView.bounds.size)
+        let scene = GameScene(size: skView.bounds.size)
         scene.scaleMode = .AspectFill
         
         skView.presentScene(scene)

@@ -22,7 +22,7 @@ import SpriteKit
     optional func objectsForRound() -> [SKSpriteNode]
     // This should handle the hero's contact with a object
     optional func heroDidTouchObject(hero: Hero, object: SKSpriteNode)
-    // This should finish the current level and prepare for the next one
+    // This should finish the level
     optional func allObjectsHaveBeenCreated()
     
 }
@@ -88,11 +88,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        if isTouching1 && leftHero.physicsBody?.velocity.dy < 300 {
+        if isTouching1 && leftHero.physicsBody?.velocity.dy < 200 {
             leftHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
         }
         
-        if (isTouching2 && rightHero.physicsBody?.velocity.dy < 300 ) {
+        if (isTouching2 && rightHero.physicsBody?.velocity.dy < 200 ) {
             rightHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
         }
         
@@ -130,6 +130,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     func gravityForLevel() -> CGVector {
         return CGVector(dx: 0, dy: -9.8)
     }
+    
     func objectsForRound() -> [SKSpriteNode] {
         var obstacle = SKSpriteNode(imageNamed: "mini_ground")
         obstacle.name = "obstacle"
