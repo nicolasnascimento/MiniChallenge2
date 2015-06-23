@@ -36,7 +36,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // Useful constants
     let BACKGROUND_COLOR: SKColor = SKColor.orangeColor()
     let HERO_SIZE_FACTOR: CGFloat = 10
-    let HERO_MASS: CGFloat = 50
+    let HERO_MASS: CGFloat = 30
     
     // Shortcuts
     var WIDTH: CGFloat { return self.view!.frame.size.width }
@@ -88,12 +88,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        if isTouching1 {
-            leftHero.physicsBody?.applyImpulse(CGVectorMake(0, 10000))
+        if isTouching1 && leftHero.physicsBody?.velocity.dy < 200 {
+            leftHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
         }
         
-        if isTouching2 {
-            rightHero.physicsBody?.applyImpulse(CGVectorMake(0, 10000))
+        if (isTouching2 && rightHero.physicsBody?.velocity.dy < 200 ) {
+            rightHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
         }
         
     }
@@ -235,13 +235,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.leftHero.size = self.rightHero.size
         self.leftHero.position.x = leftHero.size.width
         self.leftHero.position.y = leftHero.size.height + self.ground.size.height
-        self.rightHero.position.x = rightHero.size.width + leftHero.position.x
+        self.rightHero.position.x = rightHero.size.width + leftHero.position.x + 72
         self.rightHero.position.y = leftHero.position.y
         
         // Physics Body
         self.rightHero.createPhysicsBodyForSelfWithCategory(HERO_CATEGORY, contactCategory: GROUND_CATEGORY | OBSTACLE_CATEGORY | WALL_CATEGORY, collisionCategory: GROUND_CATEGORY | WALL_CATEGORY)
         self.leftHero.createPhysicsBodyForSelfWithCategory(HERO_CATEGORY, contactCategory: GROUND_CATEGORY | OBSTACLE_CATEGORY | WALL_CATEGORY, collisionCategory: GROUND_CATEGORY | WALL_CATEGORY)
         self.rightHero.physicsBody?.mass = HERO_MASS
+        self.rightHero.physicsBody?.allowsRotation = false
+        self.leftHero.physicsBody?.allowsRotation = false
         self.leftHero.physicsBody?.mass = HERO_MASS
         
         
