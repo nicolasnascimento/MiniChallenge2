@@ -88,11 +88,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        if isTouching1 && leftHero.physicsBody?.velocity.dy < 200 {
+        if isTouching1 && leftHero.physicsBody?.velocity.dy < 300 {
             leftHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
         }
         
-        if (isTouching2 && rightHero.physicsBody?.velocity.dy < 200 ) {
+        if (isTouching2 && rightHero.physicsBody?.velocity.dy < 300 ) {
             rightHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
         }
         
