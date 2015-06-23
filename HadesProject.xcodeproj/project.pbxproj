@@ -16,6 +16,7 @@
 		0CA0CEDA1B1E3F41002282DA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CA0CED91B1E3F41002282DA /* Images.xcassets */; };
 		0CA0CEDD1B1E3F41002282DA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CA0CEDB1B1E3F41002282DA /* LaunchScreen.xib */; };
 		0CA0CEE91B1E3F41002282DA /* HadesProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CEE81B1E3F41002282DA /* HadesProjectTests.swift */; };
+		0CE9EAC51B39D58900D76019 /* EarthLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9EAC41B39D58900D76019 /* EarthLevel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		0CA0CEE21B1E3F41002282DA /* HadesProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HadesProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CA0CEE71B1E3F41002282DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CA0CEE81B1E3F41002282DA /* HadesProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HadesProjectTests.swift; sourceTree = "<group>"; };
+		0CE9EAC41B39D58900D76019 /* EarthLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EarthLevel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 				0C94B8681B1F67E200945476 /* Items */,
 				0CA0CEF51B1E3FF3002282DA /* SKS */,
 				0CA0CED21B1E3F41002282DA /* GameScene.swift */,
+				0CE9EAC41B39D58900D76019 /* EarthLevel.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -211,7 +214,7 @@
 				TargetAttributes = {
 					0CA0CEC81B1E3F41002282DA = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = AD5N5Z8433;
+						DevelopmentTeam = U5ZZWN44AH;
 					};
 					0CA0CEE11B1E3F41002282DA = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -267,6 +270,7 @@
 				0CA0CED31B1E3F41002282DA /* GameScene.swift in Sources */,
 				0CA0CED51B1E3F41002282DA /* GameViewController.swift in Sources */,
 				0CA0CECF1B1E3F41002282DA /* AppDelegate.swift in Sources */,
+				0CE9EAC51B39D58900D76019 /* EarthLevel.swift in Sources */,
 				0C94B8671B1F67D700945476 /* Hero.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
