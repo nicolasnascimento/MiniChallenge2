@@ -25,6 +25,9 @@ class NeptuneLevel: GameScene {
     override func backgroundImageName() -> String {
         return "four"
     }
+    override func planetName() -> String {
+        return "Neptune"
+    }
     override func objectsForRound() -> [SKSpriteNode] {
         var obstacle = SKSpriteNode(imageNamed: imageNameArray[ Int(arc4random_uniform(3)) ])
         obstacle.name = "obstacle"

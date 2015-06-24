@@ -25,13 +25,21 @@ class EarthLevel: GameScene, GameSceneProtocol {
     override func backgroundImageName() -> String {
         return "four"
     }
+    override func planetName() -> String {
+        return "Earth"
+    }
     override func objectsForRound() -> [SKSpriteNode] {
         var obstacle = SKSpriteNode(imageNamed: imageNameArray[ Int(arc4random_uniform(3)) ])
-        obstacle.name = "obstacle"
+        
+        // Should be improved later
+        if( arc4random_uniform(3) == 0 ) {
+            obstacle.name = "PowerUp-Invert"
+        }else {
+            obstacle.name = "obstacle"
+        }
         obstacle.createPhysicsBodyForSelfWithCategory(OBSTACLE_CATEGORY, contactCategory: HERO_CATEGORY , collisionCategory: 0)
         obstacle.physicsBody?.affectedByGravity = false
         return [obstacle];
-
     }
     override func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
         super.heroDidTouchObject(hero, object: object)

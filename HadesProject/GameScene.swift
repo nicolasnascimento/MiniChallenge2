@@ -16,6 +16,7 @@ import SpriteKit
     func maximumAmountOfObjectsForLevel() -> Int
     func backgroundImageName() -> String
     func groundImageName() -> String
+    func planetName() -> String
     
     //Optional
     // This should return objects to be put in the scene after a random timer event
@@ -44,6 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     let HERO_SIZE_FACTOR: CGFloat = 10
     let OBSTACLE_SIZE_FACTOR: CGFloat = 5
     let HERO_MASS: CGFloat = 30
+    let FONT_NAME: String = "Helvetica"
     
     // Level Variable
     static var currentLevel : Level = .Earth
@@ -62,16 +64,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // Controls
     var timerNode: SKNode = SKNode()
     var amountOfObjects = 0
-    var powerUpInvertControls = false
+    //var powerUpInvertControls = false
     
     // Touches
-    var isTouching1: Bool = false
-    var isTouching2: Bool = false
+    var isTouchingLeft: Bool = false
+    var isTouchingRight: Bool = false
+    var touchArray: Set<UITouch> = Set<UITouch>()
     
     // Ground ,Roof and Background
     var ground: SKSpriteNode = SKSpriteNode()
     var roof: SKShapeNode = SKShapeNode()
     var background: SKSpriteNode = SKSpriteNode()
+    
+    // Trackers
+    var distanceLabel: SKLabelNode = SKLabelNode()
+    var coinsLabel: SKLabelNode = SKLabelNode()
+    var planetNameLabel: SKLabelNode = SKLabelNode()
+    var planetGravityLabel: SKLabelNode = SKLabelNode()
+    var pauseLabel: SKSpriteNode = SKSpriteNode()
     
     // MARK - Overriden Methods
     override func didMoveToView(view: SKView) {
@@ -79,55 +89,84 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.createHeros()
         self.createGround()
         self.createRoof()
+        self.createLabels()
     }
     
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        /* Called when a touch begins */
         
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
             
             if location.x < self.frame.width/2 {
-                isTouching1 = true
+                isTouchingLeft = true
             }
             
             if location.x > self.frame.width/2 {
-                isTouching2 = true
+                isTouchingRight = true
             }
+            
+            self.touchArray.insert(touch as! UITouch)
         }
     }
     
     override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
-        if powerUpInvertControls {
-            if isTouching1 && leftHero.physicsBody?.velocity.dy < HEIGHT*0.6567 {
+        
+        // Normal touch handling
+        if( rightHero.respositivitySide == .Right ) {
+            if (isTouchingRight && rightHero.physicsBody?.velocity.dy < HEIGHT*0.6567 ) {
                 rightHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
             }
-            
-            if (isTouching2 && rightHero.physicsBody?.velocity.dy < HEIGHT*0.6567 ) {
+            if isTouchingLeft && leftHero.physicsBody?.velocity.dy < HEIGHT*0.6567 {
                 leftHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
             }
-
+        // Inverted touch handling
         } else {
-            if isTouching1 && leftHero.physicsBody?.velocity.dy < HEIGHT*0.6567 {
-                leftHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
-            }
-            
-            if (isTouching2 && rightHero.physicsBody?.velocity.dy < HEIGHT*0.6567 ) {
+            if (isTouchingLeft && rightHero.physicsBody?.velocity.dy < HEIGHT*0.6567 ) {
                 rightHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
             }
-
+            if isTouchingRight && leftHero.physicsBody?.velocity.dy < HEIGHT*0.6567 {
+                leftHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
+            }
         }
         
+        // Determines maximum falling speed
         if (rightHero.physicsBody?.velocity.dy < -(HEIGHT*0.8231)) {
-            rightHero.physicsBody?.velocity.dy = -( HEIGHT*0.8231)
+            //rightHero.physicsBody?.velocity.dy = -( HEIGHT*0.8231)
+            rightHero.physicsBody?.affectedByGravity = false
+        }else if( rightHero.physicsBody?.affectedByGravity == false ) {
+            rightHero.physicsBody?.affectedByGravity = true
         }
         
         if (leftHero.physicsBody?.velocity.dy < -(HEIGHT*0.8231)) {
-            leftHero.physicsBody?.velocity.dy = -( HEIGHT*0.8231)
+            //leftHero.physicsBody?.velocity.dy = -( HEIGHT*0.8231)
+            leftHero.physicsBody?.affectedByGravity = false
+        }else if( leftHero.physicsBody?.affectedByGravity == false ) {
+            leftHero.physicsBody?.affectedByGravity = true
         }
         
+    }
+    
+    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+        for touch: AnyObject in touches {
+            if let index = self.touchArray.indexOf(touch as! UITouch) {
+                let oldTouch = self.touchArray[ index ] as UITouch
+                let newLocation = touch.locationInNode(self)
+                let oldLocation = oldTouch.previousLocationInNode(self)
+                
+                println("\(newLocation) , \(oldLocation)")
+                
+                if( oldLocation.x < self.frame.width/2 && newLocation.x > self.frame.width/2 ) {
+                    isTouchingLeft = false
+                    isTouchingRight = true
+                } else if( oldLocation.x > self.frame.width/2 && newLocation.x < self.frame.width/2 ) {
+                    isTouchingLeft = true
+                    isTouchingRight = false
+                }
+                
+                self.touchArray.insert(touch as! UITouch)
+            }
+        }
     }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -135,11 +174,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             let location = touch.locationInNode(self)
             
             if location.x < self.frame.width/2 {
-                isTouching1 = false
+                isTouchingLeft = false
             }
             if location.x > self.frame.width/2 {
-                isTouching2 = false
+                isTouchingRight = false
             }
+            touchArray.remove(touch as! UITouch)
         }
     }
     override func didFinishUpdate() {
@@ -169,8 +209,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     
     func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
+        object.removeFromParent()
         
-        //println("heroDidTouchObject")
+        if( object.name == "PowerUp-Invert" ) {
+            println("Invert")
+            if( rightHero.respositivitySide == .Right ) {
+                rightHero.respositivitySide = .Left
+                leftHero.respositivitySide = .Right
+            } else {
+                rightHero.respositivitySide = .Right
+                leftHero.respositivitySide = .Left
+            }
+        }
+        
+        //powerUpInvertControls = !powerUpInvertControls
+        println("heroDidTouchObject")
     }
     
     func maximumAmountOfObjectsForLevel() -> Int {
@@ -187,12 +240,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     func backgroundImageName() -> String {
         return "four"
     }
+    func planetName() -> String {
+        return "Not A Planet"
+    }
     // MARK - Private Methods
     // One time initialization
     private func initialize() {
         self.backgroundColor = self.BACKGROUND_COLOR
         self.amountOfObjects = 0
-        
         
         self.physicsWorld.gravity = self.gravityForLevel()
         
@@ -338,8 +393,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     // Creates the Heros in the scene
     private func createHeros() {
-        self.rightHero = Hero(imageNamed: "Spaceship")
-        self.leftHero = Hero(imageNamed: "Spaceship")
+        self.rightHero = Hero(imageNamed: "Spaceship", respositivitySide: .Right)
+        self.leftHero = Hero(imageNamed: "Spaceship", respositivitySide: .Left)
         
         // Resize and Positionates Heros to fit Screen
         let aspectRatio = self.rightHero.frame.size.width/self.rightHero.frame.size.height
@@ -381,6 +436,55 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         world.addChild(self.roof)
     }
     
+//    var distanceLabel: SKLabelNode = SKLabelNode()
+//    var coinsLabel: SKLabelNode = SKLabelNode()
+//    var planetNameLabel: SKLabelNode = SKLabelNode()
+//    var planetGravityLabel: SKLabelNode = SKLabelNode()
+//    var pauseLabel: SKSpriteNode = SKSpriteNode()
+    
+    private func createLabels() {
+        // Initialization
+        self.distanceLabel = SKLabelNode(fontNamed: FONT_NAME)
+        self.coinsLabel = SKLabelNode(fontNamed: FONT_NAME)
+        self.planetNameLabel = SKLabelNode(fontNamed: FONT_NAME)
+        self.planetGravityLabel = SKLabelNode(fontNamed: FONT_NAME)
+        // self.pauseLabel = SKSpriteNode(imageNamed: <#String#>)
+        
+        // Initial Values
+        self.distanceLabel.text = "0000 meters"
+        self.coinsLabel.text = "0 coins"
+        self.planetNameLabel.text = self.planetName() + ":"
+        self.planetGravityLabel.text = String(format: "%.2lf", arguments: [(-self.gravityForLevel().dy)])
+        
+        // Resize
+        self.distanceLabel = self.resizeLabel(distanceLabel, ToFitHeight: HEIGHT/20)
+        self.coinsLabel = self.resizeLabel(coinsLabel, ToFitHeight: HEIGHT/30)
+        self.planetNameLabel = self.resizeLabel(planetNameLabel, ToFitHeight: HEIGHT/10)
+        self.planetGravityLabel = self.resizeLabel(planetGravityLabel, ToFitHeight: HEIGHT/10)
+        
+        // Add to Scene
+        world.addChild(self.distanceLabel)
+        world.addChild(self.coinsLabel)
+        world.addChild(self.planetNameLabel)
+        world.addChild(self.planetGravityLabel)
+        
+        // Positions
+        self.distanceLabel.position = CGPoint(x: self.distanceLabel.frame.size.width/2 , y: HEIGHT - self.distanceLabel.frame.size.height)
+        self.coinsLabel.position = CGPoint(x: self.coinsLabel.frame.size.width/2 , y: self.distanceLabel.position.y - self.distanceLabel.frame.size.height)
+        self.planetNameLabel.position = CGPoint(x: WIDTH/2 - self.planetNameLabel.frame.size.width/2, y: HEIGHT - self.planetNameLabel.frame.size.height)
+        self.planetGravityLabel.position = CGPoint(x: WIDTH/2 + self.planetGravityLabel.frame.size.width/2, y: self.planetNameLabel.position.y)
+        
+        
+    }
+    
+    private func resizeLabel(label: SKLabelNode, ToFitHeight height: CGFloat) -> SKLabelNode {
+        while( label.frame.size.height > height ) {
+            label.fontSize *= 0.8
+        }
+        
+        return label
+    }
+    
     // MARK - Physics Delegate
     func didBeginContact(contact: SKPhysicsContact) {
         var bodyA = contact.bodyA
@@ -410,7 +514,6 @@ extension SKSpriteNode {
         }
     }
 }
-
 extension SKShapeNode{
     
     func createPhysicsBodyForSelfWithCategory(category: UInt32, contactCategory: UInt32, collisionCategory: UInt32, dynamic: Bool = false, affectedByGravity: Bool = true) {
