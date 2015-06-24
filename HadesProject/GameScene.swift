@@ -36,6 +36,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // Useful constants
     let BACKGROUND_COLOR: SKColor = SKColor.orangeColor()
     let HERO_SIZE_FACTOR: CGFloat = 10
+    let OBSTACLE_SIZE_FACTOR: CGFloat = 5
     let HERO_MASS: CGFloat = 30
     
     // Shortcuts
@@ -105,7 +106,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             if location.x < self.frame.width/2 {
                 isTouching1 = false
             }
-
             if location.x > self.frame.width/2 {
                 isTouching2 = false
             }
@@ -133,7 +133,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     func objectsForRound() -> [SKSpriteNode] {
         var obstacle = SKSpriteNode(imageNamed: "mini_ground")
         obstacle.name = "obstacle"
-        obstacle.createPhysicsBodyForSelfWithCategory(OBSTACLE_CATEGORY, contactCategory: HERO_CATEGORY , collisionCategory: 0)
         obstacle.physicsBody?.affectedByGravity = false
         return [obstacle];
     }
@@ -174,9 +173,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             var objects = self.objectsForRound()
             for (i, obj) in enumerate(objects) {
                 var node: SKSpriteNode = obj as SKSpriteNode
+                let aspectRatio =  node.size.width/node.size.height
+                node.size.height = HEIGHT/OBSTACLE_SIZE_FACTOR
+                node.size.width = node.size.height * aspectRatio
+                node.physicsBody = nil
+                node.createPhysicsBodyForSelfWithCategory(OBSTACLE_CATEGORY, contactCategory: HERO_CATEGORY , collisionCategory: 0)
+                node.physicsBody?.dynamic = false
                 dispatch_async(dispatch_get_main_queue()) {
                     node.position.x = self.WIDTH + node.frame.size.width/2
-                    node.position.y = CGFloat( self.randomFrom(UInt32(self.ground.size.height), max: UInt32(self.HEIGHT - node.size.height)) )
+                    node.position.y = CGFloat( self.randomFrom(UInt32(self.ground.size.height + node.size.height/2), max: UInt32(self.HEIGHT - node.size.height/2)) )
+                    println("node.position.y = \(node.position.y)")
                     self.world.addChild(node)
                     node.runAction(SKAction.moveTo(CGPoint(x: -node.frame.size.width/2, y: node.position.y), duration: self.randomFrom(2, max: 4)), completion: { () -> Void in
                         node.removeFromParent()
@@ -189,7 +195,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             self.allObjectsHaveBeenCreated()
         }
     }
-    // Gets all Objects from a sks file
+    // Gets objects from a sks file
     private func createSceneFromSksFileNamed(name: String) {
         for (i, obj) in enumerate(SKScene.unarchiveFromFile(name)!.children) {
             let node = obj as! SKNode
