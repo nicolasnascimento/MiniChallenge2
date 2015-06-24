@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		0C7493671B3B06C200A1BA09 /* MoonLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7493661B3B06C200A1BA09 /* MoonLevel.swift */; };
+		0C7493691B3B0F7400A1BA09 /* MercuryLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7493681B3B0F7400A1BA09 /* MercuryLevel.swift */; };
+		0C74936B1B3B129C00A1BA09 /* VenusLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C74936A1B3B129C00A1BA09 /* VenusLevel.swift */; };
+		0C74936D1B3B142900A1BA09 /* MarsLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C74936C1B3B142900A1BA09 /* MarsLevel.swift */; };
+		0C74936F1B3B15B200A1BA09 /* JupiterLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C74936E1B3B15B200A1BA09 /* JupiterLevel.swift */; };
+		0C7493711B3B1E1B00A1BA09 /* SaturnLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7493701B3B1E1B00A1BA09 /* SaturnLevel.swift */; };
+		0C7493731B3B1E5900A1BA09 /* UranusLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7493721B3B1E5900A1BA09 /* UranusLevel.swift */; };
+		0C7493751B3B1EDA00A1BA09 /* NeptuneLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7493741B3B1EDA00A1BA09 /* NeptuneLevel.swift */; };
+		0C7493771B3B1EFD00A1BA09 /* PlutoLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7493761B3B1EFD00A1BA09 /* PlutoLevel.swift */; };
 		0C94B8671B1F67D700945476 /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C94B8661B1F67D700945476 /* Hero.swift */; };
 		0CA0CECF1B1E3F41002282DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CECE1B1E3F41002282DA /* AppDelegate.swift */; };
 		0CA0CED11B1E3F41002282DA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0CA0CED01B1E3F41002282DA /* GameScene.sks */; };
@@ -32,6 +40,14 @@
 
 /* Begin PBXFileReference section */
 		0C7493661B3B06C200A1BA09 /* MoonLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoonLevel.swift; sourceTree = "<group>"; };
+		0C7493681B3B0F7400A1BA09 /* MercuryLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercuryLevel.swift; sourceTree = "<group>"; };
+		0C74936A1B3B129C00A1BA09 /* VenusLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VenusLevel.swift; sourceTree = "<group>"; };
+		0C74936C1B3B142900A1BA09 /* MarsLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarsLevel.swift; sourceTree = "<group>"; };
+		0C74936E1B3B15B200A1BA09 /* JupiterLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JupiterLevel.swift; sourceTree = "<group>"; };
+		0C7493701B3B1E1B00A1BA09 /* SaturnLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaturnLevel.swift; sourceTree = "<group>"; };
+		0C7493721B3B1E5900A1BA09 /* UranusLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UranusLevel.swift; sourceTree = "<group>"; };
+		0C7493741B3B1EDA00A1BA09 /* NeptuneLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeptuneLevel.swift; sourceTree = "<group>"; };
+		0C7493761B3B1EFD00A1BA09 /* PlutoLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlutoLevel.swift; sourceTree = "<group>"; };
 		0C94B8661B1F67D700945476 /* Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
 		0CA0CEC91B1E3F41002282DA /* HadesProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HadesProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CA0CECD1B1E3F41002282DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -69,6 +85,14 @@
 		0C1989C01B3AFEEF00E00993 /* Levels */ = {
 			isa = PBXGroup;
 			children = (
+				0C7493761B3B1EFD00A1BA09 /* PlutoLevel.swift */,
+				0C7493741B3B1EDA00A1BA09 /* NeptuneLevel.swift */,
+				0C7493721B3B1E5900A1BA09 /* UranusLevel.swift */,
+				0C7493701B3B1E1B00A1BA09 /* SaturnLevel.swift */,
+				0C74936E1B3B15B200A1BA09 /* JupiterLevel.swift */,
+				0C74936C1B3B142900A1BA09 /* MarsLevel.swift */,
+				0C74936A1B3B129C00A1BA09 /* VenusLevel.swift */,
+				0C7493681B3B0F7400A1BA09 /* MercuryLevel.swift */,
 				0C7493661B3B06C200A1BA09 /* MoonLevel.swift */,
 				0CE9EAC41B39D58900D76019 /* EarthLevel.swift */,
 			);
@@ -278,11 +302,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C74936F1B3B15B200A1BA09 /* JupiterLevel.swift in Sources */,
+				0C7493691B3B0F7400A1BA09 /* MercuryLevel.swift in Sources */,
 				0CA0CED31B1E3F41002282DA /* GameScene.swift in Sources */,
 				0CA0CED51B1E3F41002282DA /* GameViewController.swift in Sources */,
 				0CA0CECF1B1E3F41002282DA /* AppDelegate.swift in Sources */,
+				0C7493771B3B1EFD00A1BA09 /* PlutoLevel.swift in Sources */,
+				0C74936B1B3B129C00A1BA09 /* VenusLevel.swift in Sources */,
 				0C7493671B3B06C200A1BA09 /* MoonLevel.swift in Sources */,
+				0C7493711B3B1E1B00A1BA09 /* SaturnLevel.swift in Sources */,
+				0C74936D1B3B142900A1BA09 /* MarsLevel.swift in Sources */,
 				0CE9EAC51B39D58900D76019 /* EarthLevel.swift in Sources */,
+				0C7493731B3B1E5900A1BA09 /* UranusLevel.swift in Sources */,
+				0C7493751B3B1EDA00A1BA09 /* NeptuneLevel.swift in Sources */,
 				0C94B8671B1F67D700945476 /* Hero.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

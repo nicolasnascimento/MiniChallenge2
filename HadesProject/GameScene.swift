@@ -157,7 +157,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
         
-        println("heroDidTouchObject")
+        //println("heroDidTouchObject")
     }
     
     func maximumAmountOfObjectsForLevel() -> Int {
@@ -166,31 +166,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     func allObjectsHaveBeenCreated() {
         println("allObjectsHaveBeenCreated")
-        
-        var viewSize = CGSize(width: WIDTH, height: HEIGHT)
-        switch( GameScene.currentLevel ) {
-        case .Earth:
-            GameScene.currentLevel = .Moon
-            var moon = MoonLevel(size: viewSize)
-            moon.scaleMode = .AspectFill
-            self.view?.presentScene(moon, transition: SKTransition.fadeWithDuration(1))
-//        case .Mercury:
-//        case .Venus:
-//        case .Mars:
-//        case .Jupiter:
-//        case .Saturn:
-//        case .Uranus:
-//        case .Neptune:
-//        case .Pluto:
-            
-        default :
-            GameScene.currentLevel = .Earth
-            var earth = EarthLevel(size: viewSize)
-            earth.scaleMode = .AspectFill
-            self.view?.presentScene(earth, transition: SKTransition.fadeWithDuration(1))
-        }
-        
-        
+        self.goToNextLevel()
     }
     func groundImageName() -> String {
         return "four"
@@ -220,6 +196,65 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         world.addChild(timerNode)
     }
     
+    private func goToNextLevel() {
+        var viewSize = CGSize(width: WIDTH, height: HEIGHT)
+        switch( GameScene.currentLevel ) {
+        case .Earth:
+            GameScene.currentLevel = .Moon
+            var moon = MoonLevel(size: viewSize)
+            moon.scaleMode = .AspectFill
+            self.view?.presentScene(moon, transition: SKTransition.fadeWithDuration(1))
+            println("moon")
+        case .Moon:
+            GameScene.currentLevel = .Mercury
+            var mercury = MoonLevel(size: viewSize)
+            mercury.scaleMode = .AspectFill
+            self.view?.presentScene(mercury, transition: SKTransition.fadeWithDuration(1))
+            println("mercury")
+        case .Mercury:
+            GameScene.currentLevel = .Venus
+            var venus = VenusLevel(size: viewSize)
+            venus.scaleMode = .AspectFill
+            self.view?.presentScene(venus, transition: SKTransition.fadeWithDuration(1))
+            println("venus")
+        case .Venus:
+            GameScene.currentLevel = .Jupiter
+            var jupiter = JupiterLevel(size: viewSize)
+            jupiter.scaleMode = .AspectFill
+            self.view?.presentScene(jupiter, transition: SKTransition.fadeWithDuration(1))
+            println("jupiter")
+        case .Jupiter:
+            GameScene.currentLevel = .Saturn
+            var saturn = SaturnLevel(size: viewSize)
+            saturn.scaleMode = .AspectFill
+            self.view?.presentScene(saturn, transition: SKTransition.fadeWithDuration(1))
+            println("Saturn")
+        case .Saturn:
+            GameScene.currentLevel = .Uranus
+            var uranus = UranusLevel(size: viewSize)
+            uranus.scaleMode = .AspectFill
+            self.view?.presentScene(uranus, transition: SKTransition.fadeWithDuration(1))
+            println("Uranus")
+        case .Uranus:
+            GameScene.currentLevel = .Neptune
+            var neptune = NeptuneLevel(size: viewSize)
+            neptune.scaleMode = .AspectFill
+            self.view?.presentScene(neptune, transition: SKTransition.fadeWithDuration(1))
+            println("Neptune")
+        case .Neptune:
+            GameScene.currentLevel = .Pluto
+            var pluto = PlutoLevel(size: viewSize)
+            pluto.scaleMode = .AspectFill
+            self.view?.presentScene(pluto, transition: SKTransition.fadeWithDuration(1))
+            println("Pluto")
+        default :
+            GameScene.currentLevel = .Earth
+            var earth = EarthLevel(size: viewSize)
+            earth.scaleMode = .AspectFill
+            self.view?.presentScene(earth, transition: SKTransition.fadeWithDuration(1))
+            println("earth")
+        }
+    }
     private func createBackgroundImage() {
         self.background = SKSpriteNode(imageNamed: self.backgroundImageName())
         if( self.background.size.width > self.background.size.height ) {
@@ -248,7 +283,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                 dispatch_async(dispatch_get_main_queue()) {
                     node.position.x = self.WIDTH + node.frame.size.width/2
                     node.position.y = CGFloat( self.randomFrom(UInt32(self.ground.size.height + node.size.height/2), max: UInt32(self.HEIGHT - node.size.height/2)) )
-                    println("node.position.y = \(node.position.y)")
+                    //println("node.position.y = \(node.position.y)")
                     self.world.addChild(node)
                     node.runAction(SKAction.moveTo(CGPoint(x: -node.frame.size.width/2, y: node.position.y), duration: self.randomFrom(2, max: 4)), completion: { () -> Void in
                         node.removeFromParent()
