@@ -35,6 +35,7 @@ class EarthLevel: GameScene, GameSceneProtocol {
     }
     override func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
         super.heroDidTouchObject(hero, object: object)
+        println("Earth")
     }
     override func allObjectsHaveBeenCreated() {
         super.allObjectsHaveBeenCreated()
