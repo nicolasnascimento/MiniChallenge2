@@ -14,7 +14,7 @@ import SpriteKit
     // Required
     func gravityForLevel() -> CGVector
     func maximumAmountOfObjectsForLevel() -> Int
-    //func backgroundImageName() -> String
+    func backgroundImageName() -> String
     func groundImageName() -> String
     
     //Optional
@@ -27,10 +27,16 @@ import SpriteKit
     
 }
 
+// Physics Constants
 let HERO_CATEGORY:UInt32 = 0x1 << 0
 let GROUND_CATEGORY:UInt32 = 0x1 << 1
 let OBSTACLE_CATEGORY:UInt32 = 0x1 << 2
 let WALL_CATEGORY:UInt32 = 0x1 << 3
+
+// Level Enumeration
+enum Level {
+    case Earth, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto
+}
 
 class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // Useful constants
@@ -38,6 +44,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     let HERO_SIZE_FACTOR: CGFloat = 10
     let OBSTACLE_SIZE_FACTOR: CGFloat = 5
     let HERO_MASS: CGFloat = 30
+    
+    // Level Variable
+    static var currentLevel : Level = .Earth
     
     // Shortcuts
     var WIDTH: CGFloat { return self.view!.frame.size.width }
@@ -58,9 +67,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     var isTouching1: Bool = false
     var isTouching2: Bool = false
     
-    // Ground and Roof
+    // Ground ,Roof and Background
     var ground: SKSpriteNode = SKSpriteNode()
     var roof: SKShapeNode = SKShapeNode()
+    var background: SKSpriteNode = SKSpriteNode()
     
     // MARK - Overriden Methods
     override func didMoveToView(view: SKView) {
@@ -146,6 +156,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     
     func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
+        
         println("heroDidTouchObject")
     }
     
@@ -155,26 +166,73 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     func allObjectsHaveBeenCreated() {
         println("allObjectsHaveBeenCreated")
+        
+        var viewSize = CGSize(width: WIDTH, height: HEIGHT)
+        switch( GameScene.currentLevel ) {
+        case .Earth:
+            GameScene.currentLevel = .Moon
+            var moon = MoonLevel(size: viewSize)
+            moon.scaleMode = .AspectFill
+            self.view?.presentScene(moon, transition: SKTransition.fadeWithDuration(1))
+//        case .Mercury:
+//        case .Venus:
+//        case .Mars:
+//        case .Jupiter:
+//        case .Saturn:
+//        case .Uranus:
+//        case .Neptune:
+//        case .Pluto:
+            
+        default :
+            GameScene.currentLevel = .Earth
+            var earth = EarthLevel(size: viewSize)
+            earth.scaleMode = .AspectFill
+            self.view?.presentScene(earth, transition: SKTransition.fadeWithDuration(1))
+        }
+        
+        
     }
     func groundImageName() -> String {
+        return "four"
+    }
+    func backgroundImageName() -> String {
         return "four"
     }
     // MARK - Private Methods
     // One time initialization
     private func initialize() {
         self.backgroundColor = self.BACKGROUND_COLOR
+        self.amountOfObjects = 0
+        
+        
+        self.physicsWorld.gravity = self.gravityForLevel()
         
         self.physicsWorld.contactDelegate = self
-        self.physicsWorld.gravity = self.gravityForLevel()
         
         self.world = SKNode()
         self.addChild(world)
         
-        self.timerNode = SKNode()
-        self.amountOfObjects = 0
-        world.addChild(timerNode)
+        self.createBackgroundImage()
         
+        self.timerNode = SKNode()
         timerNode.runAction(SKAction.waitForDuration(0.0), completion: onTimerEvent)
+        
+        world.addChild(timerNode)
+    }
+    
+    private func createBackgroundImage() {
+        self.background = SKSpriteNode(imageNamed: self.backgroundImageName())
+        if( self.background.size.width > self.background.size.height ) {
+            let aspectRatio = self.background.size.width / self.background.size.height
+            self.background.size.height = HEIGHT
+            self.background.size.width = self.background.size.height * aspectRatio
+        } else {
+            let aspectRatio = self.background.size.height / self.background.size.width
+            self.background.size.width = WIDTH
+            self.background.size.height = self.background.size.width * aspectRatio
+        }
+        self.background.position.y = self.background.size.height/2
+        world.addChild(background)
     }
     private func onTimerEvent() {
         if( self.amountOfObjects != self.maximumAmountOfObjectsForLevel() ) {
