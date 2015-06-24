@@ -62,6 +62,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // Controls
     var timerNode: SKNode = SKNode()
     var amountOfObjects = 0
+    var powerUpInvertControls = false
     
     // Touches
     var isTouching1: Bool = false
@@ -99,12 +100,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        if isTouching1 && leftHero.physicsBody?.velocity.dy < HEIGHT*0.6567 {
-            leftHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
-        }
-        
-        if (isTouching2 && rightHero.physicsBody?.velocity.dy < HEIGHT*0.6567 ) {
-            rightHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
+        if powerUpInvertControls {
+            if isTouching1 && leftHero.physicsBody?.velocity.dy < HEIGHT*0.6567 {
+                rightHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
+            }
+            
+            if (isTouching2 && rightHero.physicsBody?.velocity.dy < HEIGHT*0.6567 ) {
+                leftHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
+            }
+
+        } else {
+            if isTouching1 && leftHero.physicsBody?.velocity.dy < HEIGHT*0.6567 {
+                leftHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
+            }
+            
+            if (isTouching2 && rightHero.physicsBody?.velocity.dy < HEIGHT*0.6567 ) {
+                rightHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
+            }
+
         }
         
         if (rightHero.physicsBody?.velocity.dy < -(HEIGHT*0.8231)) {
@@ -156,7 +169,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     
     func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
-        
+        object.removeFromParent()
+        powerUpInvertControls = !powerUpInvertControls
         println("heroDidTouchObject")
     }
     
