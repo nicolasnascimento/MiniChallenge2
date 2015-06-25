@@ -23,7 +23,7 @@ class MoonLevel: GameScene {
         return "four"
     }
     override func backgroundImageName() -> String {
-        return "four"
+        return "ola2"
     }
     override func planetName() -> String {
         return "Moon"

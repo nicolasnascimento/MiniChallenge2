@@ -42,10 +42,23 @@ enum Level {
 class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // Useful constants
     let BACKGROUND_COLOR: SKColor = SKColor.orangeColor()
+    let BACKGROUND_ANIMATION_DURATION = 20.0
     let HERO_SIZE_FACTOR: CGFloat = 10
     let OBSTACLE_SIZE_FACTOR: CGFloat = 5
     let HERO_MASS: CGFloat = 30
     let FONT_NAME: String = "Helvetica"
+    
+    // Power Up's Probabilities(%)
+    let INVERT_PROBABILITY: Double = 10.0
+    let RESIZE_UP_PROBABILITY: Double = 7.5
+    let RESIZE_DOWN_PROBABILTY: Double = 7.5
+    let FUSION_PROBABILITY: Double = 10.0
+    let INVISIBILITY_PROBABILTY: Double = 15.0
+    let MULTIPLIER_PROBABILITY: Double = 25.0
+    let SPACE_KING_PROBABILITY: Double = 5.0
+    let COIN_MAGNET_PROBABILITY: Double = 20.0
+    
+    let POWER_UP_PROBABILITY: Double = 20
     
     // Level Variable
     static var currentLevel : Level = .Earth
@@ -74,7 +87,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // Ground ,Roof and Background
     var ground: SKSpriteNode = SKSpriteNode()
     var roof: SKShapeNode = SKShapeNode()
-    var background: SKSpriteNode = SKSpriteNode()
+    var background1: SKSpriteNode = SKSpriteNode()
+    var background2: SKSpriteNode = SKSpriteNode()
     
     // Trackers
     var distanceLabel: SKLabelNode = SKLabelNode()
@@ -154,7 +168,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                 let newLocation = touch.locationInNode(self)
                 let oldLocation = oldTouch.previousLocationInNode(self)
                 
-                println("\(newLocation) , \(oldLocation)")
+               // println("\(newLocation) , \(oldLocation)")
                 
                 if( oldLocation.x < self.frame.width/2 && newLocation.x > self.frame.width/2 ) {
                     isTouchingLeft = false
@@ -275,7 +289,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             println("moon")
         case .Moon:
             GameScene.currentLevel = .Mercury
-            var mercury = MoonLevel(size: viewSize)
+            var mercury = MercuryLevel(size: viewSize)
             mercury.scaleMode = .AspectFill
             self.view?.presentScene(mercury, transition: SKTransition.fadeWithDuration(1))
             println("mercury")
@@ -324,18 +338,54 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         }
     }
     private func createBackgroundImage() {
-        self.background = SKSpriteNode(imageNamed: self.backgroundImageName())
-        if( self.background.size.width > self.background.size.height ) {
-            let aspectRatio = self.background.size.width / self.background.size.height
-            self.background.size.height = HEIGHT
-            self.background.size.width = self.background.size.height * aspectRatio
-        } else {
-            let aspectRatio = self.background.size.height / self.background.size.width
-            self.background.size.width = WIDTH
-            self.background.size.height = self.background.size.width * aspectRatio
+        self.background1 = SKSpriteNode(imageNamed: self.backgroundImageName())
+        self.background2 = SKSpriteNode(imageNamed: self.backgroundImageName())
+        self.adaptBackground(self.background1)
+        self.adaptBackground(self.background2)
+        self.background2.position.x += (self.background2.size.width*0.99)
+        
+        self.background1.runAction(SKAction.moveToX(-self.background1.size.width/2 , duration: BACKGROUND_ANIMATION_DURATION), completion: onMovementFinish)
+        self.background2.runAction(SKAction.moveToX(-self.background1.size.width/2 + self.background2.size.width, duration: BACKGROUND_ANIMATION_DURATION*0.99))
+        
+        world.addChild(self.background1)
+        world.addChild(self.background2)
+        self.background1.zPosition = -1
+        self.background2.zPosition = -1
+    }
+    
+    private func onMovementFinish() {
+        
+        self.background1.removeAllActions()
+        self.background1.removeFromParent()
+        self.background1 = self.background2
+        self.background2 = SKSpriteNode(imageNamed: self.backgroundImageName())
+        self.adaptBackground(self.background2)
+        self.background2.position.x += (self.background2.size.width*0.99)
+        self.world.addChild(self.background2)
+
+        
+        // if necessary uncommment
+        dispatch_async(dispatch_get_main_queue()) {
+            self.background1.zPosition = -1
+            self.background2.zPosition = -1
+            self.background1.runAction(SKAction.moveToX(-self.background1.size.width/2, duration: self.BACKGROUND_ANIMATION_DURATION), completion: self.onMovementFinish)
+            self.background2.runAction(SKAction.moveToX(-self.background1.size.width/2 + self.background2.size.width, duration: self.BACKGROUND_ANIMATION_DURATION*0.99))
         }
-        self.background.position.y = self.background.size.height/2
-        world.addChild(background)
+    }
+    
+    private func adaptBackground( background: SKSpriteNode ) {
+        if( background.size.width > background.size.height ) {
+            let aspectRatio = background.size.width / background.size.height
+            background.size.height = HEIGHT
+            background.size.width = background.size.height * aspectRatio
+        } else {
+            let aspectRatio = background.size.height / background.size.width
+            background.size.width = WIDTH
+            background.size.height = background.size.width * aspectRatio
+        }
+        
+        background.position.y = background.size.height/2
+        background.position.x = background.size.width/2
     }
     private func onTimerEvent() {
         if( self.amountOfObjects != self.maximumAmountOfObjectsForLevel() ) {
@@ -393,8 +443,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     // Creates the Heros in the scene
     private func createHeros() {
-        self.rightHero = Hero(imageNamed: "Spaceship", respositivitySide: .Right)
-        self.leftHero = Hero(imageNamed: "Spaceship", respositivitySide: .Left)
+        self.rightHero = Hero(imageNamed: "lala", respositivitySide: .Right)
+        self.leftHero = Hero(imageNamed: "lala", respositivitySide: .Left)
         
         // Resize and Positionates Heros to fit Screen
         let aspectRatio = self.rightHero.frame.size.width/self.rightHero.frame.size.height
@@ -436,12 +486,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         world.addChild(self.roof)
     }
     
-//    var distanceLabel: SKLabelNode = SKLabelNode()
-//    var coinsLabel: SKLabelNode = SKLabelNode()
-//    var planetNameLabel: SKLabelNode = SKLabelNode()
-//    var planetGravityLabel: SKLabelNode = SKLabelNode()
-//    var pauseLabel: SKSpriteNode = SKSpriteNode()
-    
     private func createLabels() {
         // Initialization
         self.distanceLabel = SKLabelNode(fontNamed: FONT_NAME)
@@ -473,15 +517,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.coinsLabel.position = CGPoint(x: self.coinsLabel.frame.size.width/2 , y: self.distanceLabel.position.y - self.distanceLabel.frame.size.height)
         self.planetNameLabel.position = CGPoint(x: WIDTH/2 - self.planetNameLabel.frame.size.width/2, y: HEIGHT - self.planetNameLabel.frame.size.height)
         self.planetGravityLabel.position = CGPoint(x: WIDTH/2 + self.planetGravityLabel.frame.size.width/2, y: self.planetNameLabel.position.y)
-        
-        
     }
     
     private func resizeLabel(label: SKLabelNode, ToFitHeight height: CGFloat) -> SKLabelNode {
         while( label.frame.size.height > height ) {
             label.fontSize *= 0.8
         }
-        
         return label
     }
     

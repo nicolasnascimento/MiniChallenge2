@@ -23,7 +23,7 @@ class NeptuneLevel: GameScene {
         return "four"
     }
     override func backgroundImageName() -> String {
-        return "four"
+        return "ola"
     }
     override func planetName() -> String {
         return "Neptune"

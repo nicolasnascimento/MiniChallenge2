@@ -23,13 +23,20 @@ class EarthLevel: GameScene, GameSceneProtocol {
         return "four"
     }
     override func backgroundImageName() -> String {
-        return "four"
+        return "ola"
     }
     override func planetName() -> String {
         return "Earth"
     }
     override func objectsForRound() -> [SKSpriteNode] {
         var obstacle = SKSpriteNode(imageNamed: imageNameArray[ Int(arc4random_uniform(3)) ])
+        
+//        if( arc4random_uniform(100) < UInt32( self.POWER_UP_PROBABILITY ) ) {
+//            var probability = arc4random_uniform(100)
+//            
+//        } else {
+//            
+//        }
         
         // Should be improved later
         if( arc4random_uniform(3) == 0 ) {
