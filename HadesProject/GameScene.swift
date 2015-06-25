@@ -280,62 +280,52 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     private func goToNextLevel() {
         var viewSize = CGSize(width: WIDTH, height: HEIGHT)
+        var nextPlanet: GameScene
+        
         switch( GameScene.currentLevel ) {
         case .Earth:
             GameScene.currentLevel = .Moon
-            var moon = MoonLevel(size: viewSize)
-            moon.scaleMode = .AspectFill
-            self.view?.presentScene(moon, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = MoonLevel(size: viewSize) as GameScene
             println("moon")
         case .Moon:
             GameScene.currentLevel = .Mercury
-            var mercury = MercuryLevel(size: viewSize)
-            mercury.scaleMode = .AspectFill
-            self.view?.presentScene(mercury, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = MercuryLevel(size: viewSize) as GameScene
             println("mercury")
         case .Mercury:
             GameScene.currentLevel = .Venus
-            var venus = VenusLevel(size: viewSize)
-            venus.scaleMode = .AspectFill
-            self.view?.presentScene(venus, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = VenusLevel(size: viewSize) as GameScene
             println("venus")
         case .Venus:
+            GameScene.currentLevel = .Mars
+            nextPlanet = MarsLevel(size: viewSize) as GameScene
+            println("mars")
+        case .Mars:
             GameScene.currentLevel = .Jupiter
-            var jupiter = JupiterLevel(size: viewSize)
-            jupiter.scaleMode = .AspectFill
-            self.view?.presentScene(jupiter, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = JupiterLevel(size: viewSize) as GameScene
             println("jupiter")
         case .Jupiter:
             GameScene.currentLevel = .Saturn
-            var saturn = SaturnLevel(size: viewSize)
-            saturn.scaleMode = .AspectFill
-            self.view?.presentScene(saturn, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = SaturnLevel(size: viewSize) as GameScene
             println("Saturn")
         case .Saturn:
             GameScene.currentLevel = .Uranus
-            var uranus = UranusLevel(size: viewSize)
-            uranus.scaleMode = .AspectFill
-            self.view?.presentScene(uranus, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = UranusLevel(size: viewSize) as GameScene
             println("Uranus")
         case .Uranus:
             GameScene.currentLevel = .Neptune
-            var neptune = NeptuneLevel(size: viewSize)
-            neptune.scaleMode = .AspectFill
-            self.view?.presentScene(neptune, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = NeptuneLevel(size: viewSize) as GameScene
             println("Neptune")
         case .Neptune:
             GameScene.currentLevel = .Pluto
-            var pluto = PlutoLevel(size: viewSize)
-            pluto.scaleMode = .AspectFill
-            self.view?.presentScene(pluto, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = PlutoLevel(size: viewSize)
             println("Pluto")
         default :
             GameScene.currentLevel = .Earth
-            var earth = EarthLevel(size: viewSize)
-            earth.scaleMode = .AspectFill
-            self.view?.presentScene(earth, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = EarthLevel(size: viewSize)
             println("earth")
         }
+        nextPlanet.scaleMode = .AspectFill
+        self.view?.presentScene(nextPlanet, transition: SKTransition.fadeWithDuration(1))
     }
     private func createBackgroundImage() {
         self.background1 = SKSpriteNode(imageNamed: self.backgroundImageName())
