@@ -169,9 +169,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     
     func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
-        object.removeFromParent()
-        powerUpInvertControls = !powerUpInvertControls
-        println("heroDidTouchObject")
+     //   object.removeFromParent()
+     //   powerUpInvertControls = !powerUpInvertControls
+     //   println("heroDidTouchObject")
     }
     
     func maximumAmountOfObjectsForLevel() -> Int {
