@@ -58,7 +58,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     let SPACE_KING_PROBABILITY: Double = 5.0
     let COIN_MAGNET_PROBABILITY: Double = 20.0
     
+    // Objects Probabilities
     let POWER_UP_PROBABILITY: Double = 20
+    let COIN_PROBABILTY: Double = 80
+    let OBSTACLE_PROBILITY: Double = 20
+    
+    // Objects Names
+    let COIN_NAME = "coin"
+    let OBSTACLE_NAME = "obstacle"
+    let INVERT_NAME = "invert"
+    let RESIZE_UP_NAME = "resizeup"
+    let RESIZE_DOWN_NAME = "resizedown"
+    let FUSION_NAME = "fusion"
+    let INVISIBILTY_NAME = "invisibilidade"
+    let MULTIPLIER_NAME = "multiplier"
+    let SPACE_KING_NAME = "spaceking"
+    let COIN_MAGNET_NAME = "coinmagnet"
+    
     
     // Level Variable
     static var currentLevel : Level = .Earth
@@ -77,7 +93,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // Controls
     var timerNode: SKNode = SKNode()
     var amountOfObjects = 0
-    //var powerUpInvertControls = false
+    
+    // The Objects
+    var imageNameArray: [String] { return  ["grow", "shrink", "speedup", "speeddown"] }
     
     // Touches
     var isTouchingLeft: Bool = false
@@ -216,27 +234,87 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         return CGVector(dx: 0, dy: -9.8)
     }
     func objectsForRound() -> [SKSpriteNode] {
-        var obstacle = SKSpriteNode(imageNamed: "mini_ground")
-        obstacle.name = "obstacle"
+        //var obstacle = SKSpriteNode(imageNamed: imageNameArray[ Int(arc4random_uniform(3)) ])
+        var obstacle: SKSpriteNode
+        var probability1 = arc4random_uniform(100)
+        
+        if( probability1 < UInt32( self.POWER_UP_PROBABILITY ) ) {
+            var probability = Double(arc4random_uniform(1000))/10.0
+            
+            obstacle = SKSpriteNode(imageNamed: "mini_ground")
+            
+            if( probability < 100 && probability >= 75 ) {
+                obstacle.name = MULTIPLIER_NAME
+                
+            } else if( probability < 75 && probability >= 55 ) {
+                obstacle.name = COIN_MAGNET_NAME
+                
+            } else if( probability < 55 && probability >= 40 ) {
+                obstacle.name = INVISIBILTY_NAME
+                
+            } else if( probability < 40 && probability >= 30 ) {
+                obstacle.name = FUSION_NAME
+                
+            } else if( probability < 30 && probability >= 20 ) {
+                obstacle.name = INVERT_NAME
+                
+            } else if( probability < 20 && probability >= 12.5 ) {
+                obstacle.name = RESIZE_UP_NAME
+                
+            } else if( probability < 12.5 && probability >= 5 ) {
+                obstacle.name = RESIZE_DOWN_NAME
+                
+            } else {
+                obstacle.name = SPACE_KING_NAME
+            }
+            
+        } else if( probability1 > UInt32( self.POWER_UP_PROBABILITY ) && probability1 < UInt32( self.POWER_UP_PROBABILITY + self.COIN_PROBABILTY ) ) {
+            
+            obstacle = SKSpriteNode(imageNamed: "coinIcon")
+            obstacle.name = COIN_NAME
+        } else {
+            
+            obstacle = SKSpriteNode(imageNamed: imageNameArray[ Int(arc4random_uniform(3)) ])
+            obstacle.name = OBSTACLE_NAME
+        }
+        
+        obstacle.createPhysicsBodyForSelfWithCategory(OBSTACLE_CATEGORY, contactCategory: HERO_CATEGORY , collisionCategory: 0)
         obstacle.physicsBody?.affectedByGravity = false
         return [obstacle];
     }
     
     func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
-        object.removeFromParent()
-        
-        if( object.name == "PowerUp-Invert" ) {
-            println("Invert")
-            if( rightHero.respositivitySide == .Right ) {
-                rightHero.respositivitySide = .Left
-                leftHero.respositivitySide = .Right
-            } else {
-                rightHero.respositivitySide = .Right
-                leftHero.respositivitySide = .Left
-            }
+        if( object.parent == nil ) {
+            return
         }
         
-        //powerUpInvertControls = !powerUpInvertControls
+        object.removeFromParent()
+        
+        
+        
+        if( object.name == MULTIPLIER_NAME ) {
+            
+        }else if( object.name == COIN_MAGNET_NAME ) {
+        
+        }else if( object.name == INVISIBILTY_NAME ) {
+        
+        }else if( object.name == FUSION_NAME ) {
+            
+        }else if( object.name == INVERT_NAME ) {
+            rightHero.invertResposivitySide()
+            leftHero.invertResposivitySide()
+            
+        }else if( object.name == RESIZE_UP_NAME ) {
+        
+        }else if( object.name == RESIZE_DOWN_NAME ) {
+            
+        }else if( object.name == SPACE_KING_NAME ) {
+            
+        }else if( object.name == COIN_NAME ) {
+            hero.coinsCaptured++
+            self.coinsLabel.text = String(format: "%ld coins", arguments: [ (self.rightHero.coinsCaptured + self.leftHero.coinsCaptured ) ])
+        }
+
         println("heroDidTouchObject")
     }
     
@@ -280,62 +358,52 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     private func goToNextLevel() {
         var viewSize = CGSize(width: WIDTH, height: HEIGHT)
+        var nextPlanet: GameScene
+        
         switch( GameScene.currentLevel ) {
         case .Earth:
             GameScene.currentLevel = .Moon
-            var moon = MoonLevel(size: viewSize)
-            moon.scaleMode = .AspectFill
-            self.view?.presentScene(moon, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = MoonLevel(size: viewSize) as GameScene
             println("moon")
         case .Moon:
             GameScene.currentLevel = .Mercury
-            var mercury = MercuryLevel(size: viewSize)
-            mercury.scaleMode = .AspectFill
-            self.view?.presentScene(mercury, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = MercuryLevel(size: viewSize) as GameScene
             println("mercury")
         case .Mercury:
             GameScene.currentLevel = .Venus
-            var venus = VenusLevel(size: viewSize)
-            venus.scaleMode = .AspectFill
-            self.view?.presentScene(venus, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = VenusLevel(size: viewSize) as GameScene
             println("venus")
         case .Venus:
+            GameScene.currentLevel = .Mars
+            nextPlanet = MarsLevel(size: viewSize) as GameScene
+            println("mars")
+        case .Mars:
             GameScene.currentLevel = .Jupiter
-            var jupiter = JupiterLevel(size: viewSize)
-            jupiter.scaleMode = .AspectFill
-            self.view?.presentScene(jupiter, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = JupiterLevel(size: viewSize) as GameScene
             println("jupiter")
         case .Jupiter:
             GameScene.currentLevel = .Saturn
-            var saturn = SaturnLevel(size: viewSize)
-            saturn.scaleMode = .AspectFill
-            self.view?.presentScene(saturn, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = SaturnLevel(size: viewSize) as GameScene
             println("Saturn")
         case .Saturn:
             GameScene.currentLevel = .Uranus
-            var uranus = UranusLevel(size: viewSize)
-            uranus.scaleMode = .AspectFill
-            self.view?.presentScene(uranus, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = UranusLevel(size: viewSize) as GameScene
             println("Uranus")
         case .Uranus:
             GameScene.currentLevel = .Neptune
-            var neptune = NeptuneLevel(size: viewSize)
-            neptune.scaleMode = .AspectFill
-            self.view?.presentScene(neptune, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = NeptuneLevel(size: viewSize) as GameScene
             println("Neptune")
         case .Neptune:
             GameScene.currentLevel = .Pluto
-            var pluto = PlutoLevel(size: viewSize)
-            pluto.scaleMode = .AspectFill
-            self.view?.presentScene(pluto, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = PlutoLevel(size: viewSize)
             println("Pluto")
         default :
             GameScene.currentLevel = .Earth
-            var earth = EarthLevel(size: viewSize)
-            earth.scaleMode = .AspectFill
-            self.view?.presentScene(earth, transition: SKTransition.fadeWithDuration(1))
+            nextPlanet = EarthLevel(size: viewSize)
             println("earth")
         }
+        nextPlanet.scaleMode = .AspectFill
+        self.view?.presentScene(nextPlanet, transition: SKTransition.fadeWithDuration(1))
     }
     private func createBackgroundImage() {
         self.background1 = SKSpriteNode(imageNamed: self.backgroundImageName())
