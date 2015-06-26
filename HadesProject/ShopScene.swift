@@ -22,4 +22,11 @@ class ShopScene: SKScene {
         
         
     }
+    
+    private func resizeLabel(label: SKLabelNode, ToFitHeight height: CGFloat) -> SKLabelNode {
+        while( label.frame.size.height > height ) {
+            label.fontSize *= 0.8
+        }
+        return label
+    }
 }
