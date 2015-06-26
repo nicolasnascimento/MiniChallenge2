@@ -26,6 +26,7 @@
 		0CA0CEDD1B1E3F41002282DA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CA0CEDB1B1E3F41002282DA /* LaunchScreen.xib */; };
 		0CA0CEE91B1E3F41002282DA /* HadesProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CEE81B1E3F41002282DA /* HadesProjectTests.swift */; };
 		0CE9EAC51B39D58900D76019 /* EarthLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9EAC41B39D58900D76019 /* EarthLevel.swift */; };
+		F4747BAD1B3DB80600822135 /* ShopScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4747BAC1B3DB80600822135 /* ShopScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		0CA0CEE71B1E3F41002282DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CA0CEE81B1E3F41002282DA /* HadesProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HadesProjectTests.swift; sourceTree = "<group>"; };
 		0CE9EAC41B39D58900D76019 /* EarthLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EarthLevel.swift; sourceTree = "<group>"; };
+		F4747BAC1B3DB80600822135 /* ShopScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +188,7 @@
 				0C94B8681B1F67E200945476 /* Items */,
 				0CA0CEF51B1E3FF3002282DA /* SKS */,
 				0CA0CED21B1E3F41002282DA /* GameScene.swift */,
+				F4747BAC1B3DB80600822135 /* ShopScene.swift */,
 				0C1989C01B3AFEEF00E00993 /* Levels */,
 			);
 			name = Scenes;
@@ -305,6 +308,7 @@
 				0C74936F1B3B15B200A1BA09 /* JupiterLevel.swift in Sources */,
 				0C7493691B3B0F7400A1BA09 /* MercuryLevel.swift in Sources */,
 				0CA0CED31B1E3F41002282DA /* GameScene.swift in Sources */,
+				F4747BAD1B3DB80600822135 /* ShopScene.swift in Sources */,
 				0CA0CED51B1E3F41002282DA /* GameViewController.swift in Sources */,
 				0CA0CECF1B1E3F41002282DA /* AppDelegate.swift in Sources */,
 				0C7493771B3B1EFD00A1BA09 /* PlutoLevel.swift in Sources */,
