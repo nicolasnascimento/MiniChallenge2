@@ -575,6 +575,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.ground.position.x = WIDTH/2
         self.ground.createPhysicsBodyForSelfWithCategory(GROUND_CATEGORY, contactCategory: HERO_CATEGORY, collisionCategory: HERO_CATEGORY | OBSTACLE_CATEGORY )
         self.ground.physicsBody?.dynamic = false
+        self.ground.alpha = 0.0
         
         world.addChild(self.ground)
     }

@@ -23,7 +23,7 @@ class EarthLevel: GameScene {
         return "four"
     }
     override func backgroundImageName() -> String {
-        return "ola"
+        return "backgroundEarth"
     }
     override func planetName() -> String {
         return "Earth"
