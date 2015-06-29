@@ -18,6 +18,7 @@
 		0C7493751B3B1EDA00A1BA09 /* NeptuneLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7493741B3B1EDA00A1BA09 /* NeptuneLevel.swift */; };
 		0C7493771B3B1EFD00A1BA09 /* PlutoLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7493761B3B1EFD00A1BA09 /* PlutoLevel.swift */; };
 		0C94B8671B1F67D700945476 /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C94B8661B1F67D700945476 /* Hero.swift */; };
+		0C9E72F21B41CB8A00AA003E /* PopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9E72F11B41CB8A00AA003E /* PopUp.swift */; };
 		0CA0CECF1B1E3F41002282DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CECE1B1E3F41002282DA /* AppDelegate.swift */; };
 		0CA0CED11B1E3F41002282DA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0CA0CED01B1E3F41002282DA /* GameScene.sks */; };
 		0CA0CED31B1E3F41002282DA /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CED21B1E3F41002282DA /* GameScene.swift */; };
@@ -52,6 +53,7 @@
 		0C7493741B3B1EDA00A1BA09 /* NeptuneLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeptuneLevel.swift; sourceTree = "<group>"; };
 		0C7493761B3B1EFD00A1BA09 /* PlutoLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlutoLevel.swift; sourceTree = "<group>"; };
 		0C94B8661B1F67D700945476 /* Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
+		0C9E72F11B41CB8A00AA003E /* PopUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUp.swift; sourceTree = "<group>"; };
 		0CA0CEC91B1E3F41002282DA /* HadesProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HadesProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CA0CECD1B1E3F41002282DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CA0CECE1B1E3F41002282DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 		0C94B8681B1F67E200945476 /* Items */ = {
 			isa = PBXGroup;
 			children = (
+				0C9E72F11B41CB8A00AA003E /* PopUp.swift */,
 				0C94B8661B1F67D700945476 /* Hero.swift */,
 			);
 			name = Items;
@@ -318,6 +321,7 @@
 				0C74936B1B3B129C00A1BA09 /* VenusLevel.swift in Sources */,
 				0C7493671B3B06C200A1BA09 /* MoonLevel.swift in Sources */,
 				0C7493711B3B1E1B00A1BA09 /* SaturnLevel.swift in Sources */,
+				0C9E72F21B41CB8A00AA003E /* PopUp.swift in Sources */,
 				0C74936D1B3B142900A1BA09 /* MarsLevel.swift in Sources */,
 				0CE9EAC51B39D58900D76019 /* EarthLevel.swift in Sources */,
 				0C7493731B3B1E5900A1BA09 /* UranusLevel.swift in Sources */,
