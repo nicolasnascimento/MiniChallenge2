@@ -33,7 +33,6 @@ class JupiterLevel: GameScene {
     }
     override func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
         super.heroDidTouchObject(hero, object: object)
-        println( object.name )
     }
     override func allObjectsHaveBeenCreated() {
         

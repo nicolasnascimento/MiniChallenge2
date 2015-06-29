@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C6958811B3DE23A00B7C651 /* AstronautRun.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 0C6958801B3DE23A00B7C651 /* AstronautRun.atlas */; };
 		0C7493671B3B06C200A1BA09 /* MoonLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7493661B3B06C200A1BA09 /* MoonLevel.swift */; };
 		0C7493691B3B0F7400A1BA09 /* MercuryLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7493681B3B0F7400A1BA09 /* MercuryLevel.swift */; };
 		0C74936B1B3B129C00A1BA09 /* VenusLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C74936A1B3B129C00A1BA09 /* VenusLevel.swift */; };
@@ -74,6 +75,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0C6958801B3DE23A00B7C651 /* AstronautRun.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = AstronautRun.atlas; sourceTree = "<group>"; };
 		0C7493661B3B06C200A1BA09 /* MoonLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoonLevel.swift; sourceTree = "<group>"; };
 		0C7493681B3B0F7400A1BA09 /* MercuryLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercuryLevel.swift; sourceTree = "<group>"; };
 		0C74936A1B3B129C00A1BA09 /* VenusLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VenusLevel.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 		0CA0CECB1B1E3F41002282DA /* HadesProject */ = {
 			isa = PBXGroup;
 			children = (
+				0C6958801B3DE23A00B7C651 /* AstronautRun.atlas */,
 				0CA0CEF41B1E3FE8002282DA /* Scenes */,
 				0CA0CEF31B1E3FC6002282DA /* ViewController */,
 				0CA0CEF21B1E3FC2002282DA /* UI */,
@@ -415,6 +418,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C6958811B3DE23A00B7C651 /* AstronautRun.atlas in Resources */,
 				0CA0CEDD1B1E3F41002282DA /* LaunchScreen.xib in Resources */,
 				0CA0CEDA1B1E3F41002282DA /* Images.xcassets in Resources */,
 				0CA0CED11B1E3F41002282DA /* GameScene.sks in Resources */,
