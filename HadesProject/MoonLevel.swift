@@ -34,7 +34,6 @@ class MoonLevel: GameScene {
     }
     override func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
         super.heroDidTouchObject(hero, object: object)
-        println( "Moon" )
     }
     override func allObjectsHaveBeenCreated() {
         super.allObjectsHaveBeenCreated()

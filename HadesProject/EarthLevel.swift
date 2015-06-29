@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 
-class EarthLevel: GameScene, GameSceneProtocol {
+class EarthLevel: GameScene {
     
     override var imageNameArray: [String] { return  ["grow", "shrink", "speedup", "speeddown"] }
     
