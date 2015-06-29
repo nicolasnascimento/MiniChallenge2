@@ -114,6 +114,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     var planetNameLabel: SKLabelNode = SKLabelNode()
     var planetGravityLabel: SKLabelNode = SKLabelNode()
     var pauseLabel: SKSpriteNode = SKSpriteNode()
+    var distanceTraveled: Int = Int()
+    let defaults = NSUserDefaults.standardUserDefaults()
     
     // MARK - Overriden Methods
     override func didMoveToView(view: SKView) {
@@ -122,6 +124,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.createGround()
         self.createRoof()
         self.createLabels()
+
     }
     
     
@@ -143,6 +146,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     
     override func update(currentTime: CFTimeInterval) {
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.timerNode.runAction(SKAction.waitForDuration(0.05), completion: self.updateScore)
+        }
         
         // Normal touch handling
         if( rightHero.respositivitySide == .Right ) {
@@ -284,9 +291,51 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     
     func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
-     //   object.removeFromParent()
-     //   powerUpInvertControls = !powerUpInvertControls
-     //   println("heroDidTouchObject")
+        if( object.parent == nil ) {
+            return
+        }
+        
+        object.removeFromParent()
+        
+        if( object.name == MULTIPLIER_NAME ) {
+            println(MULTIPLIER_NAME)
+            hero.doubleCoinMultiplier()
+            
+        }else if( object.name == COIN_MAGNET_NAME ) {
+            println(COIN_MAGNET_NAME)
+            hero.activateCoinMagnet()
+            
+        }else if( object.name == INVISBILITY_NAME ) {
+            println(INVISBILITY_NAME)
+            hero.turnToInvisible()
+            
+        }else if( object.name == FUSION_NAME ) {
+            println(FUSION_NAME)
+            
+        }else if( object.name == INVERT_NAME ) {
+            println(INVERT_NAME)
+            rightHero.invertResposivitySide()
+            leftHero.invertResposivitySide()
+            
+        }else if( object.name == RESIZE_UP_NAME ) {
+            println(RESIZE_UP_NAME)
+            hero.resizeUp()
+            
+        }else if( object.name == RESIZE_DOWN_NAME ) {
+            println(RESIZE_DOWN_NAME)
+            hero.resizeDown()
+            
+        }else if( object.name == SPACE_KING_NAME ) {
+            println(SPACE_KING_NAME)
+
+        }
+        
+        if( object.name == COIN_NAME ) {
+            hero.coinsCaptured += hero.coinMultiplier
+            self.coinsLabel.text = String(format: "%ld coins", arguments: [ (self.rightHero.coinsCaptured + self.leftHero.coinsCaptured ) ])
+        }
+
+        //println("heroDidTouchObject")
     }
     
     func maximumAmountOfObjectsForLevel() -> Int {
@@ -426,6 +475,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         background.position.x = background.size.width/2
     }
     private func onTimerEvent() {
+        
         if( self.amountOfObjects != self.maximumAmountOfObjectsForLevel() ) {
             var objects = self.objectsForRound()
             for (i, obj) in enumerate(objects) {
@@ -457,6 +507,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         } else {
             self.allObjectsHaveBeenCreated()
         }
+    }
+    
+    private func updateScore() {
+        
+        if let score = defaults.integerForKey("distanceTraveled") as? Int
+        {
+            distanceTraveled = score + 1
+            self.distanceLabel.text = String(format: "%ld meters", arguments: [ (self.distanceTraveled)])
+            defaults.setObject(distanceTraveled, forKey: "distanceTraveled")
+
+        }
+
     }
     // Gets objects from a sks file
     private func createSceneFromSksFileNamed(name: String) {
@@ -554,7 +616,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         // self.pauseLabel = SKSpriteNode(imageNamed: <#String#>)
         
         // Initial Values
-        self.distanceLabel.text = "0000 meters"
+        self.distanceLabel.text = String(format: "%ld meters", arguments: [ (self.distanceTraveled)])
         self.coinsLabel.text = "0 coins"
         self.planetNameLabel.text = self.planetName() + ":"
         self.planetGravityLabel.text = String(format: "%.2lf", arguments: [(-self.gravityForLevel().dy)])
@@ -572,10 +634,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         world.addChild(self.planetGravityLabel)
         
         // Positions
-        self.distanceLabel.position = CGPoint(x: self.distanceLabel.frame.size.width/2 , y: HEIGHT - self.distanceLabel.frame.size.height)
-        self.coinsLabel.position = CGPoint(x: self.coinsLabel.frame.size.width/2 , y: self.distanceLabel.position.y - self.distanceLabel.frame.size.height)
+        self.distanceLabel.position = CGPoint(x: (self.distanceLabel.frame.size.width/1.123456789) , y: HEIGHT - self.distanceLabel.frame.size.height)
+        self.coinsLabel.position = CGPoint(x: self.coinsLabel.frame.size.width/1.123456789 , y: self.distanceLabel.position.y - self.distanceLabel.frame.size.height)
         self.planetNameLabel.position = CGPoint(x: WIDTH/2 - self.planetNameLabel.frame.size.width/2, y: HEIGHT - self.planetNameLabel.frame.size.height)
         self.planetGravityLabel.position = CGPoint(x: WIDTH/2 + self.planetGravityLabel.frame.size.width/2, y: self.planetNameLabel.position.y)
+        //self.distanceLabel.horizontalAlignmentMode = .Left
+        //self.coinsLabel.horizontalAlignmentMode = .Left
+        
     }
     
     private func resizeLabel(label: SKLabelNode, ToFitHeight height: CGFloat) -> SKLabelNode {

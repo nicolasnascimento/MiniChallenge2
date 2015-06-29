@@ -29,12 +29,7 @@ class MoonLevel: GameScene {
         return "Moon"
     }
     override func objectsForRound() -> [SKSpriteNode] {
-        var objName = imageNameArray[ Int(arc4random_uniform(3)) ]
-        var obstacle = SKSpriteNode(imageNamed: objName)
-        obstacle.name = objName
-        obstacle.createPhysicsBodyForSelfWithCategory(OBSTACLE_CATEGORY, contactCategory: HERO_CATEGORY , collisionCategory: 0)
-        obstacle.physicsBody?.affectedByGravity = false
-        return [obstacle];
+        return super.objectsForRound()
         
     }
     override func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
