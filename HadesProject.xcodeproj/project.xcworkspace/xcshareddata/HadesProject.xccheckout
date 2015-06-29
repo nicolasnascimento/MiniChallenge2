@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>FC58B02C-A162-4159-8929-A41298DBC255</string>
+	<key>IDESourceControlProjectName</key>
+	<string>HadesProject</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>EC3A9A0A9C6D977AC79BDEFB33AAECEF97793469</key>
+		<string>https://github.com/nicolasnascimento/MiniChallenge2.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>HadesProject.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>EC3A9A0A9C6D977AC79BDEFB33AAECEF97793469</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/nicolasnascimento/MiniChallenge2.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>EC3A9A0A9C6D977AC79BDEFB33AAECEF97793469</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>EC3A9A0A9C6D977AC79BDEFB33AAECEF97793469</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MiniChallenge2</string>
+		</dict>
+	</array>
+</dict>
+</plist>

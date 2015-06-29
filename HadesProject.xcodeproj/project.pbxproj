@@ -26,6 +26,12 @@
 		0CA0CEDD1B1E3F41002282DA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CA0CEDB1B1E3F41002282DA /* LaunchScreen.xib */; };
 		0CA0CEE91B1E3F41002282DA /* HadesProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CEE81B1E3F41002282DA /* HadesProjectTests.swift */; };
 		0CE9EAC51B39D58900D76019 /* EarthLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9EAC41B39D58900D76019 /* EarthLevel.swift */; };
+		0D126FDD1B41ADCC008C45B1 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D126FDC1B41ADCC008C45B1 /* InterfaceController.swift */; };
+		0D126FDF1B41ADCC008C45B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D126FDE1B41ADCC008C45B1 /* Images.xcassets */; };
+		0D126FE31B41ADCC008C45B1 /* HadesProject WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = 0D126FE21B41ADCC008C45B1 /* HadesProject WatchKit App.app */; };
+		0D126FEB1B41ADCC008C45B1 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D126FE91B41ADCC008C45B1 /* Interface.storyboard */; };
+		0D126FED1B41ADCC008C45B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D126FEC1B41ADCC008C45B1 /* Images.xcassets */; };
+		0D126FF01B41ADCC008C45B1 /* HadesProject WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0D126FD81B41ADCC008C45B1 /* HadesProject WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F4747BAD1B3DB80600822135 /* ShopScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4747BAC1B3DB80600822135 /* ShopScene.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,7 +43,35 @@
 			remoteGlobalIDString = 0CA0CEC81B1E3F41002282DA;
 			remoteInfo = HadesProject;
 		};
+		0D126FE41B41ADCC008C45B1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0CA0CEC11B1E3F41002282DA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D126FE11B41ADCC008C45B1;
+			remoteInfo = "HadesProject WatchKit App";
+		};
+		0D126FEE1B41ADCC008C45B1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0CA0CEC11B1E3F41002282DA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D126FD71B41ADCC008C45B1;
+			remoteInfo = "HadesProject WatchKit Extension";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0D126FF71B41ADCD008C45B1 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				0D126FF01B41ADCC008C45B1 /* HadesProject WatchKit Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0C7493661B3B06C200A1BA09 /* MoonLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoonLevel.swift; sourceTree = "<group>"; };
@@ -63,6 +97,14 @@
 		0CA0CEE71B1E3F41002282DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CA0CEE81B1E3F41002282DA /* HadesProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HadesProjectTests.swift; sourceTree = "<group>"; };
 		0CE9EAC41B39D58900D76019 /* EarthLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EarthLevel.swift; sourceTree = "<group>"; };
+		0D126FD81B41ADCC008C45B1 /* HadesProject WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "HadesProject WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D126FDB1B41ADCC008C45B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0D126FDC1B41ADCC008C45B1 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		0D126FDE1B41ADCC008C45B1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		0D126FE21B41ADCC008C45B1 /* HadesProject WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HadesProject WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D126FE81B41ADCC008C45B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0D126FEA1B41ADCC008C45B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		0D126FEC1B41ADCC008C45B1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F4747BAC1B3DB80600822135 /* ShopScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,6 +117,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		0CA0CEDF1B1E3F41002282DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D126FD51B41ADCC008C45B1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -114,6 +163,8 @@
 			children = (
 				0CA0CECB1B1E3F41002282DA /* HadesProject */,
 				0CA0CEE51B1E3F41002282DA /* HadesProjectTests */,
+				0D126FD91B41ADCC008C45B1 /* HadesProject WatchKit Extension */,
+				0D126FE61B41ADCC008C45B1 /* HadesProject WatchKit App */,
 				0CA0CECA1B1E3F41002282DA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -123,6 +174,8 @@
 			children = (
 				0CA0CEC91B1E3F41002282DA /* HadesProject.app */,
 				0CA0CEE21B1E3F41002282DA /* HadesProjectTests.xctest */,
+				0D126FD81B41ADCC008C45B1 /* HadesProject WatchKit Extension.appex */,
+				0D126FE21B41ADCC008C45B1 /* HadesProject WatchKit App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -202,6 +255,42 @@
 			name = SKS;
 			sourceTree = "<group>";
 		};
+		0D126FD91B41ADCC008C45B1 /* HadesProject WatchKit Extension */ = {
+			isa = PBXGroup;
+			children = (
+				0D126FDC1B41ADCC008C45B1 /* InterfaceController.swift */,
+				0D126FDE1B41ADCC008C45B1 /* Images.xcassets */,
+				0D126FDA1B41ADCC008C45B1 /* Supporting Files */,
+			);
+			path = "HadesProject WatchKit Extension";
+			sourceTree = "<group>";
+		};
+		0D126FDA1B41ADCC008C45B1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0D126FDB1B41ADCC008C45B1 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0D126FE61B41ADCC008C45B1 /* HadesProject WatchKit App */ = {
+			isa = PBXGroup;
+			children = (
+				0D126FE91B41ADCC008C45B1 /* Interface.storyboard */,
+				0D126FEC1B41ADCC008C45B1 /* Images.xcassets */,
+				0D126FE71B41ADCC008C45B1 /* Supporting Files */,
+			);
+			path = "HadesProject WatchKit App";
+			sourceTree = "<group>";
+		};
+		0D126FE71B41ADCC008C45B1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0D126FE81B41ADCC008C45B1 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -212,10 +301,12 @@
 				0CA0CEC51B1E3F41002282DA /* Sources */,
 				0CA0CEC61B1E3F41002282DA /* Frameworks */,
 				0CA0CEC71B1E3F41002282DA /* Resources */,
+				0D126FF71B41ADCD008C45B1 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				0D126FEF1B41ADCC008C45B1 /* PBXTargetDependency */,
 			);
 			name = HadesProject;
 			productName = HadesProject;
@@ -240,6 +331,39 @@
 			productReference = 0CA0CEE21B1E3F41002282DA /* HadesProjectTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		0D126FD71B41ADCC008C45B1 /* HadesProject WatchKit Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D126FF61B41ADCD008C45B1 /* Build configuration list for PBXNativeTarget "HadesProject WatchKit Extension" */;
+			buildPhases = (
+				0D126FD41B41ADCC008C45B1 /* Sources */,
+				0D126FD51B41ADCC008C45B1 /* Frameworks */,
+				0D126FD61B41ADCC008C45B1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0D126FE51B41ADCC008C45B1 /* PBXTargetDependency */,
+			);
+			name = "HadesProject WatchKit Extension";
+			productName = "HadesProject WatchKit Extension";
+			productReference = 0D126FD81B41ADCC008C45B1 /* HadesProject WatchKit Extension.appex */;
+			productType = "com.apple.product-type.watchkit-extension";
+		};
+		0D126FE11B41ADCC008C45B1 /* HadesProject WatchKit App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D126FF51B41ADCD008C45B1 /* Build configuration list for PBXNativeTarget "HadesProject WatchKit App" */;
+			buildPhases = (
+				0D126FE01B41ADCC008C45B1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "HadesProject WatchKit App";
+			productName = "HadesProject WatchKit App";
+			productReference = 0D126FE21B41ADCC008C45B1 /* HadesProject WatchKit App.app */;
+			productType = "com.apple.product-type.application.watchapp";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -256,6 +380,12 @@
 					0CA0CEE11B1E3F41002282DA = {
 						CreatedOnToolsVersion = 6.3.2;
 						TestTargetID = 0CA0CEC81B1E3F41002282DA;
+					};
+					0D126FD71B41ADCC008C45B1 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+					0D126FE11B41ADCC008C45B1 = {
+						CreatedOnToolsVersion = 6.3.2;
 					};
 				};
 			};
@@ -274,6 +404,8 @@
 			targets = (
 				0CA0CEC81B1E3F41002282DA /* HadesProject */,
 				0CA0CEE11B1E3F41002282DA /* HadesProjectTests */,
+				0D126FD71B41ADCC008C45B1 /* HadesProject WatchKit Extension */,
+				0D126FE11B41ADCC008C45B1 /* HadesProject WatchKit App */,
 			);
 		};
 /* End PBXProject section */
@@ -294,6 +426,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D126FD61B41ADCC008C45B1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D126FE31B41ADCC008C45B1 /* HadesProject WatchKit App.app in Resources */,
+				0D126FDF1B41ADCC008C45B1 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D126FE01B41ADCC008C45B1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D126FEB1B41ADCC008C45B1 /* Interface.storyboard in Resources */,
+				0D126FED1B41ADCC008C45B1 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +480,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0D126FD41B41ADCC008C45B1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D126FDD1B41ADCC008C45B1 /* InterfaceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -337,6 +495,16 @@
 			isa = PBXTargetDependency;
 			target = 0CA0CEC81B1E3F41002282DA /* HadesProject */;
 			targetProxy = 0CA0CEE31B1E3F41002282DA /* PBXContainerItemProxy */;
+		};
+		0D126FE51B41ADCC008C45B1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0D126FE11B41ADCC008C45B1 /* HadesProject WatchKit App */;
+			targetProxy = 0D126FE41B41ADCC008C45B1 /* PBXContainerItemProxy */;
+		};
+		0D126FEF1B41ADCC008C45B1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0D126FD71B41ADCC008C45B1 /* HadesProject WatchKit Extension */;
+			targetProxy = 0D126FEE1B41ADCC008C45B1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -355,6 +523,14 @@
 				0CA0CEDC1B1E3F41002282DA /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		0D126FE91B41ADCC008C45B1 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0D126FEA1B41ADCC008C45B1 /* Base */,
+			);
+			name = Interface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -508,6 +684,66 @@
 			};
 			name = Release;
 		};
+		0D126FF11B41ADCC008C45B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "HadesProject WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		0D126FF21B41ADCC008C45B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "HadesProject WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		0D126FF31B41ADCC008C45B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IBSC_MODULE = HadesProject_WatchKit_Extension;
+				INFOPLIST_FILE = "HadesProject WatchKit App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+			};
+			name = Debug;
+		};
+		0D126FF41B41ADCC008C45B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				IBSC_MODULE = HadesProject_WatchKit_Extension;
+				INFOPLIST_FILE = "HadesProject WatchKit App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -537,6 +773,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		0D126FF51B41ADCD008C45B1 /* Build configuration list for PBXNativeTarget "HadesProject WatchKit App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D126FF31B41ADCC008C45B1 /* Debug */,
+				0D126FF41B41ADCC008C45B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		0D126FF61B41ADCD008C45B1 /* Build configuration list for PBXNativeTarget "HadesProject WatchKit Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D126FF11B41ADCC008C45B1 /* Debug */,
+				0D126FF21B41ADCC008C45B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
