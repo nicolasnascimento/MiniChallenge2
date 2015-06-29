@@ -43,7 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // Useful constants
     let BACKGROUND_COLOR: SKColor = SKColor.orangeColor()
     let BACKGROUND_ANIMATION_DURATION = 20.0
-    let HERO_SIZE_FACTOR: CGFloat = 10
+    let HERO_SIZE_FACTOR: CGFloat = 5
     let OBSTACLE_SIZE_FACTOR: CGFloat = 5
     let HERO_MASS: CGFloat = 30
     let FONT_NAME: String = "Helvetica"
@@ -58,7 +58,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     let SPACE_KING_PROBABILITY: Double = 5.0
     let COIN_MAGNET_PROBABILITY: Double = 20.0
     
+    // Objects Probabilities
     let POWER_UP_PROBABILITY: Double = 20
+    let COIN_PROBABILTY: Double = 80
+    let OBSTACLE_PROBILITY: Double = 20
+    
+    // Objects Names
+    let COIN_NAME = "coin"
+    let OBSTACLE_NAME = "obstacle"
+    let INVERT_NAME = "invert"
+    let RESIZE_UP_NAME = "resizeup"
+    let RESIZE_DOWN_NAME = "resizedown"
+    let FUSION_NAME = "fusion"
+    let INVISBILITY_NAME = "invisibilidade"
+    let MULTIPLIER_NAME = "multiplier"
+    let SPACE_KING_NAME = "spaceking"
+    let COIN_MAGNET_NAME = "coinmagnet"
+    
     
     // Level Variable
     static var currentLevel : Level = .Earth
@@ -77,7 +93,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // Controls
     var timerNode: SKNode = SKNode()
     var amountOfObjects = 0
-    //var powerUpInvertControls = false
+    
+    // The Objects
+    var imageNameArray: [String] { return  ["grow", "shrink", "speedup", "speeddown"] }
     
     // Touches
     var isTouchingLeft: Bool = false
@@ -216,8 +234,51 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         return CGVector(dx: 0, dy: -9.8)
     }
     func objectsForRound() -> [SKSpriteNode] {
-        var obstacle = SKSpriteNode(imageNamed: "mini_ground")
-        obstacle.name = "obstacle"
+        //var obstacle = SKSpriteNode(imageNamed: imageNameArray[ Int(arc4random_uniform(3)) ])
+        var obstacle: SKSpriteNode
+        var probability1 = arc4random_uniform(100)
+        
+        if( probability1 < UInt32( self.POWER_UP_PROBABILITY ) ) {
+            var probability = Double(arc4random_uniform(1000))/10.0
+            
+            obstacle = SKSpriteNode(imageNamed: "mini_ground")
+            
+            if( probability < 100 && probability >= 75 ) {
+                obstacle.name = MULTIPLIER_NAME
+                
+            } else if( probability < 75 && probability >= 55 ) {
+                obstacle.name = COIN_MAGNET_NAME
+                
+            } else if( probability < 55 && probability >= 40 ) {
+                obstacle.name = INVISBILITY_NAME
+                
+            } else if( probability < 40 && probability >= 30 ) {
+                obstacle.name = FUSION_NAME
+                
+            } else if( probability < 30 && probability >= 20 ) {
+                obstacle.name = INVERT_NAME
+                
+            } else if( probability < 20 && probability >= 12.5 ) {
+                obstacle.name = RESIZE_UP_NAME
+                
+            } else if( probability < 12.5 && probability >= 5 ) {
+                obstacle.name = RESIZE_DOWN_NAME
+                
+            } else {
+                obstacle.name = SPACE_KING_NAME
+            }
+            
+        } else if( probability1 > UInt32( self.POWER_UP_PROBABILITY ) && probability1 < UInt32( self.POWER_UP_PROBABILITY + self.COIN_PROBABILTY ) ) {
+            
+            obstacle = SKSpriteNode(imageNamed: "coinIcon")
+            obstacle.name = COIN_NAME
+        } else {
+            
+            obstacle = SKSpriteNode(imageNamed: imageNameArray[ Int(arc4random_uniform(3)) ])
+            obstacle.name = OBSTACLE_NAME
+        }
+        
+        obstacle.createPhysicsBodyForSelfWithCategory(OBSTACLE_CATEGORY, contactCategory: HERO_CATEGORY , collisionCategory: 0)
         obstacle.physicsBody?.affectedByGravity = false
         return [obstacle];
     }
@@ -233,7 +294,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     
     func allObjectsHaveBeenCreated() {
-        println("allObjectsHaveBeenCreated")
         self.goToNextLevel()
     }
     func groundImageName() -> String {
@@ -274,43 +334,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         case .Earth:
             GameScene.currentLevel = .Moon
             nextPlanet = MoonLevel(size: viewSize) as GameScene
-            println("moon")
+            //println("moon")
         case .Moon:
             GameScene.currentLevel = .Mercury
             nextPlanet = MercuryLevel(size: viewSize) as GameScene
-            println("mercury")
+            //println("mercury")
         case .Mercury:
             GameScene.currentLevel = .Venus
             nextPlanet = VenusLevel(size: viewSize) as GameScene
-            println("venus")
+            //println("venus")
         case .Venus:
             GameScene.currentLevel = .Mars
             nextPlanet = MarsLevel(size: viewSize) as GameScene
-            println("mars")
+            //println("mars")
         case .Mars:
             GameScene.currentLevel = .Jupiter
             nextPlanet = JupiterLevel(size: viewSize) as GameScene
-            println("jupiter")
+            //println("jupiter")
         case .Jupiter:
             GameScene.currentLevel = .Saturn
             nextPlanet = SaturnLevel(size: viewSize) as GameScene
-            println("Saturn")
+            //println("Saturn")
         case .Saturn:
             GameScene.currentLevel = .Uranus
             nextPlanet = UranusLevel(size: viewSize) as GameScene
-            println("Uranus")
+            //println("Uranus")
         case .Uranus:
             GameScene.currentLevel = .Neptune
             nextPlanet = NeptuneLevel(size: viewSize) as GameScene
-            println("Neptune")
+            //println("Neptune")
         case .Neptune:
             GameScene.currentLevel = .Pluto
             nextPlanet = PlutoLevel(size: viewSize)
-            println("Pluto")
+            //println("Pluto")
         default :
             GameScene.currentLevel = .Earth
             nextPlanet = EarthLevel(size: viewSize)
-            println("earth")
+            //println("earth")
         }
         nextPlanet.scaleMode = .AspectFill
         self.view?.presentScene(nextPlanet, transition: SKTransition.fadeWithDuration(1))
@@ -375,12 +435,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                 node.size.width = node.size.height * aspectRatio
                 node.physicsBody = nil
                 node.createPhysicsBodyForSelfWithCategory(OBSTACLE_CATEGORY, contactCategory: HERO_CATEGORY , collisionCategory: 0)
-                node.physicsBody?.dynamic = false
+                node.physicsBody?.dynamic = true
+                node.physicsBody?.affectedByGravity = false
+                node.physicsBody?.mass = 2
+                if( node.name == COIN_NAME ) {
+                    node.physicsBody?.charge = 10000000
+                }
                 dispatch_async(dispatch_get_main_queue()) {
                     node.position.x = self.WIDTH + node.frame.size.width/2
                     node.position.y = CGFloat( self.randomFrom(UInt32(self.ground.size.height + node.size.height/2), max: UInt32(self.HEIGHT - node.size.height/2)) )
                     //println("node.position.y = \(node.position.y)")
                     self.world.addChild(node)
+                    
                     node.runAction(SKAction.moveTo(CGPoint(x: -node.frame.size.width/2, y: node.position.y), duration: self.randomFrom(2, max: 4)), completion: { () -> Void in
                         node.removeFromParent()
                     })
@@ -421,8 +487,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     // Creates the Heros in the scene
     private func createHeros() {
-        self.rightHero = Hero(imageNamed: "lala", respositivitySide: .Right)
-        self.leftHero = Hero(imageNamed: "lala", respositivitySide: .Left)
+        //Animate Heros
+        var array: [SKTexture] = [SKTexture]()
+        var textureAtlas = SKTextureAtlas(named: "AstronautRun")
+        
+        for i in 1 ... textureAtlas.textureNames.count {
+            var textureName = String(format: "astro%d", arguments: [i])
+            var texture = textureAtlas.textureNamed(textureName)
+            array.append(texture)
+        }
+        
+        self.rightHero = Hero(texture: array[0] as SKTexture, respositivitySide: .Right)
+        self.leftHero = Hero(texture: array[0] as SKTexture, respositivitySide: .Left)
         
         // Resize and Positionates Heros to fit Screen
         let aspectRatio = self.rightHero.frame.size.width/self.rightHero.frame.size.height
@@ -435,13 +511,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.rightHero.position.y = leftHero.position.y
         
         // Physics Body
-        self.rightHero.createPhysicsBodyForSelfWithCategory(HERO_CATEGORY, contactCategory: GROUND_CATEGORY | OBSTACLE_CATEGORY | WALL_CATEGORY, collisionCategory: GROUND_CATEGORY | WALL_CATEGORY)
-        self.leftHero.createPhysicsBodyForSelfWithCategory(HERO_CATEGORY, contactCategory: GROUND_CATEGORY | OBSTACLE_CATEGORY | WALL_CATEGORY, collisionCategory: GROUND_CATEGORY | WALL_CATEGORY)
+        self.rightHero.createPhysicsBodyForSelfWithCategory(HERO_CATEGORY, contactCategory: GROUND_CATEGORY | OBSTACLE_CATEGORY | WALL_CATEGORY, collisionCategory: GROUND_CATEGORY | WALL_CATEGORY, squaredBody: true)
+        self.leftHero.createPhysicsBodyForSelfWithCategory(HERO_CATEGORY, contactCategory: GROUND_CATEGORY | OBSTACLE_CATEGORY | WALL_CATEGORY, collisionCategory: GROUND_CATEGORY | WALL_CATEGORY, squaredBody: true)
         self.rightHero.physicsBody?.mass = HERO_MASS
         self.rightHero.physicsBody?.allowsRotation = false
         self.leftHero.physicsBody?.allowsRotation = false
         self.leftHero.physicsBody?.mass = HERO_MASS
         
+        
+        
+        self.rightHero.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(array, timePerFrame: 0.1)))
+        self.leftHero.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(array, timePerFrame: 0.1)))
         
         world.addChild(self.rightHero)
         world.addChild(self.leftHero)
@@ -453,6 +533,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.ground.position.x = WIDTH/2
         self.ground.createPhysicsBodyForSelfWithCategory(GROUND_CATEGORY, contactCategory: HERO_CATEGORY, collisionCategory: HERO_CATEGORY | OBSTACLE_CATEGORY )
         self.ground.physicsBody?.dynamic = false
+        self.ground.alpha = 0.0
         
         world.addChild(self.ground)
     }
@@ -510,25 +591,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         var bodyB = contact.bodyB
         
         if( ( bodyA.categoryBitMask & HERO_CATEGORY != 0 ) && ( bodyB.categoryBitMask & OBSTACLE_CATEGORY != 0 ) ) {
-            self.heroDidTouchObject(bodyA.node as! Hero, object: bodyB.node as! SKSpriteNode)
+            
+            if( bodyA.node == nil || bodyB.node == nil ) {
+                println("physics body is not connected to a node")
+            }else {
+                self.heroDidTouchObject(bodyA.node as! Hero, object: bodyB.node as! SKSpriteNode)
+            }
         }
     }
 }
 
-
 // Useful extensions
 extension SKSpriteNode {
-    func createPhysicsBodyForSelfWithCategory(category: UInt32, contactCategory: UInt32, collisionCategory: UInt32) {
+
+    func createPhysicsBodyForSelfWithCategory(category: UInt32, contactCategory: UInt32, collisionCategory: UInt32, squaredBody: Bool = false) {
+        
         if let body = self.physicsBody {
             body.categoryBitMask = category
             body.contactTestBitMask = contactCategory
             body.collisionBitMask = collisionCategory
         } else {
-            let body = SKPhysicsBody(texture: self.texture!, size: self.size)
+            var body: SKPhysicsBody
+            if( squaredBody ) {
+                body = SKPhysicsBody(rectangleOfSize: self.frame.size, center: CGPoint(x: 0, y: -self.frame.size.height*0.1))
+            }else {
+                body = SKPhysicsBody(texture: self.texture, size: self.frame.size)
+            }
             body.categoryBitMask = category
             body.contactTestBitMask = contactCategory
             body.collisionBitMask = collisionCategory
             body.dynamic = true
+            body.allowsRotation = false
             self.physicsBody = body
         }
     }
@@ -545,7 +638,6 @@ extension SKShapeNode{
         newBody.velocity = pB.velocity
         newBody.affectedByGravity = affectedByGravity
         self.physicsBody = newBody
-        
     }else{
         self.physicsBody = SKPhysicsBody(polygonFromPath: self.path)
             if let pB = self.physicsBody {

@@ -11,7 +11,7 @@ import SpriteKit
 
 class SaturnLevel: GameScene {
    
-    let imageNameArray = ["grow", "shrink", "speedup", "speeddown"]
+    override var imageNameArray: [String] { return  ["grow", "shrink", "speedup", "speeddown"] }
     
     override func gravityForLevel() -> CGVector {
         return CGVector(dx: 0, dy: -10.44)
@@ -29,15 +29,10 @@ class SaturnLevel: GameScene {
         return "Saturn"
     }
     override func objectsForRound() -> [SKSpriteNode] {
-        var obstacle = SKSpriteNode(imageNamed: imageNameArray[ Int(arc4random_uniform(3)) ])
-        obstacle.name = "obstacle"
-        obstacle.createPhysicsBodyForSelfWithCategory(OBSTACLE_CATEGORY, contactCategory: HERO_CATEGORY , collisionCategory: 0)
-        obstacle.physicsBody?.affectedByGravity = false
-        return [obstacle];
+        return super.objectsForRound()
     }
     override func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
         super.heroDidTouchObject(hero, object: object)
-        println( object.name )
     }
     override func allObjectsHaveBeenCreated() {
         

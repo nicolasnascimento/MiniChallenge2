@@ -11,7 +11,7 @@ import SpriteKit
 
 class MoonLevel: GameScene {
     
-    let imageNameArray = ["grow", "shrink", "speedup", "speeddown"]
+    override var imageNameArray: [String] { return  ["grow", "shrink", "speedup", "speeddown"] }
     
     override func gravityForLevel() -> CGVector {
         return CGVector(dx: 0, dy: -1.622)
