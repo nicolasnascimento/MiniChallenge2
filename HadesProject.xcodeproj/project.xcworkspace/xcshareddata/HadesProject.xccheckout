@@ -5,16 +5,26 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
+<<<<<<< HEAD
 	<string>6A0CCE45-FF6E-4AFC-B335-4F8A2D208738</string>
 	<key>IDESourceControlProjectName</key>
 	<string>project</string>
+=======
+	<string>4692F984-2AA3-4039-97CE-F15B11F8CF79</string>
+	<key>IDESourceControlProjectName</key>
+	<string>HadesProject</string>
+>>>>>>> d90d8f559da82399f8da8c731b12de198e587584
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>EC3A9A0A9C6D977AC79BDEFB33AAECEF97793469</key>
 		<string>https://github.com/nicolasnascimento/MiniChallenge2.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
+<<<<<<< HEAD
 	<string>HadesProject.xcodeproj/project.xcworkspace</string>
+=======
+	<string>HadesProject.xcodeproj</string>
+>>>>>>> d90d8f559da82399f8da8c731b12de198e587584
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>EC3A9A0A9C6D977AC79BDEFB33AAECEF97793469</key>
@@ -34,7 +44,11 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>EC3A9A0A9C6D977AC79BDEFB33AAECEF97793469</string>
 			<key>IDESourceControlWCCName</key>
+<<<<<<< HEAD
 			<string>MiniChallenge2</string>
+=======
+			<string>HadesProject</string>
+>>>>>>> d90d8f559da82399f8da8c731b12de198e587584
 		</dict>
 	</array>
 </dict>
