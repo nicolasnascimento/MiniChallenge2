@@ -77,8 +77,8 @@ class PopUp: SKSpriteNode {
         self.resizeLabel(self.messageLabel, ToFitHeight: divisionHeight, andWidth: self.size.width)
         self.resizeSprite(self.rightButtonImage, toFitHeight: divisionHeight)
         self.resizeSprite(self.leftButtonImage, toFitHeight: divisionHeight)
-        self.rightButtonImage.position.x = -(BUTTON_DISTANCE_FRACTION)*(self.rightButtonImage.frame.size.width/2)
-        self.leftButtonImage.position.x = +(BUTTON_DISTANCE_FRACTION)*(self.leftButtonImage.frame.size.width/2)
+        self.rightButtonImage.position.x = +(BUTTON_DISTANCE_FRACTION)*(self.rightButtonImage.frame.size.width/2)
+        self.leftButtonImage.position.x = -(BUTTON_DISTANCE_FRACTION)*(self.leftButtonImage.frame.size.width/2)
     }
     private func resizeSprite( sprite: SKSpriteNode, toFitHeight height: CGFloat ) {
         var aspectRatio = sprite.frame.size.height/sprite.frame.size.width
@@ -89,6 +89,7 @@ class PopUp: SKSpriteNode {
         while( label.frame.size.height > height || label.frame.size.width > width ) {
             label.fontSize *= 0.5
         }
+        label.fontColor = SKColor.blackColor()
         label.horizontalAlignmentMode = .Center
         label.verticalAlignmentMode = .Center
         return label

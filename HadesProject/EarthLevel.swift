@@ -28,7 +28,6 @@ class EarthLevel: GameScene {
     override func planetName() -> String {
         return "Earth"
     }
-    
     override func objectsForRound() -> [SKSpriteNode] {
         return super.objectsForRound()
     }
