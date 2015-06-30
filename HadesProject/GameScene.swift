@@ -62,8 +62,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     // Objects Probabilities
     let POWER_UP_PROBABILITY: Double = 20
-    let COIN_PROBABILTY: Double = 20
-    let OBSTACLE_PROBILITY: Double = 60
+    let COIN_PROBABILTY: Double = 70
+    let OBSTACLE_PROBILITY: Double = 10
     
     // Objects Names
     let COIN_NAME = "coin"
@@ -116,6 +116,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     var planetNameLabel: SKLabelNode = SKLabelNode()
     var planetGravityLabel: SKLabelNode = SKLabelNode()
     var pauseLabel: SKSpriteNode = SKSpriteNode()
+    var distanceTraveled: Int = Int()
+    let defaults = NSUserDefaults.standardUserDefaults()
     
     // PopUp Menu
     var curiosityPopUpMenu: PopUp!
@@ -530,6 +532,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         background.position.x = background.size.width/2
     }
     private func onTimerEvent() {
+        
         if( self.amountOfObjects != self.maximumAmountOfObjectsForLevel() ) {
             var objects = self.objectsForRound()
             for (i, obj) in enumerate(objects) {
@@ -561,6 +564,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         } else {
             self.allObjectsHaveBeenCreated()
         }
+    }
+    
+    private func updateScore() {
+        
+        if let score = defaults.integerForKey("distanceTraveled") as? Int {
+            distanceTraveled = score + 1
+            self.distanceLabel.text = String(format: "%ld meters", arguments: [ (self.distanceTraveled)])
+            defaults.setObject(distanceTraveled, forKey: "distanceTraveled")
+
+        }
+
     }
     // Gets objects from a sks file
     private func createSceneFromSksFileNamed(name: String) {
@@ -672,7 +686,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         // self.pauseLabel = SKSpriteNode(imageNamed: <#String#>)
         
         // Initial Values
-        self.distanceLabel.text = "0000 meters"
+        self.distanceLabel.text = String(format: "%ld meters", arguments: [ (self.distanceTraveled)])
         self.coinsLabel.text = "0 coins"
         self.planetNameLabel.text = self.planetName() + ":"
         self.planetGravityLabel.text = String(format: "%.2lf", arguments: [(-self.gravityForLevel().dy)])
@@ -690,10 +704,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         world.addChild(self.planetGravityLabel)
         
         // Positions
-        self.distanceLabel.position = CGPoint(x: self.distanceLabel.frame.size.width/2 , y: HEIGHT - self.distanceLabel.frame.size.height)
-        self.coinsLabel.position = CGPoint(x: self.coinsLabel.frame.size.width/2 , y: self.distanceLabel.position.y - self.distanceLabel.frame.size.height)
+        self.distanceLabel.position = CGPoint(x: (self.distanceLabel.frame.size.width/1.123456789) , y: HEIGHT - self.distanceLabel.frame.size.height)
+        self.coinsLabel.position = CGPoint(x: self.coinsLabel.frame.size.width/1.123456789 , y: self.distanceLabel.position.y - self.distanceLabel.frame.size.height)
         self.planetNameLabel.position = CGPoint(x: WIDTH/2 - self.planetNameLabel.frame.size.width/2, y: HEIGHT - self.planetNameLabel.frame.size.height)
         self.planetGravityLabel.position = CGPoint(x: WIDTH/2 + self.planetGravityLabel.frame.size.width/2, y: self.planetNameLabel.position.y)
+        //self.distanceLabel.horizontalAlignmentMode = .Left
+        //self.coinsLabel.horizontalAlignmentMode = .Left
+        
     }
     
     private func resizeLabel(label: SKLabelNode, ToFitHeight height: CGFloat) -> SKLabelNode {
@@ -704,25 +721,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     private func createPopUpMenusInBackground() {
         
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
             
-            
+            println("1")
             self.curiosityPopUpMenu = PopUp(backgroundImageName: "deathBackground", rightButtonImageName: "speeddown", leftButtonImageName: "speedup", distance: "1334", planetName: self.planetName(), message: self.messageForPopUp())
             self.curiosityPopUpMenu.size = CGSize(width: self.WIDTH * 0.75, height: self.HEIGHT * 0.75)
             self.curiosityPopUpMenu.position = CGPoint(x: self.WIDTH/2, y: self.HEIGHT/2)
             self.curiosityPopUpMenu.alpha = 0
+            
+            println("2")
             self.questionPopUpMenu = PopUp(backgroundImageName: "deathBackground", rightButtonImageName: "grow", leftButtonImageName: "shrink", distance: "1334", planetName: self.planetName(), message: self.questionForPopUp())
             self.questionPopUpMenu.size = self.curiosityPopUpMenu.size
             self.questionPopUpMenu.position = self.curiosityPopUpMenu.position
             self.questionPopUpMenu.alpha = 0
             
+            println("3")
             self.world.addChild(self.curiosityPopUpMenu)
             self.world.addChild(self.questionPopUpMenu)
         }
     }
     
     private func showRestartPopUp() {
-        self.curiosityPopUpMenu.runAction(SKAction.fadeAlphaTo(1.0, duration: 0.5))
+        if( curiosityPopUpMenu != nil ) {
+            self.curiosityPopUpMenu.runAction(SKAction.fadeAlphaTo(1.0, duration: 0.5))
+        }
         
         self.background1.removeAllActions()
         self.background2.removeAllActions()
