@@ -116,6 +116,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     var planetGravityLabel: SKLabelNode = SKLabelNode()
     var pauseLabel: SKSpriteNode = SKSpriteNode()
     var distanceTraveled: Int = Int()
+    var coinsCap: Int = Int()
+    var coinsCap2: Int = Int()
+
     let defaults = NSUserDefaults.standardUserDefaults()
     
     // PopUp Menu
@@ -199,6 +202,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     override func update(currentTime: CFTimeInterval) {
         
+        dispatch_async(dispatch_get_main_queue()) {
+            self.timerNode.runAction(SKAction.waitForDuration(0.05), completion: self.updateScore)
+        }
         // Game is Running
         if( rightHero.hasActions() || leftHero.hasActions() ){
             
@@ -403,8 +409,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         }
         
         if( object.name == COIN_NAME ) {
-            hero.coinsCaptured += hero.coinMultiplier
-            self.coinsLabel.text = String(format: "%ld coins", arguments: [ (self.rightHero.coinsCaptured + self.leftHero.coinsCaptured ) ])
+            
+           // hero.coinsCaptured += hero.coinMultiplier
+
+                if let coins = defaults.integerForKey("coinsCaptured") as? Int
+                {
+                        coinsCap = coins + hero.coinMultiplier
+                        defaults.setObject(coinsCap, forKey: "coinsCaptured")
+                    
+                }
+
+            
+
+            self.coinsLabel.text = String(format: "%ld coins", defaults.integerForKey("coinsCaptured"))
         }
     }
     
@@ -588,12 +605,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     
     private func updateScore() {
-        
-        if let score = defaults.integerForKey("distanceTraveled") as? Int {
-            distanceTraveled = score + 1
-            self.distanceLabel.text = String(format: "%ld meters", arguments: [ (self.distanceTraveled)])
-            defaults.setObject(distanceTraveled, forKey: "distanceTraveled")
-
+        if( rightHero.hasActions() || leftHero.hasActions() ){
+            if let score = defaults.integerForKey("distanceTraveled") as? Int {
+                distanceTraveled = score + 1
+                self.distanceLabel.text = String(format: "%ld meters", arguments: [ (self.distanceTraveled)])
+                defaults.setObject(distanceTraveled, forKey: "distanceTraveled")
+            }
         }
 
     }
@@ -708,7 +725,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         
         // Initial Values
         self.distanceLabel.text = String(format: "%ld meters", arguments: [ (self.distanceTraveled)])
-        self.coinsLabel.text = "0 coins"
+        self.coinsLabel.text = String(format: "%ld coins", arguments: [ (self.defaults.integerForKey("coinsCaptured"))])
         self.planetNameLabel.text = self.planetName() + ":"
         self.planetGravityLabel.text = String(format: "%.2lf", arguments: [(-self.gravityForLevel().dy)])
         
