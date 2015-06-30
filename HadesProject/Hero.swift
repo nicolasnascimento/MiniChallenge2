@@ -17,7 +17,7 @@ enum Side {
 // Useful Constants
 let RESIZING_FACTOR: CGFloat = 1.5
 let INVISIBILTY_FACTOR: CGFloat = 0.5
-let POWER_UP_DURATION: Double = 5.0
+let POWER_UP_DURATION: Double = 1.0
 
 
 // Actions
@@ -29,18 +29,22 @@ let waitAction = SKAction.waitForDuration(POWER_UP_DURATION)
 class Hero: SKSpriteNode {
     
     var respositivitySide: Side
+    var shouldHitObjects: Bool
+    var isHittingTheGround: Bool = true
     var coinsCaptured: Int = 0
     var coinMultiplier: Int = 1
     var coinMagnet: SKFieldNode = SKFieldNode()
     
     init(imageNamed imageName: String = "", respositivitySide: Side = .Right) {
         self.respositivitySide = respositivitySide
+        self.shouldHitObjects = true
         let textureForImage = SKTexture(imageNamed: imageName)
         super.init(texture: textureForImage, color: UIColor.clearColor(), size: textureForImage.size())
     }
     
     init(texture: SKTexture, respositivitySide: Side = .Right) {
         self.respositivitySide = respositivitySide
+        self.shouldHitObjects = true
         super.init(texture: texture, color: UIColor.clearColor(), size: texture.size())
     }
 
@@ -53,44 +57,39 @@ class Hero: SKSpriteNode {
     }
     func resizeUp() {
         println("resizing up")
-        self.runAction(SKAction.scaleTo(RESIZING_FACTOR, duration: 0.0), completion: { () -> Void in
+        var grow = SKAction.scaleTo(RESIZING_FACTOR, duration: 0.0)
+        var recreatePhysicsBody = SKAction.customActionWithDuration(0.0, actionBlock: { (node, period) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
                 self.recreatePhysicsBody()
             }
         })
+        var wait = SKAction.waitForDuration(POWER_UP_DURATION)
+        var restoreSize = SKAction.scaleTo(1, duration: 0.0)
+        
+        self.runAction(SKAction.sequence([grow, recreatePhysicsBody, wait, restoreSize, recreatePhysicsBody]))
     }
     func resizeDown() {
         println("resizing down")
         
-        self.runAction(SKAction.scaleTo(1.0/RESIZING_FACTOR, duration: 0.0), completion: { () -> Void in
-            dispatch_async(dispatch_get_main_queue()) {
-                self.recreatePhysicsBody()
-            }
-            
-        })
-    }
-    func restoreSize() {
-        println("restoring")
-        self.runAction(SKAction.scaleTo(1.0, duration: 0.0), completion: { () -> Void in
+        var shrink = SKAction.scaleTo(1.0/RESIZING_FACTOR, duration: 0.0)
+        var recreatePhysicsBody = SKAction.customActionWithDuration(0.0, actionBlock: { (node, period) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
                 self.recreatePhysicsBody()
             }
         })
+        var wait = SKAction.waitForDuration(POWER_UP_DURATION)
+        var restoreSize = SKAction.scaleTo(1, duration: 0.0)
+        
+        self.runAction(SKAction.sequence([shrink, recreatePhysicsBody, wait, restoreSize, recreatePhysicsBody]))
     }
     
     func turnToInvisible() {
-        var category = self.physicsBody!.categoryBitMask
-        var contact = self.physicsBody!.contactTestBitMask
-        
-        self.physicsBody?.categoryBitMask = 0
-        self.physicsBody?.contactTestBitMask = 0
         
         self.alpha = INVISIBILTY_FACTOR
+        self.shouldHitObjects = false
         self.runAction(SKAction.waitForDuration(POWER_UP_DURATION), completion: { () -> Void in
-            
             self.alpha = CGFloat(1.0)
-            self.physicsBody?.categoryBitMask = category
-            self.physicsBody?.contactTestBitMask = contact
+            self.shouldHitObjects = true
         })
     }
     

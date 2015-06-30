@@ -19,6 +19,8 @@ class PopUp: SKSpriteNode {
     
     let FONT_NAME = "Heuvetica"
     let DIVISIONS: CGFloat = 5.0
+    let ANIMATION_DURATION: Double = 1
+    let BUTTON_DISTANCE_FRACTION: CGFloat = 1.2
     
     var rightButtonImage: SKSpriteNode
     var leftButtonImage: SKSpriteNode
@@ -75,8 +77,8 @@ class PopUp: SKSpriteNode {
         self.resizeLabel(self.messageLabel, ToFitHeight: divisionHeight, andWidth: self.size.width)
         self.resizeSprite(self.rightButtonImage, toFitHeight: divisionHeight)
         self.resizeSprite(self.leftButtonImage, toFitHeight: divisionHeight)
-        self.rightButtonImage.position.x = -self.rightButtonImage.frame.size.width/2
-        self.leftButtonImage.position.x = +self.leftButtonImage.frame.size.width/2
+        self.rightButtonImage.position.x = -(BUTTON_DISTANCE_FRACTION)*(self.rightButtonImage.frame.size.width/2)
+        self.leftButtonImage.position.x = +(BUTTON_DISTANCE_FRACTION)*(self.leftButtonImage.frame.size.width/2)
     }
     private func resizeSprite( sprite: SKSpriteNode, toFitHeight height: CGFloat ) {
         var aspectRatio = sprite.frame.size.height/sprite.frame.size.width
@@ -85,7 +87,7 @@ class PopUp: SKSpriteNode {
     }
     private func resizeLabel(label: SKLabelNode, ToFitHeight height: CGFloat, andWidth width: CGFloat) -> SKLabelNode {
         while( label.frame.size.height > height || label.frame.size.width > width ) {
-            label.fontSize *= 0.8
+            label.fontSize *= 0.5
         }
         label.horizontalAlignmentMode = .Center
         label.verticalAlignmentMode = .Center
