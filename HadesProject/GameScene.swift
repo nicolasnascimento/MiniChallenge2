@@ -115,6 +115,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     var planetGravityLabel: SKLabelNode = SKLabelNode()
     var pauseLabel: SKSpriteNode = SKSpriteNode()
     var distanceTraveled: Int = Int()
+    var coinsCap: Int = Int()
+    var coinsCap2: Int = Int()
+
     let defaults = NSUserDefaults.standardUserDefaults()
     
     // MARK - Overriden Methods
@@ -331,8 +334,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         }
         
         if( object.name == COIN_NAME ) {
-            hero.coinsCaptured += hero.coinMultiplier
-            self.coinsLabel.text = String(format: "%ld coins", arguments: [ (self.rightHero.coinsCaptured + self.leftHero.coinsCaptured ) ])
+            
+           // hero.coinsCaptured += hero.coinMultiplier
+
+                if let coins = defaults.integerForKey("coinsCaptured") as? Int
+                {
+                        coinsCap = coins + hero.coinMultiplier
+                        defaults.setObject(coinsCap, forKey: "coinsCaptured")
+                    
+                }
+
+            
+
+            self.coinsLabel.text = String(format: "%ld coins", defaults.integerForKey("coinsCaptured"))
         }
 
         //println("heroDidTouchObject")
@@ -617,7 +631,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         
         // Initial Values
         self.distanceLabel.text = String(format: "%ld meters", arguments: [ (self.distanceTraveled)])
-        self.coinsLabel.text = "0 coins"
+        self.coinsLabel.text = String(format: "%ld coins", arguments: [ (self.defaults.integerForKey("coinsCaptured"))])
         self.planetNameLabel.text = self.planetName() + ":"
         self.planetGravityLabel.text = String(format: "%.2lf", arguments: [(-self.gravityForLevel().dy)])
         
