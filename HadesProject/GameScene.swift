@@ -409,18 +409,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         }
         
         if( object.name == COIN_NAME ) {
-            
-           // hero.coinsCaptured += hero.coinMultiplier
 
-                if let coins = defaults.integerForKey("coinsCaptured") as? Int
-                {
-                        coinsCap = coins + hero.coinMultiplier
-                        defaults.setObject(coinsCap, forKey: "coinsCaptured")
-                    
-                }
-
-            
-
+            if let coins = defaults.integerForKey("coinsCaptured") as? Int{
+                    coinsCap = coins + hero.coinMultiplier
+                    defaults.setObject(coinsCap, forKey: "coinsCaptured")
+            }
             self.coinsLabel.text = String(format: "%ld coins", defaults.integerForKey("coinsCaptured"))
         }
     }

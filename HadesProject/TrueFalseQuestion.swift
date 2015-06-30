@@ -11,11 +11,13 @@ import UIKit
 class TrueFalseQuestion: NSObject {
     
     var question: String
+    var message: String
     var answer: Bool
     var planetName: String
     
-    init(planetName: String, question: String, answer: Bool) {
+    init(planetName: String, question: String, message: String, answer: Bool) {
         self.question = question
+        self.message = message
         self.answer = answer
         self.planetName = planetName
         super.init()
