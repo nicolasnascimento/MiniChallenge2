@@ -22,6 +22,7 @@ class QuestionDatabase: NSObject {
         TrueFalseQuestion(planetName: "Uranus", question: "Is Uranus smaller than the Earth?", answer: false),
         TrueFalseQuestion(planetName: "Neptune", question: "Is Neptune the coldest planet in the Solar System?", answer: true),
         TrueFalseQuestion(planetName: "Pluto", question: "Is Pluto bigger than the Moon?", answer: true)
+
     ]
     
     static func questionsForPlanetNamed(name: String) -> [TrueFalseQuestion] {
