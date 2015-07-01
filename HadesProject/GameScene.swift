@@ -61,8 +61,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     // Objects Probabilities
     let POWER_UP_PROBABILITY: Double = 20
-    let COIN_PROBABILTY: Double = 70
-    let OBSTACLE_PROBILITY: Double = 10
+    let COIN_PROBABILTY: Double = 20
+    let OBSTACLE_PROBILITY: Double = 60
     
     // Objects Names
     let COIN_NAME = "coin"
@@ -189,10 +189,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                     }
                     
                 }else if( node.name == self.questionPopUpMenu.rightButtonName() && self.questionPopUpMenu.alpha == 1 ) {
-                    if( currentQuestion.answer == true ) {
-                        println("wrong answer")
-                    }else{
+                    if( currentQuestion.answer == false ) {
                         println("right answer")
+                    }else{
+                        println("wrong answer")
                     }
                     
                     
@@ -224,8 +224,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                 leftHero.runAction(self.runningAction, withKey: "running")
             }
             
+            if( rightHero.isFused || leftHero.isFused ) {
+                if( ( isTouchingRight || isTouchingLeft ) && leftHero.physicsBody?.velocity.dy < HEIGHT*0.6567 ) {
+                    leftHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
+                }
+                
+                self.rightHero.position = self.leftHero.position
+            
             // Normal touch handling
-            if( rightHero.respositivitySide == .Right ) {
+            }else if( rightHero.respositivitySide == .Right ) {
                 
                 if (isTouchingRight && rightHero.physicsBody?.velocity.dy < HEIGHT*0.6567 ) {
                     rightHero.physicsBody?.applyImpulse(CGVectorMake(0, 2000))
@@ -318,7 +325,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         var obstacle: SKSpriteNode
         var probability1 = arc4random_uniform(100)
         
-        if( probability1 < UInt32( self.POWER_UP_PROBABILITY ) ) {
+        if( self.leftHero.isSpaceKing || self.rightHero.isSpaceKing ) {
+            obstacle = SKSpriteNode(imageNamed: "coinIcon")
+            obstacle.name = COIN_NAME
+            
+        } else if( probability1 < UInt32( self.POWER_UP_PROBABILITY ) ) {
             var probability = Double(arc4random_uniform(1000))/10.0
             
             obstacle = SKSpriteNode(imageNamed: "mini_ground")
@@ -378,7 +389,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             }else if( object.name == MULTIPLIER_NAME ) {
                 println(MULTIPLIER_NAME)
                 hero.doubleCoinMultiplier()
-                
+
             }else if( object.name == COIN_MAGNET_NAME ) {
                 println(COIN_MAGNET_NAME)
                 hero.activateCoinMagnet()
@@ -389,6 +400,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                 
             }else if( object.name == FUSION_NAME ) {
                 println(FUSION_NAME)
+                self.leftHero.fuseWithHero(self.rightHero)
                 
             }else if( object.name == INVERT_NAME ) {
                 println(INVERT_NAME)
@@ -405,6 +417,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                 
             }else if( object.name == SPACE_KING_NAME ) {
                 println(SPACE_KING_NAME)
+                hero.turnToSpaceKing()
+
             }
         }
         
@@ -539,7 +553,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.world.addChild(self.background2)
 
         
-        // if necessary uncommment
         dispatch_async(dispatch_get_main_queue()) {
             self.background1.zPosition = -1
             self.background2.zPosition = -1
@@ -585,13 +598,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                     //println("node.position.y = \(node.position.y)")
                     self.world.addChild(node)
                     
-                    node.runAction(SKAction.moveTo(CGPoint(x: -node.frame.size.width/2, y: node.position.y), duration: self.randomFrom(2, max: 4)), completion: { () -> Void in
+                    node.runAction(SKAction.moveTo(CGPoint(x: -node.frame.size.width/2, y: node.position.y), duration: 5.0), completion: { () -> Void in
                         node.removeFromParent()
                     })
                 }
             }
             self.amountOfObjects += objects.count
-            self.timerNode.runAction(SKAction.waitForDuration(self.randomFrom(1, max: 2)), completion: onTimerEvent)
+            self.timerNode.runAction(SKAction.waitForDuration(self.randomFrom(3, max: 5)), completion: onTimerEvent)
         } else if( self.rightHero.hasActions() && self.leftHero.hasActions() ){
             self.allObjectsHaveBeenCreated()
         }
@@ -719,7 +732,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         // Initial Values
         self.distanceLabel.text = String(format: "%ld meters", arguments: [ (self.distanceTraveled)])
         self.coinsLabel.text = String(format: "%ld coins", arguments: [ (self.defaults.integerForKey("coinsCaptured"))])
-        self.planetNameLabel.text = self.planetName() + ":"
+        self.planetNameLabel.text = self.planetName() + ": "
         self.planetGravityLabel.text = String(format: "%.2lf", arguments: [(-self.gravityForLevel().dy)])
         
         // Resize
@@ -767,7 +780,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             self.questionPopUpMenu.position = self.curiosityPopUpMenu.position
             self.questionPopUpMenu.alpha = 0
             self.questionPopUpMenu.hidden = true
-            
+            println("3")
             self.world.addChild(self.curiosityPopUpMenu)
             self.world.addChild(self.questionPopUpMenu)
         }

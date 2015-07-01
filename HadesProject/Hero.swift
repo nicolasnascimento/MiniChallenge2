@@ -17,7 +17,7 @@ enum Side {
 // Useful Constants
 let RESIZING_FACTOR: CGFloat = 1.5
 let INVISIBILTY_FACTOR: CGFloat = 0.5
-let POWER_UP_DURATION: Double = 1.0
+let POWER_UP_DURATION: Double = 5.0
 
 
 // Actions
@@ -34,6 +34,8 @@ class Hero: SKSpriteNode {
     var coinsCaptured: Int = 0
     var coinMultiplier: Int = 1
     var coinMagnet: SKFieldNode = SKFieldNode()
+    var isSpaceKing: Bool = false
+    var isFused: Bool = false
     
     init(imageNamed imageName: String = "", respositivitySide: Side = .Right) {
         self.respositivitySide = respositivitySide
@@ -107,15 +109,61 @@ class Hero: SKSpriteNode {
         self.parent!.addChild(coinMagnet)
     }
     
+    func fuseWithHero( hero: Hero ) {
+        
+        if( self.isFused || hero.isFused ) {
+            return
+        }
+        
+        var oldPosition = hero.position
+        var shrink = SKAction.scaleTo(0, duration: 0.2)
+        var comeClose = SKAction.moveTo(self.position, duration: 0.2)
+        var goAway = SKAction.moveTo(oldPosition, duration: 0.2)
+        var scaleBack = SKAction.scaleTo(1.0, duration: 0.2)
+        var grow = SKAction.scaleTo(2 * RESIZING_FACTOR, duration: 0.0)
+        var wait = SKAction.waitForDuration(POWER_UP_DURATION)
+        var recreatePhysicsBody = SKAction.customActionWithDuration(0.0, actionBlock: { (node, period) -> Void in
+            dispatch_async(dispatch_get_main_queue()) {
+                self.recreatePhysicsBody()
+            }
+        })
+        self.isFused = true
+        hero.isFused = true
+        hero.runAction(SKAction.sequence([SKAction.group([shrink, comeClose]), recreatePhysicsBody]) )
+        self.runAction(SKAction.group([shrink, comeClose]), completion: { () -> Void in
+            dispatch_async(dispatch_get_main_queue()) {
+                self.runAction(SKAction.sequence([grow, recreatePhysicsBody, wait]), completion: { () -> Void in
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.isFused = false
+                        hero.isFused = false
+                        self.runAction(SKAction.sequence([scaleBack, recreatePhysicsBody]))
+                        hero.runAction(SKAction.sequence([SKAction.group([scaleBack, goAway]), recreatePhysicsBody]))
+                    }
+                })
+            }
+            
+        })
+        
+    }
+    
+    func turnToSpaceKing() {
+        self.isSpaceKing = true
+        self.runAction(SKAction.waitForDuration(POWER_UP_DURATION), completion: { () -> Void in
+            self.isSpaceKing = false
+        })
+    }
+    
+    
     private func recreatePhysicsBody() {
         if self.physicsBody == nil {
             return
         }
         var velocity = self.physicsBody!.velocity
-        var mass = self.physicsBody!.mass
+        var mass = (self.scene as! GameScene).HERO_MASS
         var category = self.physicsBody!.categoryBitMask
         var contact = self.physicsBody!.contactTestBitMask
         var collision = self.physicsBody!.collisionBitMask
+        
         self.physicsBody = nil
         self.createPhysicsBodyForSelfWithCategory(category, contactCategory: contact, collisionCategory: collision, squaredBody: true)
         self.physicsBody?.velocity = velocity
