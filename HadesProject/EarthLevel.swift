@@ -11,7 +11,7 @@ import SpriteKit
 
 class EarthLevel: GameScene {
     
-    override var imageNameArray: [String] { return  ["grow", "shrink", "speedup", "speeddown"] }
+    override var imageNameArray: [String] { return  ["obstacleIcon"] }
     
     override func gravityForLevel() -> CGVector {
         return CGVector(dx: 0, dy: -9.8)

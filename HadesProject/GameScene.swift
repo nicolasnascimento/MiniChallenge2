@@ -44,7 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // Useful constants
     let BACKGROUND_COLOR: SKColor = SKColor.orangeColor()
     let BACKGROUND_ANIMATION_DURATION = 20.0
-    let HERO_SIZE_FACTOR: CGFloat = 5
+    let HERO_SIZE_FACTOR: CGFloat = 3.5
     let OBSTACLE_SIZE_FACTOR: CGFloat = 5
     let HERO_MASS: CGFloat = 30
     let FONT_NAME: String = "Helvetica"
@@ -60,9 +60,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     let COIN_MAGNET_PROBABILITY: Double = 20.0
     
     // Objects Probabilities
-    let POWER_UP_PROBABILITY: Double = 20
-    let COIN_PROBABILTY: Double = 20
-    let OBSTACLE_PROBILITY: Double = 60
+    let POWER_UP_PROBABILITY: Double = 10
+    let COIN_PROBABILTY: Double = 10
+    let OBSTACLE_PROBILITY: Double = 80
     
     // Objects Names
     let COIN_NAME = "coin"
@@ -94,6 +94,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // Controls
     var timerNode: SKNode = SKNode()
     var amountOfObjects = 0
+    var gameHasBegun : Bool = false
     
     // The Objects
     var imageNameArray: [String] { return  ["grow", "shrink", "speedup", "speeddown"] }
@@ -129,6 +130,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     var flyingAction: SKAction = SKAction()
     var runningAction: SKAction = SKAction()
     
+    // Menu
+    var menu: StartMenu!
     
     // Questions
     lazy var questions: [TrueFalseQuestion] = {
@@ -139,6 +142,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // MARK - Overriden Methods
     override func didMoveToView(view: SKView) {
         self.initialize()
+        self.createStartMenu()
         self.createHeros()
         self.createGround()
         self.createRoof()
@@ -148,6 +152,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        
+        if( !gameHasBegun ) {
+            self.runGame()
+            return
+        }
+        
         
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
@@ -167,6 +177,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                 return
             }
             
+            println("\(node)")
+            
             if let nodeName = node.name {
                 
                 if( nodeName == self.curiosityPopUpMenu.rightButtonName() && self.curiosityPopUpMenu.alpha == 1 ) {
@@ -184,15 +196,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                 }else if( nodeName == self.questionPopUpMenu.leftButtonName() && self.questionPopUpMenu.alpha == 1 ) {
                     if( currentQuestion.answer == true ) {
                         println("right answer")
+                        self.restartGameFromPopUpAnswer()
+                        
+                        
                     }else{
-                        println("wrong answer")
+                        // GAMBIARRA
+                        GameScene.currentLevel = .Pluto
+                        self.goToNextLevel()
                     }
                     
                 }else if( node.name == self.questionPopUpMenu.rightButtonName() && self.questionPopUpMenu.alpha == 1 ) {
                     if( currentQuestion.answer == false ) {
                         println("right answer")
+                        self.restartGameFromPopUpAnswer()
                     }else{
-                        println("wrong answer")
+                        // GAMBIARRA
+                        GameScene.currentLevel = .Pluto
+                        self.goToNextLevel()
                     }
                     
                     
@@ -202,11 +222,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     override func update(currentTime: CFTimeInterval) {
         
-        dispatch_async(dispatch_get_main_queue()) {
-            self.timerNode.runAction(SKAction.waitForDuration(0.05), completion: self.updateScore)
+        if( gameHasBegun ) {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.timerNode.runAction(SKAction.waitForDuration(0.05), completion: self.updateScore)
+            }
         }
         // Game is Running
-        if( rightHero.hasActions() || leftHero.hasActions() ){
+        if( !rightHero.paused && !leftHero.paused ){
             
             if( rightHero.actionForKey("flying") == nil && !rightHero.isHittingTheGround ) {
                 rightHero.removeActionForKey("running")
@@ -365,7 +387,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             obstacle.name = COIN_NAME
         } else {
             
-            obstacle = SKSpriteNode(imageNamed: imageNameArray[ Int(arc4random_uniform(3)) ])
+            obstacle = SKSpriteNode(imageNamed: imageNameArray[ Int(arc4random_uniform( UInt32(self.imageNameArray.count))) ])
             obstacle.name = OBSTACLE_NAME
         }
         
@@ -461,6 +483,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.currentQuestion = self.questionForPopUp()
         
         self.amountOfObjects = 0
+        self.gameHasBegun = false
         
         self.physicsWorld.gravity = self.gravityForLevel()
         
@@ -472,9 +495,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.createBackgroundImage()
         
         self.timerNode = SKNode()
-        timerNode.runAction(SKAction.waitForDuration(0.0), completion: onTimerEvent)
         
         world.addChild(timerNode)
+    }
+    
+    private func runGame() {
+        
+        self.menu.runAction(SKAction.fadeAlphaTo(0, duration: 0.5), completion: { () -> Void in
+            self.timerNode.runAction(SKAction.waitForDuration(0.0), completion: self.onTimerEvent)
+            self.gameHasBegun = true
+            self.menu.removeFromParent()
+            self.menu = nil
+        })
+        
     }
     
     private func goToNextLevel() {
@@ -577,7 +610,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     private func onTimerEvent() {
         
-        if( self.amountOfObjects != self.maximumAmountOfObjectsForLevel() && self.rightHero.hasActions() && self.leftHero.hasActions() ) {
+        if( self.amountOfObjects != self.maximumAmountOfObjectsForLevel() && !self.rightHero.paused && !self.leftHero.paused ) {
             var objects = self.objectsForRound()
             for (i, obj) in enumerate(objects) {
                 var node: SKSpriteNode = obj as SKSpriteNode
@@ -605,13 +638,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             }
             self.amountOfObjects += objects.count
             self.timerNode.runAction(SKAction.waitForDuration(self.randomFrom(3, max: 5)), completion: onTimerEvent)
-        } else if( self.rightHero.hasActions() && self.leftHero.hasActions() ){
+        } else if( !self.rightHero.paused && !self.leftHero.paused  ){
             self.allObjectsHaveBeenCreated()
         }
     }
     
     private func updateScore() {
-        if( rightHero.hasActions() || leftHero.hasActions() ){
+        if( !self.rightHero.paused && !self.leftHero.paused ){
             if let score = defaults.integerForKey("distanceTraveled") as? Int {
                 distanceTraveled = score + 1
                 self.distanceLabel.text = String(format: "%ld meters", arguments: [ (self.distanceTraveled)])
@@ -675,7 +708,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.leftHero.size = self.rightHero.size
         self.leftHero.position.x = leftHero.size.width
         self.leftHero.position.y = leftHero.size.height + self.ground.size.height
-        self.rightHero.position.x = rightHero.size.width + leftHero.position.x + 72
+        self.rightHero.position.x = rightHero.size.width + leftHero.position.x
         self.rightHero.position.y = leftHero.position.y
         
         // Physics Body
@@ -754,7 +787,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.planetGravityLabel.position = CGPoint(x: WIDTH/2 + self.planetGravityLabel.frame.size.width/2, y: self.planetNameLabel.position.y)
         //self.distanceLabel.horizontalAlignmentMode = .Left
         //self.coinsLabel.horizontalAlignmentMode = .Left
-        
     }
     
     private func resizeLabel(label: SKLabelNode, ToFitHeight height: CGFloat) -> SKLabelNode {
@@ -768,18 +800,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
             
             println("1")
-            self.curiosityPopUpMenu = PopUp(backgroundImageName: "loseBackground", rightButtonImageName: "restartIcon", leftButtonImageName: "questionIcon", distance: "1334", planetName: self.planetName(), message: self.messageForPopUp())
+            self.curiosityPopUpMenu = PopUp(backgroundImageName: "loseBackground", rightButtonImageName: "restartIcon", leftButtonImageName: "questionIcon", distance: String(format: "%.2lf", arguments: [self.gravityForLevel().dy]), planetName: self.planetName(), message: self.messageForPopUp())
             self.curiosityPopUpMenu.size = CGSize(width: self.WIDTH * 0.75, height: self.HEIGHT * 0.75)
             self.curiosityPopUpMenu.position = CGPoint(x: self.WIDTH/2, y: self.HEIGHT/2)
             self.curiosityPopUpMenu.alpha = 0
             self.curiosityPopUpMenu.hidden = true
             
             println("2")
-            self.questionPopUpMenu = PopUp(backgroundImageName: "loseBackground", rightButtonImageName: "falseIcon", leftButtonImageName: "trueIcon", distance: "1334", planetName: self.planetName(), message: self.questionForPopUp().question)
+            self.currentQuestion = self.questionForPopUp()
+            self.questionPopUpMenu = PopUp(backgroundImageName: "loseBackground", rightButtonImageName: "falseIcon", leftButtonImageName: "trueIcon", distance: String(format: "%.2lf", arguments: [self.gravityForLevel().dy]), planetName: self.planetName(), message: self.currentQuestion.question)
             self.questionPopUpMenu.size = self.curiosityPopUpMenu.size
             self.questionPopUpMenu.position = self.curiosityPopUpMenu.position
             self.questionPopUpMenu.alpha = 0
             self.questionPopUpMenu.hidden = true
+            
             println("3")
             self.world.addChild(self.curiosityPopUpMenu)
             self.world.addChild(self.questionPopUpMenu)
@@ -794,10 +828,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         
         println("here")
         
-        self.background1.removeAllActions()
-        self.background2.removeAllActions()
-        self.rightHero.removeAllActions()
-        self.leftHero.removeAllActions()
+//        self.background1.removeAllActions()
+//        self.background2.removeAllActions()
+//        self.rightHero.removeAllActions()
+//        self.leftHero.removeAllActions()
+        self.background1.paused = true
+        self.background2.paused = true
+        self.rightHero.paused = true
+        self.leftHero.paused = true
+    }
+    private func createStartMenu() {
+        self.menu = StartMenu(playButtonImageName: "logoPlanetDash", gameCenterButtonImageName: "logoPlanetDash", soundButtonImageName: "logoPlanetDash", storeButtonImageName: "logoPlanetDash")
+        world.addChild(self.menu)
+        self.menu.startAnimating(HEIGHT, maxWidth: WIDTH)
+        self.menu.position = CGPoint(x: WIDTH/2, y: HEIGHT/2)
+        self.menu.zPosition = 1
+    }
+    
+    private func restartGameFromPopUpAnswer() {
+        self.questionPopUpMenu.runAction(SKAction.fadeAlphaTo(0, duration: 1), completion: { () -> Void in
+            self.questionPopUpMenu.removeFromParent()
+            self.curiosityPopUpMenu.removeFromParent()
+            self.questionPopUpMenu = nil
+            self.curiosityPopUpMenu = nil
+            self.createPopUpMenusInBackground()
+            self.timerNode.runAction(SKAction.waitForDuration(0.0), completion: self.onTimerEvent)
+            self.gameHasBegun = true
+            self.background1.paused = false
+            self.background2.paused = false
+            self.rightHero.paused = false
+            self.leftHero.paused = false
+        })
+        
     }
     
     // MARK - Physics Delegate
