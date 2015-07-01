@@ -28,7 +28,6 @@ class EarthLevel: GameScene {
     override func planetName() -> String {
         return "Earth"
     }
-    
     override func objectsForRound() -> [SKSpriteNode] {
         return super.objectsForRound()
     }
@@ -38,5 +37,11 @@ class EarthLevel: GameScene {
     }
     override func allObjectsHaveBeenCreated() {
         super.allObjectsHaveBeenCreated()
+    }
+    override func messageForPopUp() -> String {
+        return (self.questions[Int(arc4random_uniform(UInt32(self.questions.count)))] as TrueFalseQuestion).question
+    }
+    override func questionForPopUp() -> TrueFalseQuestion {
+        return self.questions[Int(arc4random_uniform(UInt32(self.questions.count)))] as TrueFalseQuestion
     }
 }

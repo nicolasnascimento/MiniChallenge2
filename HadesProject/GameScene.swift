@@ -18,7 +18,7 @@ import SpriteKit
     func groundImageName() -> String
     func planetName() -> String
     func messageForPopUp() -> String
-    func questionForPopUp() -> String
+    func questionForPopUp() -> TrueFalseQuestion
     
     //Optional
     // This should return objects to be put in the scene after a random timer event
@@ -27,7 +27,6 @@ import SpriteKit
     optional func heroDidTouchObject(hero: Hero, object: SKSpriteNode)
     // This should finish the current level and prepare for the next one
     optional func allObjectsHaveBeenCreated()
-    
 }
 
 // Physics Constants
@@ -125,11 +124,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // PopUp Menu
     var curiosityPopUpMenu: PopUp!
     var questionPopUpMenu: PopUp!
-    var nextLevelPopUpMenu: PopUp!
     
     // Actions
     var flyingAction: SKAction = SKAction()
     var runningAction: SKAction = SKAction()
+    
+    
+    // Questions
+    lazy var questions: [TrueFalseQuestion] = {
+        return QuestionDatabase.questionsForPlanetNamed(self.planetName())
+    }()
+    var currentQuestion: TrueFalseQuestion!
     
     // MARK - Overriden Methods
     override func didMoveToView(view: SKView) {
@@ -165,15 +170,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             if let nodeName = node.name {
                 
                 if( nodeName == self.curiosityPopUpMenu.rightButtonName() && self.curiosityPopUpMenu.alpha == 1 ) {
-                    self.curiosityPopUpMenu.runAction(SKAction.fadeAlphaTo(0, duration: 1))
-                    self.questionPopUpMenu.runAction(SKAction.fadeAlphaTo(1, duration: 1))
+                    // GAMBIARRA
+                    GameScene.currentLevel = .Pluto
+                    self.goToNextLevel()
                     
                 }else if( nodeName == self.curiosityPopUpMenu.leftButtonName() && self.curiosityPopUpMenu.alpha == 1 ) {
-                    println("should restart")
+                    self.curiosityPopUpMenu.runAction(SKAction.fadeAlphaTo(0, duration: 1), completion: { () -> Void in
+                        self.curiosityPopUpMenu.hidden = true
+                    })
+                    self.questionPopUpMenu.hidden = false
+                    self.questionPopUpMenu.runAction(SKAction.fadeAlphaTo(1, duration: 1))
                     
                 }else if( nodeName == self.questionPopUpMenu.leftButtonName() && self.questionPopUpMenu.alpha == 1 ) {
+                    if( currentQuestion.answer == true ) {
+                        println("right answer")
+                    }else{
+                        println("wrong answer")
+                    }
                     
                 }else if( node.name == self.questionPopUpMenu.rightButtonName() && self.questionPopUpMenu.alpha == 1 ) {
+                    if( currentQuestion.answer == true ) {
+                        println("wrong answer")
+                    }else{
+                        println("right answer")
+                    }
+                    
                     
                 }
             }
@@ -384,23 +405,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                 
             }else if( object.name == SPACE_KING_NAME ) {
                 println(SPACE_KING_NAME)
-
             }
         }
         
         if( object.name == COIN_NAME ) {
-            
-           // hero.coinsCaptured += hero.coinMultiplier
 
-                if let coins = defaults.integerForKey("coinsCaptured") as? Int
-                {
-                        coinsCap = coins + hero.coinMultiplier
-                        defaults.setObject(coinsCap, forKey: "coinsCaptured")
-                    
-                }
-
-            
-
+            if let coins = defaults.integerForKey("coinsCaptured") as? Int{
+                    coinsCap = coins + hero.coinMultiplier
+                    defaults.setObject(coinsCap, forKey: "coinsCaptured")
+            }
             self.coinsLabel.text = String(format: "%ld coins", defaults.integerForKey("coinsCaptured"))
         }
     }
@@ -410,8 +423,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     
     func allObjectsHaveBeenCreated() {
-        //self.showPopUp()
-        //self.goToNextLevel()
+        self.goToNextLevel()
     }
     func groundImageName() -> String {
         return "four"
@@ -425,13 +437,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     func messageForPopUp() -> String {
         return "Nicolas is the God"
     }
-    func questionForPopUp() -> String {
-        return "Is Nicolas The God?"
+    func questionForPopUp() -> TrueFalseQuestion {
+        return TrueFalseQuestion(planetName: "Earth", question: "Is Nicolas The God?", answer: true)
     }
     // MARK - Private Methods
     // One time initialization
     private func initialize() {
         self.backgroundColor = self.BACKGROUND_COLOR
+        self.currentQuestion = self.questionForPopUp()
+        
         self.amountOfObjects = 0
         
         self.physicsWorld.gravity = self.gravityForLevel()
@@ -550,7 +564,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     private func onTimerEvent() {
         
-        if( self.amountOfObjects != self.maximumAmountOfObjectsForLevel() ) {
+        if( self.amountOfObjects != self.maximumAmountOfObjectsForLevel() && self.rightHero.hasActions() && self.leftHero.hasActions() ) {
             var objects = self.objectsForRound()
             for (i, obj) in enumerate(objects) {
                 var node: SKSpriteNode = obj as SKSpriteNode
@@ -578,7 +592,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             }
             self.amountOfObjects += objects.count
             self.timerNode.runAction(SKAction.waitForDuration(self.randomFrom(1, max: 2)), completion: onTimerEvent)
-        } else {
+        } else if( self.rightHero.hasActions() && self.leftHero.hasActions() ){
             self.allObjectsHaveBeenCreated()
         }
     }
@@ -741,18 +755,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
             
             println("1")
-            self.curiosityPopUpMenu = PopUp(backgroundImageName: "deathBackground", rightButtonImageName: "speeddown", leftButtonImageName: "speedup", distance: "1334", planetName: self.planetName(), message: self.messageForPopUp())
+            self.curiosityPopUpMenu = PopUp(backgroundImageName: "loseBackground", rightButtonImageName: "restartIcon", leftButtonImageName: "questionIcon", distance: "1334", planetName: self.planetName(), message: self.messageForPopUp())
             self.curiosityPopUpMenu.size = CGSize(width: self.WIDTH * 0.75, height: self.HEIGHT * 0.75)
             self.curiosityPopUpMenu.position = CGPoint(x: self.WIDTH/2, y: self.HEIGHT/2)
             self.curiosityPopUpMenu.alpha = 0
+            self.curiosityPopUpMenu.hidden = true
             
             println("2")
-            self.questionPopUpMenu = PopUp(backgroundImageName: "deathBackground", rightButtonImageName: "grow", leftButtonImageName: "shrink", distance: "1334", planetName: self.planetName(), message: self.questionForPopUp())
+            self.questionPopUpMenu = PopUp(backgroundImageName: "loseBackground", rightButtonImageName: "falseIcon", leftButtonImageName: "trueIcon", distance: "1334", planetName: self.planetName(), message: self.questionForPopUp().question)
             self.questionPopUpMenu.size = self.curiosityPopUpMenu.size
             self.questionPopUpMenu.position = self.curiosityPopUpMenu.position
             self.questionPopUpMenu.alpha = 0
+            self.questionPopUpMenu.hidden = true
             
-            println("3")
             self.world.addChild(self.curiosityPopUpMenu)
             self.world.addChild(self.questionPopUpMenu)
         }
@@ -760,8 +775,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     private func showRestartPopUp() {
         if( curiosityPopUpMenu != nil ) {
+            self.curiosityPopUpMenu.hidden = false
             self.curiosityPopUpMenu.runAction(SKAction.fadeAlphaTo(1.0, duration: 0.5))
         }
+        
+        println("here")
         
         self.background1.removeAllActions()
         self.background2.removeAllActions()
