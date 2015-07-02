@@ -38,7 +38,13 @@ class UranusLevel: GameScene {
         
         super.allObjectsHaveBeenCreated()
     }
+    override func messageForPopUp() -> String {
+        return (self.facts[Int(arc4random_uniform(UInt32(self.facts.count)))] as TrueFalseQuestion).question
+    }
     override func transactionImageName() -> String {
         return "Transition Uranus"
+    }
+    override func questionForPopUp() -> TrueFalseQuestion {
+        return self.questions[Int(arc4random_uniform(UInt32(self.questions.count)))] as TrueFalseQuestion
     }
 }
