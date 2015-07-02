@@ -44,4 +44,10 @@ class EarthLevel: GameScene {
     override func questionForPopUp() -> TrueFalseQuestion {
         return self.questions[Int(arc4random_uniform(UInt32(self.questions.count)))] as TrueFalseQuestion
     }
+    override func transactionImageName() -> String {
+        return "Transition Earth"
+    }
+    override func shouldPresentStartMenu() -> Bool {
+        return true
+    }
 }

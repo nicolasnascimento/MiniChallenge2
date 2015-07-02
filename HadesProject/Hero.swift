@@ -53,7 +53,11 @@ class Hero: SKSpriteNode {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    func restoreOriginalPhysicsProperties() {
+        if let body = self.physicsBody {
+            body.affectedByGravity = true
+        }
+    }
     func invertResposivitySide() {
         self.respositivitySide = self.respositivitySide == .Right ? .Left : .Right
     }

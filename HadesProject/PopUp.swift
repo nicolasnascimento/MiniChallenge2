@@ -66,7 +66,7 @@ class PopUp: SKSpriteNode {
     }
     
     private func positionate() {
-        var divisionHeight = self.frame.size.height/self.DIVISIONS
+        var divisionHeight = self.size.height/self.DIVISIONS
         self.planetNameLabel.position.y = 2 * divisionHeight
         self.distanceLabel.position.y = 1 * divisionHeight
         self.messageLabel.position.y = 0 * divisionHeight
@@ -81,7 +81,7 @@ class PopUp: SKSpriteNode {
         self.leftButtonImage.position.x = -(BUTTON_DISTANCE_FRACTION)*(self.leftButtonImage.frame.size.width/2)
     }
     private func resizeSprite( sprite: SKSpriteNode, toFitHeight height: CGFloat ) {
-        var aspectRatio = sprite.frame.size.height/sprite.frame.size.width
+        var aspectRatio = sprite.size.width/sprite.size.height
         sprite.size.height = height
         sprite.size.width = sprite.size.height * aspectRatio
     }

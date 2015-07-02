@@ -11,7 +11,7 @@ import SpriteKit
 
 class SaturnLevel: GameScene {
    
-    override var imageNameArray: [String] { return  ["grow", "shrink", "speedup", "speeddown"] }
+    override var imageNameArray: [String] { return  ["obstacleIcon"] }
     
     override func gravityForLevel() -> CGVector {
         return CGVector(dx: 0, dy: -10.44)
@@ -39,5 +39,7 @@ class SaturnLevel: GameScene {
         
         super.allObjectsHaveBeenCreated()
     }
-
+    override func transactionImageName() -> String {
+        return "Transition Saturn"
+    }
 }

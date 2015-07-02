@@ -11,7 +11,7 @@ import SpriteKit
 
 class MarsLevel: GameScene {
    
-    override var imageNameArray: [String] { return  ["grow", "shrink", "speedup", "speeddown"] }
+    override var imageNameArray: [String] { return  ["obstacleIcon"] }
     
     override func gravityForLevel() -> CGVector {
         return CGVector(dx: 0, dy: -3.711)
@@ -39,6 +39,9 @@ class MarsLevel: GameScene {
         
         
         super.allObjectsHaveBeenCreated()
+    }
+    override func transactionImageName() -> String {
+        return "Transition Mars"
     }
     
 }

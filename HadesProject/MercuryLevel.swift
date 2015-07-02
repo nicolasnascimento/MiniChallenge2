@@ -11,7 +11,7 @@ import SpriteKit
 
 class MercuryLevel: GameScene {
     
-    override var imageNameArray: [String] { return  ["grow", "shrink", "speedup", "speeddown"] }
+    override var imageNameArray: [String] { return  ["obstacleIcon"] }
     
     override func gravityForLevel() -> CGVector {
         return CGVector(dx: 0, dy: -3.7)
@@ -37,9 +37,10 @@ class MercuryLevel: GameScene {
     }
     override func allObjectsHaveBeenCreated() {
         
-        
         super.allObjectsHaveBeenCreated()
     }
-   
+    override func transactionImageName() -> String {
+        return "Transition Mercury"
+    }
 
 }

@@ -11,7 +11,7 @@ import SpriteKit
 
 class MoonLevel: GameScene {
     
-    override var imageNameArray: [String] { return  ["grow", "shrink", "speedup", "speeddown"] }
+    override var imageNameArray: [String] { return  ["obstacleIcon"] }
     
     override func gravityForLevel() -> CGVector {
         return CGVector(dx: 0, dy: -1.622)
@@ -37,5 +37,8 @@ class MoonLevel: GameScene {
     }
     override func allObjectsHaveBeenCreated() {
         super.allObjectsHaveBeenCreated()
+    }
+    override func transactionImageName() -> String {
+        return "Transition Moon"
     }
 }

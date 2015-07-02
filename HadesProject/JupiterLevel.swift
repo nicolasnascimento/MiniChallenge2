@@ -11,7 +11,7 @@ import SpriteKit
 
 class JupiterLevel: GameScene {
  
-    override var imageNameArray: [String] { return  ["grow", "shrink", "speedup", "speeddown"] }
+    override var imageNameArray: [String] { return  ["obstacleIcon"] }
     
     override func gravityForLevel() -> CGVector {
         return CGVector(dx: 0, dy: -24.79)
@@ -38,6 +38,9 @@ class JupiterLevel: GameScene {
         
         
         super.allObjectsHaveBeenCreated()
+    }
+    override func transactionImageName() -> String {
+        return "Transition Jupiter"
     }
 
 }

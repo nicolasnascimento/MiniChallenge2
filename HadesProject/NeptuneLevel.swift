@@ -11,7 +11,7 @@ import SpriteKit
 
 class NeptuneLevel: GameScene {
    
-    override var imageNameArray: [String] { return  ["grow", "shrink", "speedup", "speeddown"] }
+    override var imageNameArray: [String] { return  ["obstacleIcon"] }
     
     override func gravityForLevel() -> CGVector {
         return CGVector(dx: 0, dy: -11.15)
@@ -38,5 +38,7 @@ class NeptuneLevel: GameScene {
         
         super.allObjectsHaveBeenCreated()
     }
-
+    override func transactionImageName() -> String {
+        return "Transition Neptune"
+    }
 }

@@ -11,7 +11,7 @@ import SpriteKit
 
 class PlutoLevel: GameScene {
     
-    override var imageNameArray: [String] { return  ["grow", "shrink", "speedup", "speeddown"] }
+    override var imageNameArray: [String] { return  ["obstacleIcon"] }
     
     override func gravityForLevel() -> CGVector {
         return CGVector(dx: 0, dy: -0.658)
@@ -38,5 +38,7 @@ class PlutoLevel: GameScene {
         
         super.allObjectsHaveBeenCreated()
     }
-   
+    override func transactionImageName() -> String {
+        return "Transition Pluto"
+    }
 }
