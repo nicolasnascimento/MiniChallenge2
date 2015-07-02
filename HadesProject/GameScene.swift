@@ -143,6 +143,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     lazy var questions: [TrueFalseQuestion] = {
         return QuestionDatabase.questionsForPlanetNamed(self.planetName())
     }()
+    
+    lazy var facts: [TrueFalseQuestion] = {
+        return QuestionDatabase.factsForPlanetNamed(self.planetName())
+        }()
     var currentQuestion: TrueFalseQuestion!
     
     // MARK - Overriden Methods
