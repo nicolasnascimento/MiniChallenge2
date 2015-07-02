@@ -35,7 +35,6 @@ class QuestionDatabase: NSObject {
         TrueFalseQuestion(planetName: "Mercury", question: "Mercury is the smallest planet in the Solar System", answer: true),
         TrueFalseQuestion(planetName: "Mercury", question: "Mercury is only the second hottest planet", answer: true),
         TrueFalseQuestion(planetName: "Mercury", question: "Mercury is named for the Roman messenger to the gods", answer: true),
-        
         TrueFalseQuestion(planetName: "Venus", question: "Venus rotates counter-clockwise", answer: true),
         TrueFalseQuestion(planetName: "Venus", question: "Venus is the second brightest object in the night sky", answer: true),
         TrueFalseQuestion(planetName: "Venus", question: "Venus is the hottest planet in our solar system", answer: true),

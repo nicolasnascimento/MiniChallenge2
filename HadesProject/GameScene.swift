@@ -52,7 +52,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     let OBSTACLE_SIZE_FACTOR: CGFloat = 5
     let HERO_MASS: CGFloat = 30
     let FONT_NAME: String = "Helvetica"
-    let TRANSACTION_ANIMATION_DURATION: Double = 1
+    let TRANSACTION_ANIMATION_DURATION: Double = 2
     
     // Power Up's Probabilities(%)
     let INVERT_PROBABILITY: Double = 10.0
@@ -100,6 +100,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     var timerNode: SKNode = SKNode()
     var amountOfObjects = 0
     var gameHasBegun : Bool = false
+    var objects: [SKSpriteNode]! = [SKSpriteNode]()
     
     // The Objects
     var imageNameArray: [String] { return  ["grow", "shrink", "speedup", "speeddown"] }
@@ -160,7 +161,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.createRoof()
         self.createLabels()
         self.createPopUpMenusInBackground()
-        self.createTransactionImageInBackground()
+        self.createTransactionImage(inBackground: false)
         
         if( !self.shouldPresentStartMenu() ) {
             self.runGame()
@@ -404,8 +405,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             obstacle.name = OBSTACLE_NAME
         }
         
-        obstacle.createPhysicsBodyForSelfWithCategory(OBSTACLE_CATEGORY, contactCategory: HERO_CATEGORY , collisionCategory: 0)
-        obstacle.physicsBody?.affectedByGravity = false
+        //obstacle.createPhysicsBodyForSelfWithCategory(OBSTACLE_CATEGORY, contactCategory: HERO_CATEGORY , collisionCategory: 0)
+        //obstacle.physicsBody?.affectedByGravity = false
         return [obstacle];
     }
     
@@ -418,40 +419,40 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             object.removeFromParent()
             
             if( object.name == OBSTACLE_NAME ) {
-                println(OBSTACLE_NAME)
+                //println(OBSTACLE_NAME)
                 self.showRestartPopUp()
                 
             }else if( object.name == MULTIPLIER_NAME ) {
-                println(MULTIPLIER_NAME)
+                //println(MULTIPLIER_NAME)
                 hero.doubleCoinMultiplier()
 
             }else if( object.name == COIN_MAGNET_NAME ) {
-                println(COIN_MAGNET_NAME)
+                //println(COIN_MAGNET_NAME)
                 hero.activateCoinMagnet()
                 
             }else if( object.name == INVISIBILITY_NAME ) {
-                println(INVISIBILITY_NAME)
+                //println(INVISIBILITY_NAME)
                 hero.turnToInvisible()
                 
             }else if( object.name == FUSION_NAME ) {
-                println(FUSION_NAME)
+                //println(FUSION_NAME)
                 self.leftHero.fuseWithHero(self.rightHero)
                 
             }else if( object.name == INVERT_NAME ) {
-                println(INVERT_NAME)
+                //println(INVERT_NAME)
                 rightHero.invertResposivitySide()
                 leftHero.invertResposivitySide()
                 
             }else if( object.name == RESIZE_UP_NAME ) {
-                println(RESIZE_UP_NAME)
+                //println(RESIZE_UP_NAME)
                 hero.resizeUp()
                 
             }else if( object.name == RESIZE_DOWN_NAME ) {
-                println(RESIZE_DOWN_NAME)
+                //println(RESIZE_DOWN_NAME)
                 hero.resizeDown()
                 
             }else if( object.name == SPACE_KING_NAME ) {
-                println(SPACE_KING_NAME)
+                //println(SPACE_KING_NAME)
                 hero.turnToSpaceKing()
 
             }
@@ -460,8 +461,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         if( object.name == COIN_NAME ) {
 
             if let coins = defaults.integerForKey("coinsCaptured") as? Int{
-                    coinsCap = coins + hero.coinMultiplier
-                    defaults.setObject(coinsCap, forKey: "coinsCaptured")
+                coinsCap = coins + hero.coinMultiplier
+                defaults.setObject(coinsCap, forKey: "coinsCaptured")
             }
             self.coinsLabel.text = String(format: "%ld coins", defaults.integerForKey("coinsCaptured"))
         }
@@ -533,6 +534,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         
         if( menu != nil ) {
             
+            println("menu is not nil")
+            
             self.menu.runAction(SKAction.fadeAlphaTo(0, duration: 0.5), completion: { () -> Void in
                 
                 dispatch_async(dispatch_get_main_queue()) {
@@ -552,8 +555,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                 }
             })
         }else{
+            
+            println("menu is nil")
             if( self.transaction.parent == nil ) {
-                
                 dispatch_async(dispatch_get_main_queue()) {
                     self.world.addChild(self.transaction)
                     self.transaction.runAction(SKAction.sequence([moveHalfLeft, wait, moveOtherHalfLeft]), completion: { () -> Void in
@@ -669,32 +673,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     private func onTimerEvent() {
         
         if( self.amountOfObjects != self.maximumAmountOfObjectsForLevel() && !self.rightHero.paused && !self.leftHero.paused ) {
-            var objects = self.objectsForRound()
+            if( self.objects == nil ) {
+                self.objects = self.objectsForRound()
+            }
             for (i, obj) in enumerate(objects) {
-                var node: SKSpriteNode = obj as SKSpriteNode
-                let aspectRatio =  node.size.width/node.size.height
-                node.size.height = HEIGHT/OBSTACLE_SIZE_FACTOR
-                node.size.width = node.size.height * aspectRatio
-                node.physicsBody = nil
-                node.createPhysicsBodyForSelfWithCategory(OBSTACLE_CATEGORY, contactCategory: HERO_CATEGORY , collisionCategory: 0)
-                node.physicsBody?.dynamic = true
-                node.physicsBody?.affectedByGravity = false
-                node.physicsBody?.mass = 2
-                if( node.name == COIN_NAME ) {
-                    node.physicsBody?.charge = 10000000
-                }
-                dispatch_async(dispatch_get_main_queue()) {
-                    node.position.x = self.WIDTH + node.frame.size.width/2
+                dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+                    var node: SKSpriteNode = obj as SKSpriteNode
+                    let aspectRatio =  node.size.width/node.size.height
+                    node.size.height = self.HEIGHT/self.OBSTACLE_SIZE_FACTOR
+                    node.size.width = node.size.height * aspectRatio
+                    node.physicsBody = nil
+                    node.createPhysicsBodyForSelfWithCategory(OBSTACLE_CATEGORY, contactCategory: HERO_CATEGORY , collisionCategory: 0)
+                    node.physicsBody?.dynamic = true
+                    node.physicsBody?.affectedByGravity = false
+                    node.physicsBody?.mass = 2
+                    node.position.x = self.WIDTH + node.size.width/2
                     node.position.y = CGFloat( self.randomFrom(UInt32(self.ground.size.height + node.size.height/2), max: UInt32(self.HEIGHT - node.size.height/2)) )
-                    //println("node.position.y = \(node.position.y)")
-                    self.world.addChild(node)
-                    
-                    node.runAction(SKAction.moveTo(CGPoint(x: -node.frame.size.width/2, y: node.position.y), duration: 5.0), completion: { () -> Void in
-                        node.removeFromParent()
-                    })
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.world.addChild(node)
+                        node.runAction(SKAction.moveTo(CGPoint(x: -node.frame.size.width/2, y: node.position.y), duration: 5.0), completion: { () -> Void in
+                            node.removeFromParent()
+                        })
+                    }
                 }
+                
+            }
+            
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
+                self.objects = self.objectsForRound()
             }
             self.amountOfObjects += objects.count
+            self.objects = nil
             self.timerNode.runAction(SKAction.waitForDuration(self.randomFrom(3, max: 5)), completion: onTimerEvent)
         } else if( !self.rightHero.paused && !self.leftHero.paused  ){
             self.allObjectsHaveBeenCreated()
@@ -856,7 +865,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
             
-            println("1 - Pup")
+            //println("1 - Pup")
             self.curiosityPopUpMenu = PopUp(backgroundImageName: self.popUpBackgroundImageName(), rightButtonImageName: "restartIcon", leftButtonImageName: "questionIcon", distance: String(format: "%.2lf", arguments: [self.gravityForLevel().dy]), planetName: self.planetName(), message: self.messageForPopUp())
             self.curiosityPopUpMenu.size = CGSize(width: self.WIDTH * 0.75, height: self.HEIGHT * 0.75)
             self.curiosityPopUpMenu.position = CGPoint(x: self.WIDTH/2, y: self.HEIGHT/2)
@@ -873,7 +882,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             
             self.world.addChild(self.curiosityPopUpMenu)
             self.world.addChild(self.questionPopUpMenu)
-            println("2 - Pup")
+            //println("2 - Pup")
         }
     }
     
@@ -915,18 +924,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         })
         
     }
-    private func createTransactionImageInBackground() {
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            
+    private func createTransactionImage( inBackground: Bool = false ) {
+        
+        if( inBackground ) {
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+                println("1-TI")
+                self.transaction = SKSpriteNode(imageNamed: self.transactionImageName())
+                self.resizeSprite(self.transaction, toFitHeight: self.HEIGHT/2)
+                self.transaction.position.y = self.HEIGHT/2
+                self.transaction.position.x = self.WIDTH
+                
+                //self.world.addChild(self.transaction)
+                println("2-TI")
+            }
+        }else{
             println("1-TI")
-            self.transaction = SKSpriteNode(imageNamed: self.transactionImageName())
-            self.resizeSprite(self.transaction, toFitHeight: self.HEIGHT/2)
-            self.transaction.position.y = self.HEIGHT/2
-            self.transaction.position.x = self.WIDTH
-            
-            //self.world.addChild(self.transaction)
-            println("2-TI")
+                self.transaction = SKSpriteNode(imageNamed: self.transactionImageName())
+                self.resizeSprite(self.transaction, toFitHeight: self.HEIGHT/2)
+                self.transaction.position.y = self.HEIGHT/2
+                self.transaction.position.x = self.WIDTH
+                
+                //self.world.addChild(self.transaction)
+                println("2-TI")
         }
+        
     }
     private func resizeSprite( sprite: SKSpriteNode, toFitHeight height: CGFloat ) {
         var aspectRatio = sprite.frame.size.width/sprite.frame.size.height
@@ -984,11 +1005,11 @@ extension SKSpriteNode {
             body.collisionBitMask = collisionCategory
         } else {
             var body: SKPhysicsBody
-            if( squaredBody ) {
+            //if( squaredBody ) {
                 body = SKPhysicsBody(rectangleOfSize: self.frame.size, center: CGPoint(x: 0, y: -self.frame.size.height*0.1))
-            }else {
-                body = SKPhysicsBody(texture: self.texture, size: self.frame.size)
-            }
+            //}else {
+            //    body = SKPhysicsBody(texture: self.texture, size: self.frame.size)
+            //}
             body.categoryBitMask = category
             body.contactTestBitMask = contactCategory
             body.collisionBitMask = collisionCategory
