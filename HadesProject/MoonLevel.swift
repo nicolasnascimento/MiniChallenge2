@@ -44,6 +44,9 @@ class MoonLevel: GameScene {
     override func transactionImageName() -> String {
         return "Transition Moon"
     }
+    override func popUpBackgroundImageName() -> String {
+        return "Game Over Moon"
+    }
     override func questionForPopUp() -> TrueFalseQuestion {
         return self.questions[Int(arc4random_uniform(UInt32(self.questions.count)))] as TrueFalseQuestion
     }

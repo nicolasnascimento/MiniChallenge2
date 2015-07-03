@@ -19,8 +19,6 @@ class ShopScene: SKScene {
         var shopLabel = SKLabelNode(text: "Shop")
         var upgradeLabel = SKLabelNode(text: "Upgrades")
         var skinsLabel = SKLabelNode(text: "Skins")
-        
-        
     }
     
     private func resizeLabel(label: SKLabelNode, ToFitHeight height: CGFloat) -> SKLabelNode {

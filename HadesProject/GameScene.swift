@@ -7,7 +7,7 @@
 //
 
 import SpriteKit
-
+import AVFoundation
 
 @objc protocol GameSceneProtocol : NSObjectProtocol {
     
@@ -47,9 +47,9 @@ enum Level {
 class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // Useful constants
     let BACKGROUND_COLOR: SKColor = SKColor.orangeColor()
-    let BACKGROUND_ANIMATION_DURATION = 20.0
+    let BACKGROUND_ANIMATION_DURATION = 5.0
     let HERO_SIZE_FACTOR: CGFloat = 3.5
-    let OBSTACLE_SIZE_FACTOR: CGFloat = 5
+    let OBSTACLE_SIZE_FACTOR: CGFloat = 10
     let HERO_MASS: CGFloat = 30
     let FONT_NAME: String = "Helvetica"
     let TRANSACTION_ANIMATION_DURATION: Double = 2
@@ -65,9 +65,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     let COIN_MAGNET_PROBABILITY: Double = 20.0
     
     // Objects Probabilities
-    let POWER_UP_PROBABILITY: Double = 10
-    let COIN_PROBABILTY: Double = 10
-    let OBSTACLE_PROBILITY: Double = 80
+    let POWER_UP_PROBABILITY: Double = 20
+    let COIN_PROBABILTY: Double = 60
+    let OBSTACLE_PROBILITY: Double = 20
     
     // Objects Names
     let COIN_NAME = "coin"
@@ -98,6 +98,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     // Controls
     var timerNode: SKNode = SKNode()
+    var player: AVAudioPlayer!
     var amountOfObjects = 0
     var gameHasBegun : Bool = false
     var objects: [SKSpriteNode]! = [SKSpriteNode]()
@@ -113,16 +114,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // Ground ,Roof, Background and Transaction
     var ground: SKSpriteNode = SKSpriteNode()
     var roof: SKShapeNode = SKShapeNode()
-    var background1: SKSpriteNode = SKSpriteNode()
-    var background2: SKSpriteNode = SKSpriteNode()
+//    var background1: SKSpriteNode = SKSpriteNode()
+//    var background2: SKSpriteNode = SKSpriteNode()
+    var background: BackgroundManager!
     var transaction: SKSpriteNode! = SKSpriteNode()
     
     // Trackers
     var distanceLabel: SKLabelNode = SKLabelNode()
     var coinsLabel: SKLabelNode = SKLabelNode()
-    var planetNameLabel: SKLabelNode = SKLabelNode()
-    var planetGravityLabel: SKLabelNode = SKLabelNode()
     var pauseLabel: SKSpriteNode = SKSpriteNode()
+    var upperLeftCornerImage: SKSpriteNode = SKSpriteNode()
     var distanceTraveled: Int = Int()
     var coinsCap: Int = Int()
     var coinsCap2: Int = Int()
@@ -162,6 +163,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.createLabels()
         self.createPopUpMenusInBackground()
         self.createTransactionImage(inBackground: false)
+        self.createSounds()
         
         if( !self.shouldPresentStartMenu() ) {
             self.runGame()
@@ -199,6 +201,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                 
                 if( nodeName == self.curiosityPopUpMenu.rightButtonName() && self.curiosityPopUpMenu.alpha == 1 ) {
                     // GAMBIARRA
+                    defaults.setObject(0, forKey: "distanceTraveled")
                     GameScene.currentLevel = .Pluto
                     self.goToNextLevel()
                     
@@ -214,10 +217,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                         println("right answer")
                         self.restartGameFromPopUpAnswer()
                         
-                        
                     }else{
                         // GAMBIARRA
+                        defaults.setObject(0, forKey: "distanceTraveled")
                         GameScene.currentLevel = .Pluto
+                        
                         self.goToNextLevel()
                     }
                     
@@ -227,6 +231,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                         self.restartGameFromPopUpAnswer()
                     }else{
                         // GAMBIARRA
+                        defaults.setObject(0, forKey: "distanceTraveled")
                         GameScene.currentLevel = .Pluto
                         self.goToNextLevel()
                     }
@@ -368,30 +373,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         } else if( probability1 < UInt32( self.POWER_UP_PROBABILITY ) ) {
             var probability = Double(arc4random_uniform(1000))/10.0
             
-            obstacle = SKSpriteNode(imageNamed: "mini_ground")
-            
             if( probability < 100 && probability >= 75 ) {
+                obstacle = SKSpriteNode(imageNamed: "ChangeSidePowerUp")
                 obstacle.name = MULTIPLIER_NAME
                 
             } else if( probability < 75 && probability >= 55 ) {
+                obstacle = SKSpriteNode(imageNamed: "CoinMagnetPowerUp")
                 obstacle.name = COIN_MAGNET_NAME
                 
             } else if( probability < 55 && probability >= 40 ) {
+                obstacle = SKSpriteNode(imageNamed: "GhostPowerUp")
                 obstacle.name = INVISIBILITY_NAME
                 
             } else if( probability < 40 && probability >= 30 ) {
+                obstacle = SKSpriteNode(imageNamed: "FusionPowerUp")
                 obstacle.name = FUSION_NAME
                 
             } else if( probability < 30 && probability >= 20 ) {
+                obstacle = SKSpriteNode(imageNamed: "ChangeSidePowerUp")
                 obstacle.name = INVERT_NAME
                 
             } else if( probability < 20 && probability >= 12.5 ) {
+                obstacle = SKSpriteNode(imageNamed: "GrowUpPowerUp")
                 obstacle.name = RESIZE_UP_NAME
                 
             } else if( probability < 12.5 && probability >= 5 ) {
+                obstacle = SKSpriteNode(imageNamed: "SizeDownPowerUp")
                 obstacle.name = RESIZE_DOWN_NAME
                 
             } else {
+                obstacle = SKSpriteNode(imageNamed: "SpaceKingPowerUp")
                 obstacle.name = SPACE_KING_NAME
             }
             
@@ -420,7 +431,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             
             if( object.name == OBSTACLE_NAME ) {
                 //println(OBSTACLE_NAME)
+                
                 self.showRestartPopUp()
+                hero.runAction(SKAction.playSoundFileNamed("explosion.mp3  .mp3", waitForCompletion: true))
                 
             }else if( object.name == MULTIPLIER_NAME ) {
                 //println(MULTIPLIER_NAME)
@@ -459,6 +472,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         }
         
         if( object.name == COIN_NAME ) {
+            
+            hero.runAction(SKAction.playSoundFileNamed("coinBlink.m4a", waitForCompletion: true))
 
             if let coins = defaults.integerForKey("coinsCaptured") as? Int{
                 coinsCap = coins + hero.coinMultiplier
@@ -473,6 +488,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     
     func allObjectsHaveBeenCreated() {
+        
         self.goToNextLevel()
     }
     func groundImageName() -> String {
@@ -573,6 +589,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         
     }
     private func goToNextLevel() {
+        self.player.pause()
+        self.player = nil
         var viewSize = CGSize(width: WIDTH, height: HEIGHT)
         var nextPlanet: GameScene
         
@@ -622,38 +640,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.view?.presentScene(nextPlanet, transition: SKTransition.fadeWithDuration(1))
     }
     private func createBackgroundImage() {
-        self.background1 = SKSpriteNode(imageNamed: self.backgroundImageName())
-        self.background2 = SKSpriteNode(imageNamed: self.backgroundImageName())
-        self.adaptBackground(self.background1)
-        self.adaptBackground(self.background2)
-        self.background2.position.x += (self.background2.size.width*0.99)
-        
-        self.background1.runAction(SKAction.moveToX(-self.background1.size.width/2 , duration: BACKGROUND_ANIMATION_DURATION), completion: onMovementFinish)
-        self.background2.runAction(SKAction.moveToX(-self.background1.size.width/2 + self.background2.size.width, duration: BACKGROUND_ANIMATION_DURATION*0.99))
-        
-        world.addChild(self.background1)
-        world.addChild(self.background2)
-        self.background1.zPosition = -1
-        self.background2.zPosition = -1
-    }
-    
-    private func onMovementFinish() {
-        
-        self.background1.removeAllActions()
-        self.background1.removeFromParent()
-        self.background1 = self.background2
-        self.background2 = SKSpriteNode(imageNamed: self.backgroundImageName())
-        self.adaptBackground(self.background2)
-        self.background2.position.x += (self.background2.size.width*0.99)
-        self.world.addChild(self.background2)
-
-        
-        dispatch_async(dispatch_get_main_queue()) {
-            self.background1.zPosition = -1
-            self.background2.zPosition = -1
-            self.background1.runAction(SKAction.moveToX(-self.background1.size.width/2, duration: self.BACKGROUND_ANIMATION_DURATION), completion: self.onMovementFinish)
-            self.background2.runAction(SKAction.moveToX(-self.background1.size.width/2 + self.background2.size.width, duration: self.BACKGROUND_ANIMATION_DURATION*0.99))
-        }
+        self.background = BackgroundManager(firstLevelImageName: "first" + self.planetName(), secondLevelImageName: "second" + self.planetName(), thirdLevelImageName: "third" + self.planetName(), fourthLevelImageName: "fourth" + self.planetName(), maxHeight: HEIGHT, maxWidth: WIDTH)
+        self.background.zPosition = -100
+        self.addChild(background)
     }
     
     private func adaptBackground( background: SKSpriteNode ) {
@@ -691,7 +680,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                     node.position.y = CGFloat( self.randomFrom(UInt32(self.ground.size.height + node.size.height/2), max: UInt32(self.HEIGHT - node.size.height/2)) )
                     dispatch_async(dispatch_get_main_queue()) {
                         self.world.addChild(node)
-                        node.runAction(SKAction.moveTo(CGPoint(x: -node.frame.size.width/2, y: node.position.y), duration: 5.0), completion: { () -> Void in
+                        node.runAction(SKAction.moveTo(CGPoint(x: -node.frame.size.width/2, y: node.position.y), duration: self.BACKGROUND_ANIMATION_DURATION), completion: { () -> Void in
                             node.removeFromParent()
                         })
                     }
@@ -704,7 +693,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             }
             self.amountOfObjects += objects.count
             self.objects = nil
-            self.timerNode.runAction(SKAction.waitForDuration(self.randomFrom(3, max: 5)), completion: onTimerEvent)
+            self.timerNode.runAction(SKAction.waitForDuration(self.randomFrom(1, max: 3)), completion: onTimerEvent)
         } else if( !self.rightHero.paused && !self.leftHero.paused  ){
             self.allObjectsHaveBeenCreated()
         }
@@ -804,7 +793,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     private func createGround() {
         self.ground = SKSpriteNode(imageNamed: self.groundImageName())
         self.ground.size.width = WIDTH
-        self.ground.size.height = HEIGHT/10
+        self.ground.size.height = HEIGHT/5
         self.ground.position.x = WIDTH/2
         self.ground.createPhysicsBodyForSelfWithCategory(GROUND_CATEGORY, contactCategory: HERO_CATEGORY, collisionCategory: HERO_CATEGORY | OBSTACLE_CATEGORY )
         self.ground.physicsBody?.dynamic = false
@@ -824,35 +813,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         // Initialization
         self.distanceLabel = SKLabelNode(fontNamed: FONT_NAME)
         self.coinsLabel = SKLabelNode(fontNamed: FONT_NAME)
-        self.planetNameLabel = SKLabelNode(fontNamed: FONT_NAME)
-        self.planetGravityLabel = SKLabelNode(fontNamed: FONT_NAME)
-        // self.pauseLabel = SKSpriteNode(imageNamed: <#String#>)
+        self.upperLeftCornerImage = SKSpriteNode(imageNamed: "distance")
         
         // Initial Values
         self.distanceLabel.text = String(format: "%ld meters", arguments: [ (self.distanceTraveled)])
         self.coinsLabel.text = String(format: "%ld coins", arguments: [ (self.defaults.integerForKey("coinsCaptured"))])
-        self.planetNameLabel.text = self.planetName() + ": "
-        self.planetGravityLabel.text = String(format: "%.2lf", arguments: [(-self.gravityForLevel().dy)])
         
         // Resize
         self.distanceLabel = self.resizeLabel(distanceLabel, ToFitHeight: HEIGHT/20)
         self.coinsLabel = self.resizeLabel(coinsLabel, ToFitHeight: HEIGHT/30)
-        self.planetNameLabel = self.resizeLabel(planetNameLabel, ToFitHeight: HEIGHT/10)
-        self.planetGravityLabel = self.resizeLabel(planetGravityLabel, ToFitHeight: HEIGHT/10)
+        self.resizeSprite(self.upperLeftCornerImage, toFitHeight: HEIGHT/8)
         
         // Add to Scene
-        world.addChild(self.distanceLabel)
-        world.addChild(self.coinsLabel)
-        world.addChild(self.planetNameLabel)
-        world.addChild(self.planetGravityLabel)
+        self.world.addChild(self.distanceLabel)
+        self.world.addChild(self.coinsLabel)
+        self.world.addChild(self.upperLeftCornerImage)
         
         // Positions
         self.distanceLabel.position = CGPoint(x: (self.distanceLabel.frame.size.width/1.123456789) , y: HEIGHT - self.distanceLabel.frame.size.height)
         self.coinsLabel.position = CGPoint(x: self.coinsLabel.frame.size.width/1.123456789 , y: self.distanceLabel.position.y - self.distanceLabel.frame.size.height)
-        self.planetNameLabel.position = CGPoint(x: WIDTH/2 - self.planetNameLabel.frame.size.width/2, y: HEIGHT - self.planetNameLabel.frame.size.height)
-        self.planetGravityLabel.position = CGPoint(x: WIDTH/2 + self.planetGravityLabel.frame.size.width/2, y: self.planetNameLabel.position.y)
-        //self.distanceLabel.horizontalAlignmentMode = .Left
-        //self.coinsLabel.horizontalAlignmentMode = .Left
+        self.upperLeftCornerImage.position.y = HEIGHT - self.upperLeftCornerImage.size.height/2
+        self.upperLeftCornerImage.position.x = self.upperLeftCornerImage.size.width/2
+        self.upperLeftCornerImage.zPosition = -1
     }
     
     private func resizeLabel(label: SKLabelNode, ToFitHeight height: CGFloat) -> SKLabelNode {
@@ -867,7 +849,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             
             //println("1 - Pup")
             self.curiosityPopUpMenu = PopUp(backgroundImageName: self.popUpBackgroundImageName(), rightButtonImageName: "restartIcon", leftButtonImageName: "questionIcon", distance: String(format: "%.2lf", arguments: [self.gravityForLevel().dy]), planetName: self.planetName(), message: self.messageForPopUp())
-            self.curiosityPopUpMenu.size = CGSize(width: self.WIDTH * 0.75, height: self.HEIGHT * 0.75)
+            var height = self.HEIGHT * 0.75
+            var width = self.getWidthForSpriteWithOriginalHeight(self.curiosityPopUpMenu.size.height, andOriginalWidth: self.curiosityPopUpMenu.size.width, andNewHeight: height)
+            self.curiosityPopUpMenu.size = CGSize(width: width, height: height)
             self.curiosityPopUpMenu.position = CGPoint(x: self.WIDTH/2, y: self.HEIGHT/2)
             self.curiosityPopUpMenu.alpha = 0
             self.curiosityPopUpMenu.hidden = true
@@ -886,6 +870,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         }
     }
     
+    private func getWidthForSpriteWithOriginalHeight( originalHeight: CGFloat, andOriginalWidth originalWidth: CGFloat, andNewHeight newHeight: CGFloat ) -> CGFloat {
+        return newHeight * originalWidth/originalHeight
+    }
+    
     private func showRestartPopUp() {
         if( curiosityPopUpMenu != nil ) {
             self.curiosityPopUpMenu.hidden = false
@@ -895,13 +883,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.leftHero.restoreOriginalPhysicsProperties()
         self.rightHero.restoreOriginalPhysicsProperties()
         
-        self.background1.paused = true
-        self.background2.paused = true
+//        self.background1.paused = true
+//        self.background2.paused = true
         self.rightHero.paused = true
         self.leftHero.paused = true
     }
     private func createStartMenu() {
-        self.menu = StartMenu(playButtonImageName: "logoPlanetDash", gameCenterButtonImageName: "logoPlanetDash", soundButtonImageName: "logoPlanetDash", storeButtonImageName: "logoPlanetDash")
+        self.menu = StartMenu(playButtonImageName: "logoPlanetDash", gameCenterButtonImageName: "ranking", storeButtonImageName: "store")
         world.addChild(self.menu)
         self.menu.startAnimating(HEIGHT, maxWidth: WIDTH)
         self.menu.position = CGPoint(x: WIDTH/2, y: HEIGHT/2)
@@ -917,8 +905,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             self.createPopUpMenusInBackground()
             self.timerNode.runAction(SKAction.waitForDuration(0.0), completion: self.onTimerEvent)
             self.gameHasBegun = true
-            self.background1.paused = false
-            self.background2.paused = false
+//            self.background1.paused = false
+//            self.background2.paused = false
             self.rightHero.paused = false
             self.leftHero.paused = false
         })
@@ -947,6 +935,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                 //self.world.addChild(self.transaction)
                 println("2-TI")
         }
+    }
+    private func createSounds() {
+        var url = NSBundle.mainBundle().URLForResource("GameMusic", withExtension: "m4a")
+        var error: NSErrorPointer! = NSErrorPointer()
+        self.player = AVAudioPlayer(contentsOfURL: url!, error: error)
+        self.player.numberOfLoops = -1
+        self.player.prepareToPlay()
+        self.player.play()
+        
+//        self.soundNode = SKNode()
+//        self.world.addChild(self.soundNode)
+//        self.soundNode.runAction(SKAction.repeatActionForever(SKAction.playSoundFileNamed("GameMusic.m4a", waitForCompletion: true)))
         
     }
     private func resizeSprite( sprite: SKSpriteNode, toFitHeight height: CGFloat ) {
@@ -1006,7 +1006,7 @@ extension SKSpriteNode {
         } else {
             var body: SKPhysicsBody
             //if( squaredBody ) {
-                body = SKPhysicsBody(rectangleOfSize: self.frame.size, center: CGPoint(x: 0, y: -self.frame.size.height*0.1))
+                body = SKPhysicsBody(rectangleOfSize: self.frame.size/*, center: CGPoint(x: 0, y: -self.frame.size.height*0.0)*/)
             //}else {
             //    body = SKPhysicsBody(texture: self.texture, size: self.frame.size)
             //}
