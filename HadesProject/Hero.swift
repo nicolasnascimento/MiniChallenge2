@@ -124,7 +124,7 @@ class Hero: SKSpriteNode {
         var comeClose = SKAction.moveTo(self.position, duration: 0.2)
         var goAway = SKAction.moveTo(oldPosition, duration: 0.2)
         var scaleBack = SKAction.scaleTo(1.0, duration: 0.2)
-        var grow = SKAction.scaleTo(2 * RESIZING_FACTOR, duration: 0.0)
+        var grow = SKAction.scaleTo(RESIZING_FACTOR, duration: 0.0)
         var wait = SKAction.waitForDuration(POWER_UP_DURATION)
         var recreatePhysicsBody = SKAction.customActionWithDuration(0.0, actionBlock: { (node, period) -> Void in
             dispatch_async(dispatch_get_main_queue()) {

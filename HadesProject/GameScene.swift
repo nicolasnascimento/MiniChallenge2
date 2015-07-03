@@ -38,6 +38,7 @@ let HERO_CATEGORY:UInt32 = 0x1 << 0
 let GROUND_CATEGORY:UInt32 = 0x1 << 1
 let OBSTACLE_CATEGORY:UInt32 = 0x1 << 2
 let WALL_CATEGORY:UInt32 = 0x1 << 3
+let PORTAL_CATEGORY:UInt32 = 0x1 << 4
 
 // Level Enumeration
 enum Level {
@@ -53,6 +54,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     let HERO_MASS: CGFloat = 30
     let FONT_NAME: String = "Helvetica"
     let TRANSACTION_ANIMATION_DURATION: Double = 2
+    let PORTAL_IMAGE_NAME: String = "speeddown"
     
     // Power Up's Probabilities(%)
     let INVERT_PROBABILITY: Double = 10.0
@@ -102,6 +104,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     var amountOfObjects = 0
     var gameHasBegun : Bool = false
     var objects: [SKSpriteNode]! = [SKSpriteNode]()
+    var objectsInScreen: Int = 0
     
     // The Objects
     var imageNameArray: [String] { return  ["grow", "shrink", "speedup", "speeddown"] }
@@ -141,6 +144,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // Menu
     var menu: StartMenu! = nil
     
+    // Portal
+    var portal: SKSpriteNode = SKSpriteNode()
+    
     // Questions
     lazy var questions: [TrueFalseQuestion] = {
         return QuestionDatabase.questionsForPlanetNamed(self.planetName())
@@ -157,13 +163,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         if( self.shouldPresentStartMenu() ) {
             self.createStartMenu()
         }
+        // High Priority
         self.createHeros()
         self.createGround()
         self.createRoof()
         self.createLabels()
-        self.createPopUpMenusInBackground()
-        self.createTransactionImage(inBackground: false)
         self.createSounds()
+        self.createTransactionImage(inBackground: false)
+        
+        // This can run in background
+        self.createPopUpMenusInBackground()
+        self.createPortalInBackground()
         
         if( !self.shouldPresentStartMenu() ) {
             self.runGame()
@@ -206,7 +216,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                     self.goToNextLevel()
                     
                 }else if( nodeName == self.curiosityPopUpMenu.leftButtonName() && self.curiosityPopUpMenu.alpha == 1 ) {
-                    self.curiosityPopUpMenu.runAction(SKAction.fadeAlphaTo(0, duration: 1), completion: { () -> Void in
+                    self.curiosityPopUpMenu.runAction(SKAction.fadeAlphaTo(0, duration: 1), completion: { [unowned self] () -> Void in
                         self.curiosityPopUpMenu.hidden = true
                     })
                     self.questionPopUpMenu.hidden = false
@@ -473,6 +483,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         
         if( object.name == COIN_NAME ) {
             
+            if( object.parent != nil ){
+                object.removeFromParent()
+            }
+            
             hero.runAction(SKAction.playSoundFileNamed("coinBlink.m4a", waitForCompletion: true))
 
             if let coins = defaults.integerForKey("coinsCaptured") as? Int{
@@ -489,7 +503,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     func allObjectsHaveBeenCreated() {
         
-        self.goToNextLevel()
+        if( self.portal.hidden == true ) {
+            self.portal.alpha = 1
+            self.portal.hidden = false
+            self.world.addChild(self.portal)
+            self.portal.runAction( SKAction.moveTo(CGPoint(x: -self.portal.frame.size.width/2, y: self.HEIGHT/2), duration:BACKGROUND_ANIMATION_DURATION))
+        }
+        //self.goToNextLevel()
     }
     func groundImageName() -> String {
         return "four"
@@ -510,7 +530,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         return "Transition Earth"
     }
     func popUpBackgroundImageName() -> String {
-        return "Game Over Earth"
+        return "Game Over " + self.planetName()
     }
     func shouldPresentStartMenu() -> Bool {
         return false
@@ -552,13 +572,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             
             println("menu is not nil")
             
-            self.menu.runAction(SKAction.fadeAlphaTo(0, duration: 0.5), completion: { () -> Void in
+            self.menu.runAction(SKAction.fadeAlphaTo(0, duration: 0.5), completion: { [unowned self] () -> Void in
                 
                 dispatch_async(dispatch_get_main_queue()) {
                     
                     if( self.transaction.parent == nil ) {
                         self.world.addChild(self.transaction)
-                        self.transaction.runAction(SKAction.sequence([moveHalfLeft, wait, moveOtherHalfLeft]), completion: { () -> Void in
+                        self.transaction.runAction(SKAction.sequence([moveHalfLeft, wait, moveOtherHalfLeft]), completion: { [unowned self] () -> Void in
                             
                             self.timerNode.runAction(SKAction.waitForDuration(0.0), completion: self.onTimerEvent)
                             self.gameHasBegun = true
@@ -576,7 +596,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             if( self.transaction.parent == nil ) {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.world.addChild(self.transaction)
-                    self.transaction.runAction(SKAction.sequence([moveHalfLeft, wait, moveOtherHalfLeft]), completion: { () -> Void in
+                    self.transaction.runAction(SKAction.sequence([moveHalfLeft, wait, moveOtherHalfLeft]), completion: { [unowned self] () -> Void in
                         
                         self.timerNode.runAction(SKAction.waitForDuration(0.0), completion: self.onTimerEvent)
                         self.gameHasBegun = true
@@ -590,7 +610,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     private func goToNextLevel() {
         self.player.pause()
-        self.player = nil
         var viewSize = CGSize(width: WIDTH, height: HEIGHT)
         var nextPlanet: GameScene
         
@@ -637,12 +656,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             //println("earth")
         }
         nextPlanet.scaleMode = .AspectFill
-        self.view?.presentScene(nextPlanet, transition: SKTransition.fadeWithDuration(1))
+        self.view?.presentScene(nextPlanet, transition: SKTransition.fadeWithDuration(2))
     }
     private func createBackgroundImage() {
         self.background = BackgroundManager(firstLevelImageName: "first" + self.planetName(), secondLevelImageName: "second" + self.planetName(), thirdLevelImageName: "third" + self.planetName(), fourthLevelImageName: "fourth" + self.planetName(), maxHeight: HEIGHT, maxWidth: WIDTH)
         self.background.zPosition = -100
-        self.addChild(background)
+        self.world.addChild(background)
     }
     
     private func adaptBackground( background: SKSpriteNode ) {
@@ -665,6 +684,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             if( self.objects == nil ) {
                 self.objects = self.objectsForRound()
             }
+            //self.objectsInScreen += self.objects.count
             for (i, obj) in enumerate(objects) {
                 dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
                     var node: SKSpriteNode = obj as SKSpriteNode
@@ -768,8 +788,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.rightHero.position.y = leftHero.position.y
         
         // Physics Body
-        self.rightHero.createPhysicsBodyForSelfWithCategory(HERO_CATEGORY, contactCategory: GROUND_CATEGORY | OBSTACLE_CATEGORY | WALL_CATEGORY, collisionCategory: GROUND_CATEGORY | WALL_CATEGORY, squaredBody: true)
-        self.leftHero.createPhysicsBodyForSelfWithCategory(HERO_CATEGORY, contactCategory: GROUND_CATEGORY | OBSTACLE_CATEGORY | WALL_CATEGORY, collisionCategory: GROUND_CATEGORY | WALL_CATEGORY, squaredBody: true)
+        self.rightHero.createPhysicsBodyForSelfWithCategory(HERO_CATEGORY, contactCategory: GROUND_CATEGORY | OBSTACLE_CATEGORY | WALL_CATEGORY | PORTAL_CATEGORY, collisionCategory: GROUND_CATEGORY | WALL_CATEGORY, squaredBody: true)
+        self.leftHero.createPhysicsBodyForSelfWithCategory(HERO_CATEGORY, contactCategory: GROUND_CATEGORY | OBSTACLE_CATEGORY | WALL_CATEGORY | PORTAL_CATEGORY, collisionCategory: GROUND_CATEGORY | WALL_CATEGORY, squaredBody: true)
         self.rightHero.physicsBody?.mass = HERO_MASS
         self.rightHero.physicsBody?.allowsRotation = false
         self.leftHero.physicsBody?.allowsRotation = false
@@ -834,7 +854,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.coinsLabel.position = CGPoint(x: self.coinsLabel.frame.size.width/1.123456789 , y: self.distanceLabel.position.y - self.distanceLabel.frame.size.height)
         self.upperLeftCornerImage.position.y = HEIGHT - self.upperLeftCornerImage.size.height/2
         self.upperLeftCornerImage.position.x = self.upperLeftCornerImage.size.width/2
-        self.upperLeftCornerImage.zPosition = -1
+        self.upperLeftCornerImage.zPosition = 1
+        self.distanceLabel.zPosition = 2
+        self.coinsLabel.zPosition = 2
     }
     
     private func resizeLabel(label: SKLabelNode, ToFitHeight height: CGFloat) -> SKLabelNode {
@@ -880,6 +902,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             self.curiosityPopUpMenu.runAction(SKAction.fadeAlphaTo(1.0, duration: 0.5))
         }
         
+        self.world.enumerateChildNodesWithName(OBSTACLE_NAME, usingBlock: { [unowned self] (node, error) -> Void in
+            node.runAction(SKAction.fadeAlphaTo(0, duration: 0.05), completion:{ () -> Void in
+                if( self.amountOfObjects > 0 ) {
+                    self.amountOfObjects--
+                }
+            })
+        })
+        self.world.enumerateChildNodesWithName(COIN_NAME, usingBlock: { [unowned self] (node, error) -> Void in
+            node.runAction(SKAction.fadeAlphaTo(0, duration: 0.05), completion:{ () -> Void in
+                if( self.amountOfObjects > 0 ) {
+                    self.amountOfObjects--
+                }
+            })
+        })
+        
         self.leftHero.restoreOriginalPhysicsProperties()
         self.rightHero.restoreOriginalPhysicsProperties()
         
@@ -897,7 +934,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     
     private func restartGameFromPopUpAnswer() {
-        self.questionPopUpMenu.runAction(SKAction.fadeAlphaTo(0, duration: 1), completion: { () -> Void in
+        self.questionPopUpMenu.runAction(SKAction.fadeAlphaTo(0, duration: 1), completion: { [unowned self] () -> Void in
             self.questionPopUpMenu.removeFromParent()
             self.curiosityPopUpMenu.removeFromParent()
             self.questionPopUpMenu = nil
@@ -954,6 +991,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         sprite.size.height = height
         sprite.size.width = sprite.size.height * aspectRatio
     }
+    private func createPortalInBackground() {
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
+            self.portal = SKSpriteNode(imageNamed: self.PORTAL_IMAGE_NAME)
+            self.resizeSprite(self.portal, toFitHeight: self.HEIGHT)
+            self.portal.createPhysicsBodyForSelfWithCategory(PORTAL_CATEGORY, contactCategory: HERO_CATEGORY, collisionCategory: 0, squaredBody: true)
+            self.portal.physicsBody?.affectedByGravity = false
+            self.portal.position.x = self.WIDTH + self.portal.size.width/2
+            self.portal.position.y = self.HEIGHT/2
+            self.portal.alpha = 0
+            self.portal.hidden = true
+        }
+    }
     
     // MARK - Physics Delegate
     func didBeginContact(contact: SKPhysicsContact) {
@@ -975,6 +1024,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                 println("physics body is not connected to a node")
             }else {
                 self.heroDidTouchObject(bodyA.node as! Hero, object: bodyB.node as! SKSpriteNode)
+            }
+        }else if( ( bodyA.categoryBitMask & HERO_CATEGORY != 0 ) && ( bodyB.categoryBitMask & PORTAL_CATEGORY != 0 ) ) {
+            if( bodyA.node == nil || bodyB.node == nil ) {
+                println("physics body is not connected to a node")
+            }else {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.goToNextLevel()
+                }
             }
         }
     }
