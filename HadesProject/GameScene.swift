@@ -433,7 +433,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                 //println(OBSTACLE_NAME)
                 
                 self.showRestartPopUp()
-                hero.runAction(SKAction.playSoundFileNamed("explosion.mp3  .mp3", waitForCompletion: true))
+                hero.runAction(SKAction.playSoundFileNamed("explosion.mp3.mp3", waitForCompletion: true))
                 
             }else if( object.name == MULTIPLIER_NAME ) {
                 //println(MULTIPLIER_NAME)
