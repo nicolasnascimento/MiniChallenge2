@@ -17,7 +17,7 @@ class EarthLevel: GameScene {
         return CGVector(dx: 0, dy: -9.8)
     }
     override func maximumAmountOfObjectsForLevel() -> Int {
-        return 20
+        return 25
     }
     override func groundImageName() -> String {
         return "four"

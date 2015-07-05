@@ -17,7 +17,7 @@ class MoonLevel: GameScene {
         return CGVector(dx: 0, dy: -1.622)
     }
     override func maximumAmountOfObjectsForLevel() -> Int {
-        return 20
+        return 25
     }
     override func groundImageName() -> String {
         return "four"
@@ -29,8 +29,11 @@ class MoonLevel: GameScene {
         return "Moon"
     }
     override func objectsForRound() -> [SKSpriteNode] {
-        return super.objectsForRound()
-        
+        if( arc4random_uniform(3) == 0 ) {
+            return self.createCoinsFromSksFileNamed("CoinLine")
+        }else{
+            return super.objectsForRound()
+        }
     }
     override func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
         super.heroDidTouchObject(hero, object: object)

@@ -48,13 +48,13 @@ enum Level {
 class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     // Useful constants
     let BACKGROUND_COLOR: SKColor = SKColor.orangeColor()
-    let BACKGROUND_ANIMATION_DURATION = 5.0
+    let BACKGROUND_ANIMATION_DURATION = 3.0
     let HERO_SIZE_FACTOR: CGFloat = 3.5
     let OBSTACLE_SIZE_FACTOR: CGFloat = 10
     let HERO_MASS: CGFloat = 30
-    let FONT_NAME: String = "Helvetica"
+    let FONT_NAME: String = "SanFranciscoDisplay-Regular"
     let TRANSACTION_ANIMATION_DURATION: Double = 2
-    let PORTAL_IMAGE_NAME: String = "speeddown"
+    let PORTAL_IMAGE_NAME: String = "portal"
     
     // Power Up's Probabilities(%)
     let INVERT_PROBABILITY: Double = 10.0
@@ -68,8 +68,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     // Objects Probabilities
     let POWER_UP_PROBABILITY: Double = 20
-    let COIN_PROBABILTY: Double = 60
-    let OBSTACLE_PROBILITY: Double = 20
+    let COIN_PROBABILTY: Double = 40
+    let OBSTACLE_PROBILITY: Double = 40
     
     // Objects Names
     let COIN_NAME = "coin"
@@ -115,21 +115,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     var touchArray: Set<UITouch> = Set<UITouch>()
     
     // Ground ,Roof, Background and Transaction
-    var ground: SKSpriteNode = SKSpriteNode()
-    var roof: SKShapeNode = SKShapeNode()
-//    var background1: SKSpriteNode = SKSpriteNode()
-//    var background2: SKSpriteNode = SKSpriteNode()
-    var background: BackgroundManager!
-    var transaction: SKSpriteNode! = SKSpriteNode()
+    var ground: SKSpriteNode! = nil
+    var roof: SKShapeNode! = nil
+    var background: BackgroundManager! = nil
+    var transaction: SKSpriteNode! = nil
     
     // Trackers
-    var distanceLabel: SKLabelNode = SKLabelNode()
-    var coinsLabel: SKLabelNode = SKLabelNode()
-    var pauseLabel: SKSpriteNode = SKSpriteNode()
-    var upperLeftCornerImage: SKSpriteNode = SKSpriteNode()
-    var distanceTraveled: Int = Int()
-    var coinsCap: Int = Int()
-    var coinsCap2: Int = Int()
+//    var distanceLabel: SKLabelNode! = nil
+//    var coinsLabel: SKLabelNode! = nil
+//    var pauseLabel: SKSpriteNode! = nil
+//    var upperLeftCornerImage: SKSpriteNode! = nil
+    var labels: LabelManager! = nil
+    var distanceTraveled: Int = 0
+    var coinsCap: Int = 0
+    var coinsCap2: Int = 0
 
     let defaults = NSUserDefaults.standardUserDefaults()
     
@@ -138,8 +137,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     var questionPopUpMenu: PopUp!
     
     // Actions
-    var flyingAction: SKAction = SKAction()
-    var runningAction: SKAction = SKAction()
+    var flyingAction: SKAction! = SKAction()
+    var runningAction: SKAction! = SKAction()
     
     // Menu
     var menu: StartMenu! = nil
@@ -157,6 +156,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         }()
     var currentQuestion: TrueFalseQuestion!
     
+    
+    
+    
     // MARK - Overriden Methods
     override func didMoveToView(view: SKView) {
         self.initialize()
@@ -164,9 +166,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             self.createStartMenu()
         }
         // High Priority
-        self.createHeros()
+        
         self.createGround()
         self.createRoof()
+        self.createHeros()
         self.createLabels()
         self.createSounds()
         self.createTransactionImage(inBackground: false)
@@ -251,10 +254,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     override func update(currentTime: CFTimeInterval) {
         
-        if( gameHasBegun ) {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.timerNode.runAction(SKAction.waitForDuration(0.05), completion: self.updateScore)
-            }
+        if( gameHasBegun && self.timerNode.actionForKey("updateScore") == nil ) {
+            //dispatch_async(dispatch_get_main_queue()) {
+            var action = SKAction.waitForDuration(0.2)
+            var updateScore = SKAction.customActionWithDuration(0.0, actionBlock: { [unowned self] (node, duration) -> Void in
+                self.updateScore()
+            })
+            self.timerNode.runAction(SKAction.sequence([action, updateScore]), withKey: "updateScore")
+            //}
         }
         // Game is Running
         if( !rightHero.paused && !leftHero.paused ){
@@ -373,62 +380,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         return CGVector(dx: 0, dy: -9.8)
     }
     func objectsForRound() -> [SKSpriteNode] {
-        var obstacle: SKSpriteNode
-        var probability1 = arc4random_uniform(100)
-        
-        if( self.leftHero.isSpaceKing || self.rightHero.isSpaceKing ) {
-            obstacle = SKSpriteNode(imageNamed: "coinIcon")
-            obstacle.name = COIN_NAME
-            
-        } else if( probability1 < UInt32( self.POWER_UP_PROBABILITY ) ) {
-            var probability = Double(arc4random_uniform(1000))/10.0
-            
-            if( probability < 100 && probability >= 75 ) {
-                obstacle = SKSpriteNode(imageNamed: "ChangeSidePowerUp")
-                obstacle.name = MULTIPLIER_NAME
-                
-            } else if( probability < 75 && probability >= 55 ) {
-                obstacle = SKSpriteNode(imageNamed: "CoinMagnetPowerUp")
-                obstacle.name = COIN_MAGNET_NAME
-                
-            } else if( probability < 55 && probability >= 40 ) {
-                obstacle = SKSpriteNode(imageNamed: "GhostPowerUp")
-                obstacle.name = INVISIBILITY_NAME
-                
-            } else if( probability < 40 && probability >= 30 ) {
-                obstacle = SKSpriteNode(imageNamed: "FusionPowerUp")
-                obstacle.name = FUSION_NAME
-                
-            } else if( probability < 30 && probability >= 20 ) {
-                obstacle = SKSpriteNode(imageNamed: "ChangeSidePowerUp")
-                obstacle.name = INVERT_NAME
-                
-            } else if( probability < 20 && probability >= 12.5 ) {
-                obstacle = SKSpriteNode(imageNamed: "GrowUpPowerUp")
-                obstacle.name = RESIZE_UP_NAME
-                
-            } else if( probability < 12.5 && probability >= 5 ) {
-                obstacle = SKSpriteNode(imageNamed: "SizeDownPowerUp")
-                obstacle.name = RESIZE_DOWN_NAME
-                
-            } else {
-                obstacle = SKSpriteNode(imageNamed: "SpaceKingPowerUp")
-                obstacle.name = SPACE_KING_NAME
-            }
-            
-        } else if( probability1 > UInt32( self.POWER_UP_PROBABILITY ) && probability1 < UInt32( self.POWER_UP_PROBABILITY + self.COIN_PROBABILTY ) ) {
-            
-            obstacle = SKSpriteNode(imageNamed: "coinIcon")
-            obstacle.name = COIN_NAME
-        } else {
-            
-            obstacle = SKSpriteNode(imageNamed: imageNameArray[ Int(arc4random_uniform( UInt32(self.imageNameArray.count))) ])
-            obstacle.name = OBSTACLE_NAME
+        var probability = arc4random_uniform(4)
+        if( probability == 0 ) {
+            return self.getRandomObject()
+        }else if( probability == 1 ) {
+            return self.createCoinsFromSksFileNamed("CoinLine")
+        }else if( probability == 2 ) {
+            return self.createCoinsFromSksFileNamed("CoinU")
+        }else {
+            return self.createCoinsFromSksFileNamed("CoinH")
         }
-        
-        //obstacle.createPhysicsBodyForSelfWithCategory(OBSTACLE_CATEGORY, contactCategory: HERO_CATEGORY , collisionCategory: 0)
-        //obstacle.physicsBody?.affectedByGravity = false
-        return [obstacle];
     }
     
     func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
@@ -493,7 +454,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                 coinsCap = coins + hero.coinMultiplier
                 defaults.setObject(coinsCap, forKey: "coinsCaptured")
             }
-            self.coinsLabel.text = String(format: "%ld coins", defaults.integerForKey("coinsCaptured"))
+            //self.labels.coinsLabel.text = String(format: "%ld coins", defaults.integerForKey("coinsCaptured"))
+            self.labels.updateCoinLabelTextTo(defaults.integerForKey("coinsCaptured"))
         }
     }
     
@@ -502,6 +464,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     
     func allObjectsHaveBeenCreated() {
+        
+        defaults.setObject(distanceTraveled, forKey: "score")
         
         if( self.portal.hidden == true ) {
             self.portal.alpha = 1
@@ -521,10 +485,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         return "Not A Planet"
     }
     func messageForPopUp() -> String {
-        return "Nicolas is the God"
+        return "The Spirits Are Restless"
     }
     func questionForPopUp() -> TrueFalseQuestion {
-        return TrueFalseQuestion(planetName: "Earth", question: "Is Nicolas The God?", answer: true)
+        return TrueFalseQuestion(planetName: "Earth", question: "Are the Spirits Restless ?", answer: true)
     }
     func transactionImageName() -> String {
         return "Transition Earth"
@@ -540,7 +504,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     private func initialize() {
         self.backgroundColor = self.BACKGROUND_COLOR
         self.currentQuestion = self.questionForPopUp()
-        
+        //defaults.setObject(0, forKey: "distanceTraveled")
         self.amountOfObjects = 0
         self.gameHasBegun = self.shouldPresentStartMenu() ? false : true
         
@@ -560,7 +524,63 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         }
         
         self.world.addChild(timerNode)
+    }
+    
+    private func getRandomObject() -> [SKSpriteNode] {
+        var obstacle: SKSpriteNode
+        var probability1 = arc4random_uniform(100)
         
+        if( self.leftHero.isSpaceKing || self.rightHero.isSpaceKing ) {
+            obstacle = SKSpriteNode(imageNamed: "coinIcon")
+            obstacle.name = COIN_NAME
+            
+        } else if( probability1 < UInt32( self.POWER_UP_PROBABILITY ) ) {
+            var probability = Double(arc4random_uniform(1000))/10.0
+            
+            if( probability < 100 && probability >= 75 ) {
+                obstacle = SKSpriteNode(imageNamed: "MultiplierCoinsPowerUpIcon")
+                obstacle.name = MULTIPLIER_NAME
+                
+            } else if( probability < 75 && probability >= 55 ) {
+                obstacle = SKSpriteNode(imageNamed: "CoinMagnetPowerUp")
+                obstacle.name = COIN_MAGNET_NAME
+                
+            } else if( probability < 55 && probability >= 40 ) {
+                obstacle = SKSpriteNode(imageNamed: "GhostPowerUp")
+                obstacle.name = INVISIBILITY_NAME
+                
+            } else if( probability < 40 && probability >= 30 ) {
+                obstacle = SKSpriteNode(imageNamed: "FusionPowerUp")
+                obstacle.name = FUSION_NAME
+                
+            } else if( probability < 30 && probability >= 20 ) {
+                obstacle = SKSpriteNode(imageNamed: "ChangeSidePowerUp")
+                obstacle.name = INVERT_NAME
+                
+            } else if( probability < 20 && probability >= 12.5 ) {
+                obstacle = SKSpriteNode(imageNamed: "GrowUpPowerUp")
+                obstacle.name = RESIZE_UP_NAME
+                
+            } else if( probability < 12.5 && probability >= 5 ) {
+                obstacle = SKSpriteNode(imageNamed: "SizeDownPowerUp")
+                obstacle.name = RESIZE_DOWN_NAME
+                
+            } else {
+                obstacle = SKSpriteNode(imageNamed: "SpaceKingPowerUp")
+                obstacle.name = SPACE_KING_NAME
+            }
+            
+        } else if( probability1 > UInt32( self.POWER_UP_PROBABILITY ) && probability1 < UInt32( self.POWER_UP_PROBABILITY + self.COIN_PROBABILTY ) ) {
+            
+            obstacle = SKSpriteNode(imageNamed: "coinIcon")
+            obstacle.name = COIN_NAME
+        } else {
+            
+            obstacle = SKSpriteNode(imageNamed: imageNameArray[ Int(arc4random_uniform( UInt32(self.imageNameArray.count))) ])
+            obstacle.name = OBSTACLE_NAME
+        }
+        
+        return [obstacle];
     }
     
     private func runGame() {
@@ -609,7 +629,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         
     }
     private func goToNextLevel() {
-        self.player.pause()
+        if( self.player != nil ) {
+            self.player.pause()
+        }
         var viewSize = CGSize(width: WIDTH, height: HEIGHT)
         var nextPlanet: GameScene
         
@@ -656,7 +678,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             //println("earth")
         }
         nextPlanet.scaleMode = .AspectFill
-        self.view?.presentScene(nextPlanet, transition: SKTransition.fadeWithDuration(2))
+        let transition = SKTransition.fadeWithDuration(1)
+        self.ground.removeFromParent()
+        self.roof.removeFromParent()
+        self.labels.removeFromParent()
+        nextPlanet.ground = self.ground
+        nextPlanet.roof = self.roof
+        nextPlanet.labels = self.labels
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            
+            self.view?.presentScene(nextPlanet, transition:transition)
+            self.world.removeAllChildren()
+            self.unload()
+        }
+        
     }
     private func createBackgroundImage() {
         self.background = BackgroundManager(firstLevelImageName: "first" + self.planetName(), secondLevelImageName: "second" + self.planetName(), thirdLevelImageName: "third" + self.planetName(), fourthLevelImageName: "fourth" + self.planetName(), maxHeight: HEIGHT, maxWidth: WIDTH)
@@ -680,11 +716,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     private func onTimerEvent() {
         
-        if( self.amountOfObjects != self.maximumAmountOfObjectsForLevel() && !self.rightHero.paused && !self.leftHero.paused ) {
+        if( self.amountOfObjects < self.maximumAmountOfObjectsForLevel() && !self.rightHero.paused && !self.leftHero.paused ) {
             if( self.objects == nil ) {
                 self.objects = self.objectsForRound()
             }
-            //self.objectsInScreen += self.objects.count
             for (i, obj) in enumerate(objects) {
                 dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
                     var node: SKSpriteNode = obj as SKSpriteNode
@@ -696,24 +731,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                     node.physicsBody?.dynamic = true
                     node.physicsBody?.affectedByGravity = false
                     node.physicsBody?.mass = 2
-                    node.position.x = self.WIDTH + node.size.width/2
-                    node.position.y = CGFloat( self.randomFrom(UInt32(self.ground.size.height + node.size.height/2), max: UInt32(self.HEIGHT - node.size.height/2)) )
+                    var duration = self.BACKGROUND_ANIMATION_DURATION
+                    if( node.position.x != 0 ) {
+                        duration = Double(CGFloat(self.BACKGROUND_ANIMATION_DURATION)*(self.WIDTH + node.position.x)/self.WIDTH)
+                    }
+                    node.position.x += self.WIDTH + node.size.width/2
+                    if( node.name != "coinFromSKS" ) {
+                        node.position.y = CGFloat( self.randomFrom(UInt32(self.ground.size.height + node.size.height/2), max: UInt32(self.HEIGHT - node.size.height/2)) )
+                    }else if( node.name == "coinFromSKS"){
+                        node.name = self.COIN_NAME
+                    }
                     dispatch_async(dispatch_get_main_queue()) {
                         self.world.addChild(node)
-                        node.runAction(SKAction.moveTo(CGPoint(x: -node.frame.size.width/2, y: node.position.y), duration: self.BACKGROUND_ANIMATION_DURATION), completion: { () -> Void in
+                        
+                        node.runAction(SKAction.moveTo(CGPoint(x: -node.frame.size.width/2, y: node.position.y), duration: duration), completion: { () -> Void in
                             node.removeFromParent()
                         })
                     }
                 }
-                
             }
             
+            
+            self.amountOfObjects += objects.count
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
                 self.objects = self.objectsForRound()
             }
-            self.amountOfObjects += objects.count
             self.objects = nil
-            self.timerNode.runAction(SKAction.waitForDuration(self.randomFrom(1, max: 3)), completion: onTimerEvent)
+            self.timerNode.runAction(SKAction.waitForDuration(self.randomFrom(2, max: 3)), completion: onTimerEvent)
         } else if( !self.rightHero.paused && !self.leftHero.paused  ){
             self.allObjectsHaveBeenCreated()
         }
@@ -723,35 +767,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         if( !self.rightHero.paused && !self.leftHero.paused ){
             if let score = defaults.integerForKey("distanceTraveled") as? Int {
                 distanceTraveled = score + 1
-                self.distanceLabel.text = String(format: "%ld meters", arguments: [ (self.distanceTraveled)])
+                //dispatch_async(dispatch_get_main_queue()) {
+                    self.labels.updateDistanceLabelTextTo(self.distanceTraveled)
+                //}
                 defaults.setObject(distanceTraveled, forKey: "distanceTraveled")
             }
         }
 
     }
     // Gets objects from a sks file
-    private func createSceneFromSksFileNamed(name: String) {
+    func createCoinsFromSksFileNamed(name: String) -> [SKSpriteNode] {
+        var coins = [SKSpriteNode]()
         for (i, obj) in enumerate(SKScene.unarchiveFromFile(name)!.children) {
             let node = obj as! SKNode
             node.removeFromParent()
             if let nodeName = node.name {
-                switch(nodeName) {
-                    case "leftHero":
-                        self.leftHero.position = node.position
-                    case "rightHero":
-                        self.rightHero.position = node.position
-                    case "obstacle":
-                        if let body = node.physicsBody {
-                            body.categoryBitMask = OBSTACLE_CATEGORY
-                            body.contactTestBitMask = HERO_CATEGORY
-                            body.collisionBitMask = 0
-                        }
-                        world.addChild(node)
-                    default :
-                        println("name not mapped in swicth statement : \(nodeName)")
+                if( nodeName == "coin" && node is SKSpriteNode ){
+                    node.physicsBody?.categoryBitMask = OBSTACLE_CATEGORY
+                    node.physicsBody?.collisionBitMask = 0
+                    node.physicsBody?.contactTestBitMask = HERO_CATEGORY
+                    node.name = "coinFromSKS"
+                    coins.append(node as! SKSpriteNode)
                 }
             }
         }
+        return coins
     }
     private func randomFrom(min: UInt32, max: UInt32) -> Double {
         return Double(  min + arc4random_uniform(max - min) )
@@ -772,6 +812,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.leftHero = Hero(texture: textureArray[0] as SKTexture, respositivitySide: .Left)
         
         self.loadFlyingTexturesInBackground()
+        
         self.runningAction = SKAction.repeatActionForever(SKAction.animateWithTextures(textureArray, timePerFrame: 0.1))
         
         self.rightHero.runAction(self.runningAction)
@@ -793,6 +834,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.rightHero.physicsBody?.mass = HERO_MASS
         self.rightHero.physicsBody?.allowsRotation = false
         self.leftHero.physicsBody?.allowsRotation = false
+        self.rightHero.physicsBody?.restitution = 0
+        self.leftHero.physicsBody?.restitution = 0
         self.leftHero.physicsBody?.mass = HERO_MASS
         
         world.addChild(self.rightHero)
@@ -811,52 +854,47 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         }
     }
     private func createGround() {
-        self.ground = SKSpriteNode(imageNamed: self.groundImageName())
-        self.ground.size.width = WIDTH
-        self.ground.size.height = HEIGHT/5
-        self.ground.position.x = WIDTH/2
-        self.ground.createPhysicsBodyForSelfWithCategory(GROUND_CATEGORY, contactCategory: HERO_CATEGORY, collisionCategory: HERO_CATEGORY | OBSTACLE_CATEGORY )
-        self.ground.physicsBody?.dynamic = false
-        self.ground.alpha = 0.0
+        if( self.ground == nil ) {
+            self.ground = SKSpriteNode(imageNamed: self.groundImageName())
+            self.ground.size.width = WIDTH
+            self.ground.size.height = HEIGHT/5
+            self.ground.position.x = WIDTH/2
+            self.ground.createPhysicsBodyForSelfWithCategory(GROUND_CATEGORY, contactCategory: HERO_CATEGORY, collisionCategory: HERO_CATEGORY | OBSTACLE_CATEGORY )
+            self.ground.physicsBody?.restitution = 0.0
+            self.ground.physicsBody?.dynamic = false
+            self.ground.alpha = 0.0
+        }
         
         world.addChild(self.ground)
     }
     private func createRoof() {
-        self.roof = SKShapeNode(path: UIBezierPath(rect: CGRect(x: 0, y: 0, width: WIDTH, height: 2)).CGPath)
-        self.roof.position.y = HEIGHT
-        self.roof.createPhysicsBodyForSelfWithCategory(WALL_CATEGORY, contactCategory: OBSTACLE_CATEGORY, collisionCategory:  OBSTACLE_CATEGORY, dynamic: false, affectedByGravity: false)
-        self.roof.alpha = 0
+        if( self.roof == nil ) {
+            self.roof = SKShapeNode(path: UIBezierPath(rect: CGRect(x: 0, y: 0, width: WIDTH, height: 2)).CGPath)
+            self.roof.position.y = HEIGHT
+            self.roof.createPhysicsBodyForSelfWithCategory(WALL_CATEGORY, contactCategory: OBSTACLE_CATEGORY, collisionCategory:  OBSTACLE_CATEGORY, dynamic: false, affectedByGravity: false)
+            self.roof.alpha = 0
+        }
         world.addChild(self.roof)
     }
     
     private func createLabels() {
-        // Initialization
-        self.distanceLabel = SKLabelNode(fontNamed: FONT_NAME)
-        self.coinsLabel = SKLabelNode(fontNamed: FONT_NAME)
-        self.upperLeftCornerImage = SKSpriteNode(imageNamed: "distance")
-        
-        // Initial Values
-        self.distanceLabel.text = String(format: "%ld meters", arguments: [ (self.distanceTraveled)])
-        self.coinsLabel.text = String(format: "%ld coins", arguments: [ (self.defaults.integerForKey("coinsCaptured"))])
-        
-        // Resize
-        self.distanceLabel = self.resizeLabel(distanceLabel, ToFitHeight: HEIGHT/20)
-        self.coinsLabel = self.resizeLabel(coinsLabel, ToFitHeight: HEIGHT/30)
-        self.resizeSprite(self.upperLeftCornerImage, toFitHeight: HEIGHT/8)
-        
-        // Add to Scene
-        self.world.addChild(self.distanceLabel)
-        self.world.addChild(self.coinsLabel)
-        self.world.addChild(self.upperLeftCornerImage)
-        
-        // Positions
-        self.distanceLabel.position = CGPoint(x: (self.distanceLabel.frame.size.width/1.123456789) , y: HEIGHT - self.distanceLabel.frame.size.height)
-        self.coinsLabel.position = CGPoint(x: self.coinsLabel.frame.size.width/1.123456789 , y: self.distanceLabel.position.y - self.distanceLabel.frame.size.height)
-        self.upperLeftCornerImage.position.y = HEIGHT - self.upperLeftCornerImage.size.height/2
-        self.upperLeftCornerImage.position.x = self.upperLeftCornerImage.size.width/2
-        self.upperLeftCornerImage.zPosition = 1
-        self.distanceLabel.zPosition = 2
-        self.coinsLabel.zPosition = 2
+        if( self.labels == nil ) {
+            self.labels = LabelManager(
+                maxHeight: HEIGHT,
+                maxWidth: WIDTH,
+                distanceBackgroundImageName: "distance",
+                initialDistanceLabelText: "00000 meters",
+                initialCoinsLabelText: "0000 coins",
+                pauseOnIconImageName: "play",
+                pauseOffIconImageName: "pause",
+                initialPauseState: false,
+                musicOnImageName: "music",
+                musicOffImageName: "no music",
+                initialMusicState: false
+            )
+        }
+        self.labels.updateCoinLabelTextTo(defaults.integerForKey("coinsCaptured"))
+        self.world.addChild(self.labels)
     }
     
     private func resizeLabel(label: SKLabelNode, ToFitHeight height: CGFloat) -> SKLabelNode {
@@ -870,7 +908,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
             
             //println("1 - Pup")
-            self.curiosityPopUpMenu = PopUp(backgroundImageName: self.popUpBackgroundImageName(), rightButtonImageName: "restartIcon", leftButtonImageName: "questionIcon", distance: String(format: "%.2lf", arguments: [self.gravityForLevel().dy]), planetName: self.planetName(), message: self.messageForPopUp())
+            self.curiosityPopUpMenu = PopUp(backgroundImageName: self.popUpBackgroundImageName(), rightButtonImageName: "restartIcon", leftButtonImageName: "questionIcon", distance: "00000 m", planetName: self.planetName(), message: self.messageForPopUp())
             var height = self.HEIGHT * 0.75
             var width = self.getWidthForSpriteWithOriginalHeight(self.curiosityPopUpMenu.size.height, andOriginalWidth: self.curiosityPopUpMenu.size.width, andNewHeight: height)
             self.curiosityPopUpMenu.size = CGSize(width: width, height: height)
@@ -879,7 +917,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             self.curiosityPopUpMenu.hidden = true
             
             self.currentQuestion = self.questionForPopUp()
-            self.questionPopUpMenu = PopUp(backgroundImageName: self.popUpBackgroundImageName(), rightButtonImageName: "falseIcon", leftButtonImageName: "trueIcon", distance: String(format: "%.2lf", arguments: [self.gravityForLevel().dy]), planetName: self.planetName(), message: self.currentQuestion.question)
+            self.questionPopUpMenu = PopUp(backgroundImageName: self.popUpBackgroundImageName(), rightButtonImageName: "falseIcon", leftButtonImageName: "trueIcon", distance: "00000 m", planetName: self.planetName(), message: self.currentQuestion.question)
             self.questionPopUpMenu.size = self.curiosityPopUpMenu.size
             self.questionPopUpMenu.position = self.curiosityPopUpMenu.position
             self.questionPopUpMenu.alpha = 0
@@ -899,6 +937,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     private func showRestartPopUp() {
         if( curiosityPopUpMenu != nil ) {
             self.curiosityPopUpMenu.hidden = false
+            self.curiosityPopUpMenu.distanceLabel.text = self.labels.distanceLabel.text.substringWithRange(Range<String.Index>(start: self.labels.distanceLabel.text.startIndex, end: advance(self.labels.distanceLabel.text.endIndex, -5)))
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+                self.questionPopUpMenu.distanceLabel.text = self.curiosityPopUpMenu.distanceLabel.text
+            }
             self.curiosityPopUpMenu.runAction(SKAction.fadeAlphaTo(1.0, duration: 0.5))
         }
         
@@ -920,8 +962,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.leftHero.restoreOriginalPhysicsProperties()
         self.rightHero.restoreOriginalPhysicsProperties()
         
-//        self.background1.paused = true
-//        self.background2.paused = true
         self.rightHero.paused = true
         self.leftHero.paused = true
     }
@@ -942,8 +982,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             self.createPopUpMenusInBackground()
             self.timerNode.runAction(SKAction.waitForDuration(0.0), completion: self.onTimerEvent)
             self.gameHasBegun = true
-//            self.background1.paused = false
-//            self.background2.paused = false
             self.rightHero.paused = false
             self.leftHero.paused = false
         })
@@ -1003,15 +1041,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             self.portal.hidden = true
         }
     }
+    private func unload() {
+        if( self.player != nil ) {
+            self.player.stop()
+            self.player = nil
+        }
+        self.curiosityPopUpMenu = nil
+        self.questionPopUpMenu = nil
+        self.ground = nil
+        self.roof = nil
+        self.labels = nil
+        self.background = nil
+    }
     
     // MARK - Physics Delegate
     func didBeginContact(contact: SKPhysicsContact) {
         var bodyA = contact.bodyA
         var bodyB = contact.bodyB
         
-        if( ( bodyA.categoryBitMask & HERO_CATEGORY  != 0 ) && ( bodyB.categoryBitMask & GROUND_CATEGORY != 0 ) ) {
-            if( bodyA.node == nil || bodyB.node == nil ) {
+        if( ( bodyB.categoryBitMask & HERO_CATEGORY  != 0 ) && ( bodyA.categoryBitMask & GROUND_CATEGORY != 0 ) ) {
+            if( bodyB.node == nil ) {
                 println("physics body is not connected to a node")
+                
+            }else{
+                var hero = bodyB.node as! Hero
+                hero.isHittingTheGround = true
+            }
+        }else if( ( bodyA.categoryBitMask & HERO_CATEGORY  != 0 ) && ( bodyB.categoryBitMask & GROUND_CATEGORY != 0 ) ) {
+            if( bodyA.node == nil ) {
+                println("physics body is not connected to a node")
+                
             }else{
                 var hero = bodyA.node as! Hero
                 hero.isHittingTheGround = true
@@ -1029,9 +1088,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             if( bodyA.node == nil || bodyB.node == nil ) {
                 println("physics body is not connected to a node")
             }else {
-                dispatch_async(dispatch_get_main_queue()) {
+                //dispatch_async(dispatch_get_main_queue()) {
                     self.goToNextLevel()
-                }
+                //}
             }
         }
     }
@@ -1040,14 +1099,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         var bodyA = contact.bodyA
         var bodyB = contact.bodyB
         
-        if( ( bodyA.categoryBitMask & HERO_CATEGORY  != 0 ) && ( bodyB.categoryBitMask & GROUND_CATEGORY != 0 ) ) {
-            if( bodyA.node == nil || bodyB.node == nil ) {
+        if( ( bodyB.categoryBitMask & HERO_CATEGORY  != 0 ) && ( bodyA.categoryBitMask & GROUND_CATEGORY != 0 ) ) {
+            if( bodyB.node == nil ) {
                 println("physics body is not connected to a node")
+                
+            }else{
+                var hero = bodyB.node as! Hero
+                hero.isHittingTheGround = false
+            }
+        }else if( ( bodyA.categoryBitMask & HERO_CATEGORY  != 0 ) && ( bodyB.categoryBitMask & GROUND_CATEGORY != 0 ) ) {
+            if( bodyA.node == nil ) {
+                println("physics body is not connected to a node")
+                
             }else{
                 var hero = bodyA.node as! Hero
                 hero.isHittingTheGround = false
             }
         }
+
     }
 }
 

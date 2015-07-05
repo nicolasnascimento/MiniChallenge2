@@ -64,7 +64,7 @@ class Hero: SKSpriteNode {
     func resizeUp() {
         println("resizing up")
         var grow = SKAction.scaleTo(RESIZING_FACTOR, duration: 0.0)
-        var recreatePhysicsBody = SKAction.customActionWithDuration(0.0, actionBlock: { (node, period) -> Void in
+        var recreatePhysicsBody = SKAction.customActionWithDuration(0.0, actionBlock: { [unowned self] (node, period) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
                 self.recreatePhysicsBody()
             }
@@ -78,7 +78,7 @@ class Hero: SKSpriteNode {
         println("resizing down")
         
         var shrink = SKAction.scaleTo(1.0/RESIZING_FACTOR, duration: 0.0)
-        var recreatePhysicsBody = SKAction.customActionWithDuration(0.0, actionBlock: { (node, period) -> Void in
+        var recreatePhysicsBody = SKAction.customActionWithDuration(0.0, actionBlock: { [unowned self]  (node, period) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
                 self.recreatePhysicsBody()
             }
@@ -93,7 +93,7 @@ class Hero: SKSpriteNode {
         
         self.alpha = INVISIBILTY_FACTOR
         self.shouldHitObjects = false
-        self.runAction(SKAction.waitForDuration(POWER_UP_DURATION), completion: { () -> Void in
+        self.runAction(SKAction.waitForDuration(POWER_UP_DURATION), completion: { [unowned self] () -> Void in
             self.alpha = CGFloat(1.0)
             self.shouldHitObjects = true
         })
@@ -126,7 +126,7 @@ class Hero: SKSpriteNode {
         var scaleBack = SKAction.scaleTo(1.0, duration: 0.2)
         var grow = SKAction.scaleTo(RESIZING_FACTOR, duration: 0.0)
         var wait = SKAction.waitForDuration(POWER_UP_DURATION)
-        var recreatePhysicsBody = SKAction.customActionWithDuration(0.0, actionBlock: { (node, period) -> Void in
+        var recreatePhysicsBody = SKAction.customActionWithDuration(0.0, actionBlock: { [unowned self] (node, period) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
                 self.recreatePhysicsBody()
             }
@@ -136,7 +136,7 @@ class Hero: SKSpriteNode {
         hero.runAction(SKAction.sequence([SKAction.group([shrink, comeClose]), recreatePhysicsBody]) )
         self.runAction(SKAction.group([shrink, comeClose]), completion: { () -> Void in
             dispatch_async(dispatch_get_main_queue()) {
-                self.runAction(SKAction.sequence([grow, recreatePhysicsBody, wait]), completion: { () -> Void in
+                self.runAction(SKAction.sequence([grow, recreatePhysicsBody, wait]), completion: { [unowned self] () -> Void in
                     dispatch_async(dispatch_get_main_queue()) {
                         self.isFused = false
                         hero.isFused = false
@@ -152,7 +152,7 @@ class Hero: SKSpriteNode {
     
     func turnToSpaceKing() {
         self.isSpaceKing = true
-        self.runAction(SKAction.waitForDuration(POWER_UP_DURATION), completion: { () -> Void in
+        self.runAction(SKAction.waitForDuration(POWER_UP_DURATION), completion: { [unowned self] () -> Void in
             self.isSpaceKing = false
         })
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7706" systemVersion="15A178w" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="7701"/>
@@ -10,83 +10,89 @@
             <objects>
                 <controller title="Earth" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="HadesProject_WatchKit_App" customModuleProvider="target">
                     <items>
-                        <imageView alignment="left" image="terra" id="r5Q-Ys-cSf"/>
+                        <imageView height="130" alignment="left" image="terra" id="r5Q-Ys-cSf"/>
                         <label alignment="left" text="Gravity: -9.8" id="PNI-Al-7XI"/>
+                        <label alignment="left" text="The Earth was once believed to be the centre of the universe" numberOfLines="0" id="V2u-Ay-Nl7"/>
                     </items>
                     <connections>
                         <segue destination="6UQ-Lw-blB" kind="relationship" relationship="nextPage" id="7M8-XK-y9L"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="127" y="337"/>
+            <point key="canvasLocation" x="127" y="334"/>
         </scene>
         <!--Moon-->
         <scene sceneID="lHF-q5-8e3">
             <objects>
                 <controller title="Moon" id="6UQ-Lw-blB">
                     <items>
-                        <imageView alignment="left" image="lua" id="DCu-XV-p8q"/>
+                        <imageView height="130" alignment="left" image="lua" id="DCu-XV-p8q"/>
                         <label alignment="left" text="Gravity: -1.622" id="pgD-Or-v2R"/>
+                        <label alignment="left" text="The Moon is drifting away from the Earth" numberOfLines="0" id="bes-LK-iG9"/>
                     </items>
                     <connections>
                         <segue destination="N7p-K9-dx6" kind="relationship" relationship="nextPage" id="Rm4-Ja-Uzd"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="319" y="337"/>
+            <point key="canvasLocation" x="319" y="334.5"/>
         </scene>
         <!--Mercury-->
         <scene sceneID="lIV-Yq-7Wa">
             <objects>
                 <controller title="Mercury" id="N7p-K9-dx6">
                     <items>
-                        <imageView alignment="left" image="mercurio" id="hkZ-I1-XCo"/>
+                        <imageView height="130" alignment="left" image="mercurio" id="hkZ-I1-XCo"/>
                         <label alignment="left" text="Gravity: -3.7" id="z1w-Eu-pYs"/>
+                        <label alignment="left" text="Mercury is the smallest planet in the Solar System" numberOfLines="0" id="DlR-da-zLt"/>
                     </items>
                     <connections>
                         <segue destination="TLD-sE-15J" kind="relationship" relationship="nextPage" id="dcu-og-Ec5"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="507" y="337"/>
+            <point key="canvasLocation" x="507" y="335"/>
         </scene>
         <!--Venus-->
         <scene sceneID="Byk-MS-Nlg">
             <objects>
                 <controller title="Venus" id="TLD-sE-15J">
                     <items>
-                        <imageView alignment="left" image="venus" id="e2b-st-o0c"/>
+                        <imageView height="130" alignment="left" image="venus" id="e2b-st-o0c"/>
                         <label alignment="left" text="Gravity: -8.87" id="FWc-At-Ar1"/>
+                        <label alignment="left" text="Venus rotates counter-clockwise" numberOfLines="0" id="ezu-RR-t6h"/>
                     </items>
                     <connections>
                         <segue destination="jfy-s9-y5X" kind="relationship" relationship="nextPage" id="ywB-aF-yTo"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="683" y="337"/>
+            <point key="canvasLocation" x="683" y="334.5"/>
         </scene>
         <!--Mars-->
         <scene sceneID="vMx-83-qib">
             <objects>
                 <controller title="Mars" id="jfy-s9-y5X">
                     <items>
-                        <imageView alignment="left" image="marte" id="Zlt-Sv-vJj"/>
+                        <imageView height="130" alignment="left" image="marte" id="Zlt-Sv-vJj"/>
                         <label alignment="left" text="Gravity: -3.711" id="rKC-tb-t2M"/>
+                        <label alignment="left" text="Mars is home to the tallest mountain in the solar system" numberOfLines="0" id="HG2-az-BHm"/>
                     </items>
                     <connections>
                         <segue destination="I7H-YG-JhW" kind="relationship" relationship="nextPage" id="rMN-uA-hKs"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="868" y="337"/>
+            <point key="canvasLocation" x="868" y="334.5"/>
         </scene>
         <!--Saturn-->
         <scene sceneID="p5j-I4-WIO">
             <objects>
                 <controller title="Saturn" id="wsJ-W3-ZMv">
                     <items>
-                        <imageView height="135" alignment="left" image="saturno + aneis" contentMode="scaleAspectFill" id="Y4g-hf-AOA"/>
+                        <imageView height="130" alignment="left" image="saturno + aneis" contentMode="scaleAspectFill" id="Y4g-hf-AOA"/>
                         <label alignment="left" text="Gravity: -10.44" id="cDl-uh-64w"/>
+                        <label alignment="left" text="Saturn is made mostly of hydrogen" numberOfLines="0" id="LPn-Pk-7NW"/>
                     </items>
                     <connections>
                         <segue destination="k26-rW-S3b" kind="relationship" relationship="nextPage" id="dcE-sF-zNL"/>
@@ -100,8 +106,9 @@
             <objects>
                 <controller title="Pluto" id="0mX-Uv-3Q3">
                     <items>
-                        <imageView alignment="left" image="plutao" id="8qp-wd-kI5"/>
+                        <imageView height="130" alignment="left" image="plutao" id="8qp-wd-kI5"/>
                         <label alignment="left" text="Gravity: 0.658" id="ZKO-mz-g8c"/>
+                        <label alignment="left" text="There are five dwarf planets in our solar system" numberOfLines="0" id="nPN-CJ-WOo"/>
                     </items>
                 </controller>
             </objects>
@@ -112,8 +119,9 @@
             <objects>
                 <controller title="Neptune" id="eoh-ou-0R0">
                     <items>
-                        <imageView alignment="left" image="neturno" id="DyM-W9-89M"/>
+                        <imageView height="130" alignment="left" image="neturno" id="DyM-W9-89M"/>
                         <label alignment="left" text="Gravity: -11.15" id="AAO-G3-Zz4"/>
+                        <label alignment="left" text="Neptune has 14 moons" numberOfLines="0" id="vay-pS-5Ei"/>
                     </items>
                     <connections>
                         <segue destination="0mX-Uv-3Q3" kind="relationship" relationship="nextPage" id="K1d-3U-Ah8"/>
@@ -127,8 +135,9 @@
             <objects>
                 <controller title="Uranus" id="k26-rW-S3b">
                     <items>
-                        <imageView alignment="left" image="urano" id="mWf-at-zyQ"/>
+                        <imageView height="130" alignment="left" image="urano" id="mWf-at-zyQ"/>
                         <label alignment="left" text="Gravity: -8.69" id="UUU-KB-2Is"/>
+                        <label alignment="left" text="Uranus makes one trip around the Sun every 84 Earth years" numberOfLines="0" id="juy-CI-wp8"/>
                     </items>
                     <connections>
                         <segue destination="eoh-ou-0R0" kind="relationship" relationship="nextPage" id="wNg-hP-Gib"/>
@@ -142,8 +151,9 @@
             <objects>
                 <controller title="Jupiter" id="I7H-YG-JhW">
                     <items>
-                        <imageView alignment="left" image="jupiter" id="gHe-Pg-4hL"/>
+                        <imageView height="130" alignment="left" image="jupiter" id="gHe-Pg-4hL"/>
                         <label alignment="left" text="Gravity: -24.79" id="coG-b1-ZgX"/>
+                        <label alignment="left" text="Jupiter orbits the Sun once every 11.8 Earth years" numberOfLines="0" id="LBm-ME-YUB"/>
                     </items>
                     <connections>
                         <segue destination="wsJ-W3-ZMv" kind="relationship" relationship="nextPage" id="EOL-r0-jwd"/>

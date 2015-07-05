@@ -29,7 +29,8 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(0, forKey: "distanceTraveled")
         // Configure the view.
         let skView = self.view as! SKView
         //skView.showsFPS = true

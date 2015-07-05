@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HadesProject/GameScene.swift"
-            timestampString = "457587476.356029"
+            timestampString = "457805925.824747"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "621"
-            endingLineNumber = "621"
+            startingLineNumber = "657"
+            endingLineNumber = "657"
             landmarkName = "goToNextLevel()"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HadesProject/GameScene.swift"
-            timestampString = "457587378.546515"
+            timestampString = "457805925.824747"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "608"
-            endingLineNumber = "608"
-            landmarkName = "runGame()"
+            startingLineNumber = "642"
+            endingLineNumber = "642"
+            landmarkName = "goToNextLevel()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -74,12 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HadesProject/GameScene.swift"
-            timestampString = "457587476.356029"
+            timestampString = "457806302.910368"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "991"
-            endingLineNumber = "991"
-            landmarkName = "resizeSprite(_:toFitHeight:)"
+            startingLineNumber = "1058"
+            endingLineNumber = "1058"
+            landmarkName = "didBeginContact(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -90,12 +90,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HadesProject/GameScene.swift"
-            timestampString = "457586507.672937"
+            timestampString = "457756053.19671"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "243"
-            endingLineNumber = "243"
-            landmarkName = "touchesBegan(_:withEvent:)"
+            startingLineNumber = "265"
+            endingLineNumber = "265"
+            landmarkName = "update(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -122,7 +122,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HadesProject/EarthLevel.swift"
-            timestampString = "457386746.513999"
+            timestampString = "457805303.774333"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "45"
@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HadesProject/GameScene.swift"
-            timestampString = "457587476.356029"
+            timestampString = "457806302.910368"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "693"
-            endingLineNumber = "693"
+            startingLineNumber = "748"
+            endingLineNumber = "748"
             landmarkName = "onTimerEvent()"
             landmarkType = "5">
          </BreakpointContent>

@@ -73,8 +73,6 @@ class MovingBackground: SKNode {
     
     private func onMovementFinish() {
         
-            //self.front.removeAllActions()
-            //self.front.removeFromParent()
         self.front = self.rear
         self.rear = self.nextImage
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {

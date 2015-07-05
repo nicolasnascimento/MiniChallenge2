@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C085A7A1B498BF900542F55 /* CoinU.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0C085A791B498BF900542F55 /* CoinU.sks */; };
 		0C17CA5E1B45991900D54CF1 /* GameMusic.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0C17CA5D1B45991900D54CF1 /* GameMusic.m4a */; };
 		0C17CA611B45ADDC00D54CF1 /* MovingBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C17CA601B45ADDC00D54CF1 /* MovingBackground.swift */; };
 		0C17CA631B45ADEB00D54CF1 /* BackgroundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C17CA621B45ADEB00D54CF1 /* BackgroundManager.swift */; };
@@ -22,6 +23,7 @@
 		0C7493731B3B1E5900A1BA09 /* UranusLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7493721B3B1E5900A1BA09 /* UranusLevel.swift */; };
 		0C7493751B3B1EDA00A1BA09 /* NeptuneLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7493741B3B1EDA00A1BA09 /* NeptuneLevel.swift */; };
 		0C7493771B3B1EFD00A1BA09 /* PlutoLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7493761B3B1EFD00A1BA09 /* PlutoLevel.swift */; };
+		0C84FB9F1B478459008B8A7D /* CoinH.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0C84FB9E1B478459008B8A7D /* CoinH.sks */; };
 		0C8D06CC1B42E2D4001759C9 /* AstronautFly.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 0C8D06CB1B42E2D4001759C9 /* AstronautFly.atlas */; };
 		0C94B8671B1F67D700945476 /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C94B8661B1F67D700945476 /* Hero.swift */; };
 		0C99B8E81B4464B2006B51DC /* StartMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C99B8E71B4464B2006B51DC /* StartMenu.swift */; };
@@ -29,31 +31,25 @@
 		0C99D7321B431581003FA6DE /* TrueFalseQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C99D7311B431581003FA6DE /* TrueFalseQuestion.swift */; };
 		0C9E72F21B41CB8A00AA003E /* PopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9E72F11B41CB8A00AA003E /* PopUp.swift */; };
 		0CA0CECF1B1E3F41002282DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CECE1B1E3F41002282DA /* AppDelegate.swift */; };
-		0CA0CED11B1E3F41002282DA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0CA0CED01B1E3F41002282DA /* GameScene.sks */; };
+		0CA0CED11B1E3F41002282DA /* CoinLine.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0CA0CED01B1E3F41002282DA /* CoinLine.sks */; };
 		0CA0CED31B1E3F41002282DA /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CED21B1E3F41002282DA /* GameScene.swift */; };
 		0CA0CED51B1E3F41002282DA /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CED41B1E3F41002282DA /* GameViewController.swift */; };
 		0CA0CED81B1E3F41002282DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CA0CED61B1E3F41002282DA /* Main.storyboard */; };
 		0CA0CEDA1B1E3F41002282DA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CA0CED91B1E3F41002282DA /* Images.xcassets */; };
 		0CA0CEDD1B1E3F41002282DA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CA0CEDB1B1E3F41002282DA /* LaunchScreen.xib */; };
-		0CA0CEE91B1E3F41002282DA /* HadesProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CEE81B1E3F41002282DA /* HadesProjectTests.swift */; };
+		0CBC5FD51B48C78400E176DF /* LabelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBC5FD31B48C78400E176DF /* LabelManager.swift */; };
+		0CBC5FD61B48C78400E176DF /* TwoStateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBC5FD41B48C78400E176DF /* TwoStateButton.swift */; };
 		0CE9EAC51B39D58900D76019 /* EarthLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9EAC41B39D58900D76019 /* EarthLevel.swift */; };
 		0D126FDD1B41ADCC008C45B1 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D126FDC1B41ADCC008C45B1 /* InterfaceController.swift */; };
 		0D126FDF1B41ADCC008C45B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D126FDE1B41ADCC008C45B1 /* Images.xcassets */; };
-		0D126FE31B41ADCC008C45B1 /* HadesProject WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = 0D126FE21B41ADCC008C45B1 /* HadesProject WatchKit App.app */; };
+		0D126FE31B41ADCC008C45B1 /* AstroPlanet WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = 0D126FE21B41ADCC008C45B1 /* AstroPlanet WatchKit App.app */; };
 		0D126FEB1B41ADCC008C45B1 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D126FE91B41ADCC008C45B1 /* Interface.storyboard */; };
 		0D126FED1B41ADCC008C45B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D126FEC1B41ADCC008C45B1 /* Images.xcassets */; };
-		0D126FF01B41ADCC008C45B1 /* HadesProject WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0D126FD81B41ADCC008C45B1 /* HadesProject WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0D126FF01B41ADCC008C45B1 /* AstroPlanet WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0D126FD81B41ADCC008C45B1 /* AstroPlanet WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F4747BAD1B3DB80600822135 /* ShopScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4747BAC1B3DB80600822135 /* ShopScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0CA0CEE31B1E3F41002282DA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0CA0CEC11B1E3F41002282DA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0CA0CEC81B1E3F41002282DA;
-			remoteInfo = HadesProject;
-		};
 		0D126FE41B41ADCC008C45B1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0CA0CEC11B1E3F41002282DA /* Project object */;
@@ -77,7 +73,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				0D126FF01B41ADCC008C45B1 /* HadesProject WatchKit Extension.appex in Embed App Extensions */,
+				0D126FF01B41ADCC008C45B1 /* AstroPlanet WatchKit Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -85,6 +81,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0C085A791B498BF900542F55 /* CoinU.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CoinU.sks; sourceTree = "<group>"; };
 		0C17CA5D1B45991900D54CF1 /* GameMusic.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = GameMusic.m4a; sourceTree = "<group>"; };
 		0C17CA601B45ADDC00D54CF1 /* MovingBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovingBackground.swift; sourceTree = "<group>"; };
 		0C17CA621B45ADEB00D54CF1 /* BackgroundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundManager.swift; sourceTree = "<group>"; };
@@ -100,30 +97,32 @@
 		0C7493721B3B1E5900A1BA09 /* UranusLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UranusLevel.swift; sourceTree = "<group>"; };
 		0C7493741B3B1EDA00A1BA09 /* NeptuneLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeptuneLevel.swift; sourceTree = "<group>"; };
 		0C7493761B3B1EFD00A1BA09 /* PlutoLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlutoLevel.swift; sourceTree = "<group>"; };
+		0C84FB9E1B478459008B8A7D /* CoinH.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CoinH.sks; sourceTree = "<group>"; };
 		0C8D06CB1B42E2D4001759C9 /* AstronautFly.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = AstronautFly.atlas; sourceTree = "<group>"; };
 		0C94B8661B1F67D700945476 /* Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
 		0C99B8E71B4464B2006B51DC /* StartMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartMenu.swift; sourceTree = "<group>"; };
 		0C99D72F1B430E2C003FA6DE /* QuestionDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionDatabase.swift; sourceTree = "<group>"; };
 		0C99D7311B431581003FA6DE /* TrueFalseQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrueFalseQuestion.swift; sourceTree = "<group>"; };
 		0C9E72F11B41CB8A00AA003E /* PopUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUp.swift; sourceTree = "<group>"; };
-		0CA0CEC91B1E3F41002282DA /* HadesProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HadesProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0CA0CEC91B1E3F41002282DA /* AstroPlanet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AstroPlanet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CA0CECD1B1E3F41002282DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CA0CECE1B1E3F41002282DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0CA0CED01B1E3F41002282DA /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		0CA0CED01B1E3F41002282DA /* CoinLine.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CoinLine.sks; sourceTree = "<group>"; };
 		0CA0CED21B1E3F41002282DA /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		0CA0CED41B1E3F41002282DA /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		0CA0CED71B1E3F41002282DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0CA0CED91B1E3F41002282DA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0CA0CEDC1B1E3F41002282DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		0CA0CEE21B1E3F41002282DA /* HadesProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HadesProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CA0CEE71B1E3F41002282DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CA0CEE81B1E3F41002282DA /* HadesProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HadesProjectTests.swift; sourceTree = "<group>"; };
+		0CBC5FD31B48C78400E176DF /* LabelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelManager.swift; sourceTree = "<group>"; };
+		0CBC5FD41B48C78400E176DF /* TwoStateButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoStateButton.swift; sourceTree = "<group>"; };
 		0CE9EAC41B39D58900D76019 /* EarthLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EarthLevel.swift; sourceTree = "<group>"; };
-		0D126FD81B41ADCC008C45B1 /* HadesProject WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "HadesProject WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D126FD81B41ADCC008C45B1 /* AstroPlanet WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "AstroPlanet WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D126FDB1B41ADCC008C45B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D126FDC1B41ADCC008C45B1 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
 		0D126FDE1B41ADCC008C45B1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		0D126FE21B41ADCC008C45B1 /* HadesProject WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HadesProject WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D126FE21B41ADCC008C45B1 /* AstroPlanet WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AstroPlanet WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D126FE81B41ADCC008C45B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D126FEA1B41ADCC008C45B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		0D126FEC1B41ADCC008C45B1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -132,13 +131,6 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		0CA0CEC61B1E3F41002282DA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0CA0CEDF1B1E3F41002282DA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -155,6 +147,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C085A781B498BC600542F55 /* CoinFormations */ = {
+			isa = PBXGroup;
+			children = (
+				0CA0CED01B1E3F41002282DA /* CoinLine.sks */,
+				0C085A791B498BF900542F55 /* CoinU.sks */,
+				0C84FB9E1B478459008B8A7D /* CoinH.sks */,
+			);
+			name = CoinFormations;
+			sourceTree = "<group>";
+		};
 		0C17CA5F1B45991C00D54CF1 /* Songs */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +187,8 @@
 		0C94B8681B1F67E200945476 /* Items */ = {
 			isa = PBXGroup;
 			children = (
+				0CBC5FD31B48C78400E176DF /* LabelManager.swift */,
+				0CBC5FD41B48C78400E176DF /* TwoStateButton.swift */,
 				0C17CA621B45ADEB00D54CF1 /* BackgroundManager.swift */,
 				0C17CA601B45ADDC00D54CF1 /* MovingBackground.swift */,
 				0C99B8E71B4464B2006B51DC /* StartMenu.swift */,
@@ -217,10 +221,9 @@
 		0CA0CECA1B1E3F41002282DA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0CA0CEC91B1E3F41002282DA /* HadesProject.app */,
-				0CA0CEE21B1E3F41002282DA /* HadesProjectTests.xctest */,
-				0D126FD81B41ADCC008C45B1 /* HadesProject WatchKit Extension.appex */,
-				0D126FE21B41ADCC008C45B1 /* HadesProject WatchKit App.app */,
+				0CA0CEC91B1E3F41002282DA /* AstroPlanet.app */,
+				0D126FD81B41ADCC008C45B1 /* AstroPlanet WatchKit Extension.appex */,
+				0D126FE21B41ADCC008C45B1 /* AstroPlanet WatchKit App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -299,7 +302,7 @@
 		0CA0CEF51B1E3FF3002282DA /* SKS */ = {
 			isa = PBXGroup;
 			children = (
-				0CA0CED01B1E3F41002282DA /* GameScene.sks */,
+				0C085A781B498BC600542F55 /* CoinFormations */,
 			);
 			name = SKS;
 			sourceTree = "<group>";
@@ -343,9 +346,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0CA0CEC81B1E3F41002282DA /* HadesProject */ = {
+		0CA0CEC81B1E3F41002282DA /* AstroPlanet */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0CA0CEEC1B1E3F41002282DA /* Build configuration list for PBXNativeTarget "HadesProject" */;
+			buildConfigurationList = 0CA0CEEC1B1E3F41002282DA /* Build configuration list for PBXNativeTarget "AstroPlanet" */;
 			buildPhases = (
 				0CA0CEC51B1E3F41002282DA /* Sources */,
 				0CA0CEC61B1E3F41002282DA /* Frameworks */,
@@ -357,32 +360,14 @@
 			dependencies = (
 				0D126FEF1B41ADCC008C45B1 /* PBXTargetDependency */,
 			);
-			name = HadesProject;
+			name = AstroPlanet;
 			productName = HadesProject;
-			productReference = 0CA0CEC91B1E3F41002282DA /* HadesProject.app */;
+			productReference = 0CA0CEC91B1E3F41002282DA /* AstroPlanet.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0CA0CEE11B1E3F41002282DA /* HadesProjectTests */ = {
+		0D126FD71B41ADCC008C45B1 /* AstroPlanet WatchKit Extension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0CA0CEEF1B1E3F41002282DA /* Build configuration list for PBXNativeTarget "HadesProjectTests" */;
-			buildPhases = (
-				0CA0CEDE1B1E3F41002282DA /* Sources */,
-				0CA0CEDF1B1E3F41002282DA /* Frameworks */,
-				0CA0CEE01B1E3F41002282DA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				0CA0CEE41B1E3F41002282DA /* PBXTargetDependency */,
-			);
-			name = HadesProjectTests;
-			productName = HadesProjectTests;
-			productReference = 0CA0CEE21B1E3F41002282DA /* HadesProjectTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		0D126FD71B41ADCC008C45B1 /* HadesProject WatchKit Extension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0D126FF61B41ADCD008C45B1 /* Build configuration list for PBXNativeTarget "HadesProject WatchKit Extension" */;
+			buildConfigurationList = 0D126FF61B41ADCD008C45B1 /* Build configuration list for PBXNativeTarget "AstroPlanet WatchKit Extension" */;
 			buildPhases = (
 				0D126FD41B41ADCC008C45B1 /* Sources */,
 				0D126FD51B41ADCC008C45B1 /* Frameworks */,
@@ -393,14 +378,14 @@
 			dependencies = (
 				0D126FE51B41ADCC008C45B1 /* PBXTargetDependency */,
 			);
-			name = "HadesProject WatchKit Extension";
+			name = "AstroPlanet WatchKit Extension";
 			productName = "HadesProject WatchKit Extension";
-			productReference = 0D126FD81B41ADCC008C45B1 /* HadesProject WatchKit Extension.appex */;
+			productReference = 0D126FD81B41ADCC008C45B1 /* AstroPlanet WatchKit Extension.appex */;
 			productType = "com.apple.product-type.watchkit-extension";
 		};
-		0D126FE11B41ADCC008C45B1 /* HadesProject WatchKit App */ = {
+		0D126FE11B41ADCC008C45B1 /* AstroPlanet WatchKit App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0D126FF51B41ADCD008C45B1 /* Build configuration list for PBXNativeTarget "HadesProject WatchKit App" */;
+			buildConfigurationList = 0D126FF51B41ADCD008C45B1 /* Build configuration list for PBXNativeTarget "AstroPlanet WatchKit App" */;
 			buildPhases = (
 				0D126FE01B41ADCC008C45B1 /* Resources */,
 			);
@@ -408,9 +393,9 @@
 			);
 			dependencies = (
 			);
-			name = "HadesProject WatchKit App";
+			name = "AstroPlanet WatchKit App";
 			productName = "HadesProject WatchKit App";
-			productReference = 0D126FE21B41ADCC008C45B1 /* HadesProject WatchKit App.app */;
+			productReference = 0D126FE21B41ADCC008C45B1 /* AstroPlanet WatchKit App.app */;
 			productType = "com.apple.product-type.application.watchapp";
 		};
 /* End PBXNativeTarget section */
@@ -427,10 +412,6 @@
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = U5ZZWN44AH;
 					};
-					0CA0CEE11B1E3F41002282DA = {
-						CreatedOnToolsVersion = 6.3.2;
-						TestTargetID = 0CA0CEC81B1E3F41002282DA;
-					};
 					0D126FD71B41ADCC008C45B1 = {
 						CreatedOnToolsVersion = 6.3.2;
 					};
@@ -440,7 +421,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0CA0CEC41B1E3F41002282DA /* Build configuration list for PBXProject "HadesProject" */;
+			buildConfigurationList = 0CA0CEC41B1E3F41002282DA /* Build configuration list for PBXProject "AstroPlanet" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -453,10 +434,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0CA0CEC81B1E3F41002282DA /* HadesProject */,
-				0CA0CEE11B1E3F41002282DA /* HadesProjectTests */,
-				0D126FD71B41ADCC008C45B1 /* HadesProject WatchKit Extension */,
-				0D126FE11B41ADCC008C45B1 /* HadesProject WatchKit App */,
+				0CA0CEC81B1E3F41002282DA /* AstroPlanet */,
+				0D126FD71B41ADCC008C45B1 /* AstroPlanet WatchKit Extension */,
+				0D126FE11B41ADCC008C45B1 /* AstroPlanet WatchKit App */,
 			);
 		};
 /* End PBXProject section */
@@ -469,19 +449,14 @@
 				0C2259F71B4606D8005E6E85 /* explosion.mp3.mp3 in Resources */,
 				0C6958811B3DE23A00B7C651 /* AstronautRun.atlas in Resources */,
 				0C8D06CC1B42E2D4001759C9 /* AstronautFly.atlas in Resources */,
+				0C085A7A1B498BF900542F55 /* CoinU.sks in Resources */,
 				0CA0CEDD1B1E3F41002282DA /* LaunchScreen.xib in Resources */,
 				0CA0CEDA1B1E3F41002282DA /* Images.xcassets in Resources */,
 				0C17CA5E1B45991900D54CF1 /* GameMusic.m4a in Resources */,
-				0CA0CED11B1E3F41002282DA /* GameScene.sks in Resources */,
+				0C84FB9F1B478459008B8A7D /* CoinH.sks in Resources */,
+				0CA0CED11B1E3F41002282DA /* CoinLine.sks in Resources */,
 				0C17CA651B45B54300D54CF1 /* coinBlink.m4a in Resources */,
 				0CA0CED81B1E3F41002282DA /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0CA0CEE01B1E3F41002282DA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,7 +464,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D126FE31B41ADCC008C45B1 /* HadesProject WatchKit App.app in Resources */,
+				0D126FE31B41ADCC008C45B1 /* AstroPlanet WatchKit App.app in Resources */,
 				0D126FDF1B41ADCC008C45B1 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -528,17 +503,11 @@
 				0C17CA631B45ADEB00D54CF1 /* BackgroundManager.swift in Sources */,
 				0C74936D1B3B142900A1BA09 /* MarsLevel.swift in Sources */,
 				0CE9EAC51B39D58900D76019 /* EarthLevel.swift in Sources */,
+				0CBC5FD51B48C78400E176DF /* LabelManager.swift in Sources */,
 				0C7493731B3B1E5900A1BA09 /* UranusLevel.swift in Sources */,
 				0C7493751B3B1EDA00A1BA09 /* NeptuneLevel.swift in Sources */,
 				0C94B8671B1F67D700945476 /* Hero.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0CA0CEDE1B1E3F41002282DA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0CA0CEE91B1E3F41002282DA /* HadesProjectTests.swift in Sources */,
+				0CBC5FD61B48C78400E176DF /* TwoStateButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,19 +522,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0CA0CEE41B1E3F41002282DA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0CA0CEC81B1E3F41002282DA /* HadesProject */;
-			targetProxy = 0CA0CEE31B1E3F41002282DA /* PBXContainerItemProxy */;
-		};
 		0D126FE51B41ADCC008C45B1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0D126FE11B41ADCC008C45B1 /* HadesProject WatchKit App */;
+			target = 0D126FE11B41ADCC008C45B1 /* AstroPlanet WatchKit App */;
 			targetProxy = 0D126FE41B41ADCC008C45B1 /* PBXContainerItemProxy */;
 		};
 		0D126FEF1B41ADCC008C45B1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0D126FD71B41ADCC008C45B1 /* HadesProject WatchKit Extension */;
+			target = 0D126FD71B41ADCC008C45B1 /* AstroPlanet WatchKit Extension */;
 			targetProxy = 0D126FEE1B41ADCC008C45B1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -691,7 +655,7 @@
 				INFOPLIST_FILE = HadesProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.OurCompany.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = AstroPlanet;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -705,50 +669,8 @@
 				INFOPLIST_FILE = HadesProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.OurCompany.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = AstroPlanet;
 				PROVISIONING_PROFILE = "";
-			};
-			name = Release;
-		};
-		0CA0CEF01B1E3F41002282DA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Nicolas Nascimento (8492J3M7WN)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nicolas Nascimento (8492J3M7WN)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = HadesProjectTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.OurCompany.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c4a51ab2-f764-4ddd-91a1-e5d19113d653";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HadesProject.app/HadesProject";
-			};
-			name = Debug;
-		};
-		0CA0CEF11B1E3F41002282DA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Nicolas Nascimento (8492J3M7WN)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nicolas Nascimento (8492J3M7WN)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = HadesProjectTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.OurCompany.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c4a51ab2-f764-4ddd-91a1-e5d19113d653";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HadesProject.app/HadesProject";
 			};
 			name = Release;
 		};
@@ -763,7 +685,7 @@
 				);
 				INFOPLIST_FILE = "HadesProject WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_NAME = "${TARGET_NAME}";
+				PRODUCT_NAME = "AstroPlanet WatchKit Extension";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -775,7 +697,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "HadesProject WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_NAME = "${TARGET_NAME}";
+				PRODUCT_NAME = "AstroPlanet WatchKit Extension";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -793,7 +715,7 @@
 				IBSC_MODULE = HadesProject_WatchKit_Extension;
 				INFOPLIST_FILE = "HadesProject WatchKit App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "AstroPlanet WatchKit App";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -810,7 +732,7 @@
 				IBSC_MODULE = HadesProject_WatchKit_Extension;
 				INFOPLIST_FILE = "HadesProject WatchKit App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "AstroPlanet WatchKit App";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -821,7 +743,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0CA0CEC41B1E3F41002282DA /* Build configuration list for PBXProject "HadesProject" */ = {
+		0CA0CEC41B1E3F41002282DA /* Build configuration list for PBXProject "AstroPlanet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0CA0CEEA1B1E3F41002282DA /* Debug */,
@@ -830,7 +752,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0CA0CEEC1B1E3F41002282DA /* Build configuration list for PBXNativeTarget "HadesProject" */ = {
+		0CA0CEEC1B1E3F41002282DA /* Build configuration list for PBXNativeTarget "AstroPlanet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0CA0CEED1B1E3F41002282DA /* Debug */,
@@ -839,16 +761,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0CA0CEEF1B1E3F41002282DA /* Build configuration list for PBXNativeTarget "HadesProjectTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0CA0CEF01B1E3F41002282DA /* Debug */,
-				0CA0CEF11B1E3F41002282DA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		0D126FF51B41ADCD008C45B1 /* Build configuration list for PBXNativeTarget "HadesProject WatchKit App" */ = {
+		0D126FF51B41ADCD008C45B1 /* Build configuration list for PBXNativeTarget "AstroPlanet WatchKit App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0D126FF31B41ADCC008C45B1 /* Debug */,
@@ -857,7 +770,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0D126FF61B41ADCD008C45B1 /* Build configuration list for PBXNativeTarget "HadesProject WatchKit Extension" */ = {
+		0D126FF61B41ADCD008C45B1 /* Build configuration list for PBXNativeTarget "AstroPlanet WatchKit Extension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0D126FF11B41ADCC008C45B1 /* Debug */,

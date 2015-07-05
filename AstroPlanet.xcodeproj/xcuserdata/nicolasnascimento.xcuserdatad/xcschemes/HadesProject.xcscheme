@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0CA0CEC81B1E3F41002282DA"
-               BuildableName = "HadesProject.app"
-               BlueprintName = "HadesProject"
-               ReferencedContainer = "container:HadesProject.xcodeproj">
+               BuildableName = "AstroPlanet.app"
+               BlueprintName = "AstroPlanet"
+               ReferencedContainer = "container:AstroPlanet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -31,7 +31,7 @@
                BlueprintIdentifier = "0CA0CEE11B1E3F41002282DA"
                BuildableName = "HadesProjectTests.xctest"
                BlueprintName = "HadesProjectTests"
-               ReferencedContainer = "container:HadesProject.xcodeproj">
+               ReferencedContainer = "container:AstroPlanet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -49,7 +49,7 @@
                BlueprintIdentifier = "0CA0CEE11B1E3F41002282DA"
                BuildableName = "HadesProjectTests.xctest"
                BlueprintName = "HadesProjectTests"
-               ReferencedContainer = "container:HadesProject.xcodeproj">
+               ReferencedContainer = "container:AstroPlanet.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0CA0CEC81B1E3F41002282DA"
-            BuildableName = "HadesProject.app"
-            BlueprintName = "HadesProject"
-            ReferencedContainer = "container:HadesProject.xcodeproj">
+            BuildableName = "AstroPlanet.app"
+            BlueprintName = "AstroPlanet"
+            ReferencedContainer = "container:AstroPlanet.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -77,9 +77,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0CA0CEC81B1E3F41002282DA"
-            BuildableName = "HadesProject.app"
-            BlueprintName = "HadesProject"
-            ReferencedContainer = "container:HadesProject.xcodeproj">
+            BuildableName = "AstroPlanet.app"
+            BlueprintName = "AstroPlanet"
+            ReferencedContainer = "container:AstroPlanet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -96,9 +96,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0CA0CEC81B1E3F41002282DA"
-            BuildableName = "HadesProject.app"
-            BlueprintName = "HadesProject"
-            ReferencedContainer = "container:HadesProject.xcodeproj">
+            BuildableName = "AstroPlanet.app"
+            BlueprintName = "AstroPlanet"
+            ReferencedContainer = "container:AstroPlanet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
