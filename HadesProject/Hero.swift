@@ -56,6 +56,7 @@ class Hero: SKSpriteNode {
     func restoreOriginalPhysicsProperties() {
         if let body = self.physicsBody {
             body.affectedByGravity = true
+            body.restitution = 0.0
         }
     }
     func invertResposivitySide() {

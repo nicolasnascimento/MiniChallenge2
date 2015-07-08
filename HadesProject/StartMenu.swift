@@ -11,6 +11,9 @@ import SpriteKit
 
 class StartMenu: SKNode {
     
+    let GAME_CENTER_BUTTON_NAME: String = "gameCenterButton"
+    let STORE_BUTTON_NAME: String = "storeButton"
+    
     var DIVISIONS: CGFloat = 5.0
     
     var playButton: SKSpriteNode
@@ -41,9 +44,9 @@ class StartMenu: SKNode {
         
         let divisionHeight = maxHeight/DIVISIONS
         
-        self.resizeSprite(self.playButton, toFitHeight: 2.5*divisionHeight)
-        self.resizeSprite(self.gameCenterButton, toFitHeight: divisionHeight)
-        self.resizeSprite(self.storeButton, toFitHeight: divisionHeight)
+        Util.resizeSprite(self.playButton, toFitHeight: 2.5*divisionHeight)
+        Util.resizeSprite(self.gameCenterButton, toFitHeight: divisionHeight)
+        Util.resizeSprite(self.storeButton, toFitHeight: divisionHeight)
         
         self.playButton.position.y += divisionHeight/2
         
@@ -56,11 +59,5 @@ class StartMenu: SKNode {
         
         self.storeButton.position.y = self.playButton.position.y
         self.storeButton.position.x = (self.playButton.frame.size.width/1.5)
-    }
-    
-    private func resizeSprite( sprite: SKSpriteNode, toFitHeight height: CGFloat ) {
-        var aspectRatio = sprite.frame.size.width/sprite.frame.size.height
-        sprite.size.height = height
-        sprite.size.width = sprite.size.height * aspectRatio
     }
 }

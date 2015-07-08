@@ -34,9 +34,4 @@ class TwoStateButton: SKSpriteNode {
         var aTexture = SKTexture(imageNamed: ( self.state ? onTextureName : offTextureName ))
         self.runAction(SKAction.setTexture(aTexture))
     }
-    private func resizeSprite(sprite: SKSpriteNode, toFitHeight height: CGFloat) {
-        var aspectRatio = sprite.size.width/sprite.size.height
-        sprite.size.height = height
-        sprite.size.width = height * aspectRatio
-    }
 }

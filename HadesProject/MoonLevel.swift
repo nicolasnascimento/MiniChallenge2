@@ -17,7 +17,7 @@ class MoonLevel: GameScene {
         return CGVector(dx: 0, dy: -1.622)
     }
     override func maximumAmountOfObjectsForLevel() -> Int {
-        return 25
+        return 50
     }
     override func groundImageName() -> String {
         return "four"

@@ -54,11 +54,11 @@ class LabelManager: SKNode {
         let divisionWidth = maxWidth/WIDTH_DIVISIONS
         
         // Resize
-        self.resizeSprite(self.distanceBackgroundImage, toFitHeight: divisionHeight)
-        self.resizeSprite(self.pauseIcon, toFitHeight: divisionHeight)
-        self.resizeSprite(self.musicIcon, toFitHeight: divisionHeight)
-        self.resizeLabel(self.distanceLabel, ToFitHeight: 2.0*divisionHeight/3.0, andWidth: self.distanceBackgroundImage.size.width*0.9)
-        self.resizeLabel(self.coinsLabel, ToFitHeight: 1.0*divisionHeight/3.0, andWidth: 0.9*distanceBackgroundImage.size.width/2)
+        Util.resizeSprite(self.distanceBackgroundImage, toFitHeight: divisionHeight)
+        Util.resizeSprite(self.pauseIcon, toFitHeight: divisionHeight)
+        Util.resizeSprite(self.musicIcon, toFitHeight: divisionHeight)
+        Util.resizeLabel(self.distanceLabel, ToFitHeight: 2.0*divisionHeight/3.0, andWidth: self.distanceBackgroundImage.size.width*0.9)
+        Util.resizeLabel(self.coinsLabel, ToFitHeight: 1.0*divisionHeight/3.0, andWidth: 0.9*distanceBackgroundImage.size.width/2)
         
         // Positionate
         self.distanceBackgroundImage.position = CGPoint(x: self.distanceBackgroundImage.size.width/2, y: maxHeight - self.distanceBackgroundImage.size.height/2)
@@ -86,17 +86,6 @@ class LabelManager: SKNode {
         self.coinsLabel.text = self.adaptStringToFitLabel(self.coinsLabel, value: value, complementaryTextForLabel: " coins")
     }
     // Useful Methods
-    private func resizeSprite(sprite: SKSpriteNode, toFitHeight height: CGFloat) {
-        var aspectRatio = sprite.size.width/sprite.size.height
-        sprite.size.height = height
-        sprite.size.width = height * aspectRatio
-    }
-    private func resizeLabel(label: SKLabelNode, ToFitHeight height: CGFloat, andWidth width: CGFloat) -> SKLabelNode {
-        while( label.frame.size.height > height || label.frame.size.width > width ) {
-            label.fontSize *= 0.9
-        }
-        return label
-    }
     private func adaptStringToFitLabel( label: SKLabelNode, value: Int, complementaryTextForLabel: String ) -> String {
         var valueAsString = String(format: "%d", arguments: [value])
         var originalCharacterAmount = count(label.text)

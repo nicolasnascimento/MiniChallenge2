@@ -46,6 +46,10 @@ class PopUp: SKSpriteNode {
         self.planetNameLabel.text = planetName
         self.messageLabel.text = message
         
+        self.distanceLabel.color = SKColor.blackColor()
+        self.planetNameLabel.color = SKColor.blackColor()
+        self.messageLabel.color = SKColor.blackColor()
+        
         self.addChild(rightButtonImage)
         self.addChild(leftButtonImage)
         self.addChild(distanceLabel)
@@ -73,33 +77,21 @@ class PopUp: SKSpriteNode {
         self.messageLabel.position.y = -divisionHeight/2
         self.rightButtonImage.position.y = -2.5 * divisionHeight
         self.leftButtonImage.position.y = -2.5 * divisionHeight
-        self.resizeLabel(self.planetNameLabel, ToFitHeight: divisionHeight, andWidth: self.size.width )
-        self.resizeLabel(self.distanceLabel, ToFitHeight: divisionHeight, andWidth: self.size.width)
-        self.resizeLabel(self.messageLabel, ToFitHeight: divisionHeight, andWidth: self.size.width)
-        self.resizeSprite(self.rightButtonImage, toFitHeight: divisionHeight)
-        self.resizeSprite(self.leftButtonImage, toFitHeight: divisionHeight)
+        Util.resizeLabel(self.planetNameLabel, ToFitHeight: divisionHeight, andWidth: self.size.width )
+        Util.resizeLabel(self.distanceLabel, ToFitHeight: divisionHeight, andWidth: self.size.width)
+        Util.resizeLabel(self.messageLabel, ToFitHeight: divisionHeight, andWidth: self.size.width)
+        Util.resizeSprite(self.rightButtonImage, toFitHeight: divisionHeight)
+        Util.resizeSprite(self.leftButtonImage, toFitHeight: divisionHeight)
         self.rightButtonImage.position.x = +(BUTTON_DISTANCE_FRACTION)*(self.rightButtonImage.frame.size.width/2)
         self.leftButtonImage.position.x = -(BUTTON_DISTANCE_FRACTION)*(self.leftButtonImage.frame.size.width/2)
         self.planetNameLabel.position.x = -1.25*divisionWidth
         self.planetNameLabel.position.y += self.planetNameLabel.frame.size.height/2
         self.distanceLabel.position.y = self.planetNameLabel.position.y
         self.distanceLabel.position.x = -self.planetNameLabel.position.x
-        //self.distanceLabel.horizontalAlignmentMode = .Right
+        
+        self.distanceLabel.zPosition = 50
+        self.planetNameLabel.zPosition = 50
         self.rightButtonImage.zPosition = 50
         self.leftButtonImage.zPosition = 50
-    }
-    private func resizeSprite( sprite: SKSpriteNode, toFitHeight height: CGFloat ) {
-        var aspectRatio = sprite.size.width/sprite.size.height
-        sprite.size.height = height
-        sprite.size.width = sprite.size.height * aspectRatio
-    }
-    private func resizeLabel(label: SKLabelNode, ToFitHeight height: CGFloat, andWidth width: CGFloat) -> SKLabelNode {
-        while( label.frame.size.height > height || label.frame.size.width > width ) {
-            label.fontSize *= 0.8
-        }
-        label.fontColor = SKColor.blackColor()
-        label.horizontalAlignmentMode = .Center
-        label.verticalAlignmentMode = .Center
-        return label
     }
 }

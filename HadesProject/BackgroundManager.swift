@@ -12,7 +12,7 @@ import SpriteKit
 class BackgroundManager: SKNode {
     
     
-    let ANIMATION_TIME : Double = 40
+    let ANIMATION_TIME : Double = 20
     
     override var zPosition: CGFloat {
         didSet{
@@ -39,7 +39,7 @@ class BackgroundManager: SKNode {
         
         super.init()
         
-        self.resizeSprite(self.firstLevel, toFitHeight: maxHeight)
+        Util.resizeSprite(self.firstLevel, toFitHeight: maxHeight)
         
         self.addChild(self.firstLevel)
         self.addChild(self.secondLevel)
@@ -63,10 +63,5 @@ class BackgroundManager: SKNode {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    private func resizeSprite( sprite: SKSpriteNode, toFitHeight height: CGFloat ) {
-        var aspectRatio = sprite.frame.size.width/sprite.frame.size.height
-        sprite.size.height = height
-        sprite.size.width = sprite.size.height * aspectRatio
     }
 }

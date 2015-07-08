@@ -17,7 +17,7 @@ class UranusLevel: GameScene {
         return CGVector(dx: 0, dy: -8.69)
     }
     override func maximumAmountOfObjectsForLevel() -> Int {
-        return 20
+        return 50
     }
     override func groundImageName() -> String {
         return "four"

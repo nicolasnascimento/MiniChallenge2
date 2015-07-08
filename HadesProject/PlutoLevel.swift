@@ -17,7 +17,7 @@ class PlutoLevel: GameScene {
         return CGVector(dx: 0, dy: -0.658)
     }
     override func maximumAmountOfObjectsForLevel() -> Int {
-        return 20
+        return 50
     }
     override func groundImageName() -> String {
         return "four"
