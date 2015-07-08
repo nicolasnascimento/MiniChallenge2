@@ -1074,10 +1074,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         }
     }
     private func unload() {
-        if( self.player != nil ) {
-            self.player.stop()
-            self.player = nil
-        }
+//        if( self.player != nil ) {
+//            self.player.stop()
+//            self.player = nil
+//        }
         self.curiosityPopUpMenu = nil
         self.questionPopUpMenu = nil
         self.ground = nil
