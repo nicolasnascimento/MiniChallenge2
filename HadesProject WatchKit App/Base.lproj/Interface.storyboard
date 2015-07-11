@@ -8,7 +8,7 @@
         <!--Earth-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller title="Earth" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="HadesProject_WatchKit_App" customModuleProvider="target">
+                <controller title="Earth" id="AgC-eL-Hgc" customClass="PlanetInterfaceController" customModule="AstroPlanet_WatchKit_Extension">
                     <items>
                         <imageView height="130" alignment="left" image="terra" id="r5Q-Ys-cSf"/>
                         <label alignment="left" text="Gravity: -9.8" id="PNI-Al-7XI"/>
@@ -19,12 +19,12 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="127" y="334"/>
+            <point key="canvasLocation" x="67" y="346.5"/>
         </scene>
         <!--Moon-->
         <scene sceneID="lHF-q5-8e3">
             <objects>
-                <controller title="Moon" id="6UQ-Lw-blB">
+                <controller title="Moon" id="6UQ-Lw-blB" customClass="PlanetInterfaceController" customModule="AstroPlanet_WatchKit_Extension">
                     <items>
                         <imageView height="130" alignment="left" image="lua" id="DCu-XV-p8q"/>
                         <label alignment="left" text="Gravity: -1.622" id="pgD-Or-v2R"/>
@@ -35,12 +35,12 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="319" y="334.5"/>
+            <point key="canvasLocation" x="237" y="337"/>
         </scene>
         <!--Mercury-->
         <scene sceneID="lIV-Yq-7Wa">
             <objects>
-                <controller title="Mercury" id="N7p-K9-dx6">
+                <controller title="Mercury" id="N7p-K9-dx6" customClass="PlanetInterfaceController" customModule="AstroPlanet_WatchKit_Extension">
                     <items>
                         <imageView height="130" alignment="left" image="mercurio" id="hkZ-I1-XCo"/>
                         <label alignment="left" text="Gravity: -3.7" id="z1w-Eu-pYs"/>
@@ -51,12 +51,12 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="507" y="335"/>
+            <point key="canvasLocation" x="389" y="337"/>
         </scene>
         <!--Venus-->
         <scene sceneID="Byk-MS-Nlg">
             <objects>
-                <controller title="Venus" id="TLD-sE-15J">
+                <controller title="Venus" id="TLD-sE-15J" customClass="PlanetInterfaceController" customModule="AstroPlanet_WatchKit_Extension">
                     <items>
                         <imageView height="130" alignment="left" image="venus" id="e2b-st-o0c"/>
                         <label alignment="left" text="Gravity: -8.87" id="FWc-At-Ar1"/>
@@ -67,12 +67,12 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="683" y="334.5"/>
+            <point key="canvasLocation" x="533" y="337"/>
         </scene>
         <!--Mars-->
         <scene sceneID="vMx-83-qib">
             <objects>
-                <controller title="Mars" id="jfy-s9-y5X">
+                <controller title="Mars" id="jfy-s9-y5X" customClass="PlanetInterfaceController" customModule="AstroPlanet_WatchKit_Extension">
                     <items>
                         <imageView height="130" alignment="left" image="marte" id="Zlt-Sv-vJj"/>
                         <label alignment="left" text="Gravity: -3.711" id="rKC-tb-t2M"/>
@@ -83,12 +83,12 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="868" y="334.5"/>
+            <point key="canvasLocation" x="678" y="346.5"/>
         </scene>
         <!--Saturn-->
         <scene sceneID="p5j-I4-WIO">
             <objects>
-                <controller title="Saturn" id="wsJ-W3-ZMv">
+                <controller title="Saturn" id="wsJ-W3-ZMv" customClass="PlanetInterfaceController" customModule="AstroPlanet_WatchKit_Extension">
                     <items>
                         <imageView height="130" alignment="left" image="saturno + aneis" contentMode="scaleAspectFill" id="Y4g-hf-AOA"/>
                         <label alignment="left" text="Gravity: -10.44" id="cDl-uh-64w"/>
@@ -99,12 +99,12 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="1224" y="337"/>
+            <point key="canvasLocation" x="970" y="337"/>
         </scene>
         <!--Pluto-->
         <scene sceneID="zkc-B5-8M0">
             <objects>
-                <controller title="Pluto" id="0mX-Uv-3Q3">
+                <controller title="Pluto" id="0mX-Uv-3Q3" customClass="PlanetInterfaceController" customModule="AstroPlanet_WatchKit_Extension">
                     <items>
                         <imageView height="130" alignment="left" image="plutao" id="8qp-wd-kI5"/>
                         <label alignment="left" text="Gravity: 0.658" id="ZKO-mz-g8c"/>
@@ -112,12 +112,12 @@
                     </items>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="1748" y="337"/>
+            <point key="canvasLocation" x="1416" y="337"/>
         </scene>
         <!--Neptune-->
         <scene sceneID="FBY-Jy-wUV">
             <objects>
-                <controller title="Neptune" id="eoh-ou-0R0">
+                <controller title="Neptune" id="eoh-ou-0R0" customClass="PlanetInterfaceController" customModule="AstroPlanet_WatchKit_Extension">
                     <items>
                         <imageView height="130" alignment="left" image="neturno" id="DyM-W9-89M"/>
                         <label alignment="left" text="Gravity: -11.15" id="AAO-G3-Zz4"/>
@@ -128,12 +128,12 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="1574" y="337"/>
+            <point key="canvasLocation" x="1266" y="327.5"/>
         </scene>
         <!--Uranus-->
         <scene sceneID="RJG-F8-hz8">
             <objects>
-                <controller title="Uranus" id="k26-rW-S3b">
+                <controller title="Uranus" id="k26-rW-S3b" customClass="PlanetInterfaceController" customModule="AstroPlanet_WatchKit_Extension">
                     <items>
                         <imageView height="130" alignment="left" image="urano" id="mWf-at-zyQ"/>
                         <label alignment="left" text="Gravity: -8.69" id="UUU-KB-2Is"/>
@@ -144,12 +144,12 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="1398" y="337"/>
+            <point key="canvasLocation" x="1114" y="346.5"/>
         </scene>
         <!--Jupiter-->
         <scene sceneID="dAf-D1-7ox">
             <objects>
-                <controller title="Jupiter" id="I7H-YG-JhW">
+                <controller title="Jupiter" id="I7H-YG-JhW" customClass="PlanetInterfaceController" customModule="AstroPlanet_WatchKit_Extension">
                     <items>
                         <imageView height="130" alignment="left" image="jupiter" id="gHe-Pg-4hL"/>
                         <label alignment="left" text="Gravity: -24.79" id="coG-b1-ZgX"/>
@@ -160,7 +160,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="1048" y="337"/>
+            <point key="canvasLocation" x="824" y="337"/>
         </scene>
     </scenes>
 </document>
