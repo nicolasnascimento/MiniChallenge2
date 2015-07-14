@@ -40,8 +40,8 @@
 		0CA0CEDD1B1E3F41002282DA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CA0CEDB1B1E3F41002282DA /* LaunchScreen.xib */; };
 		0CBC5FD51B48C78400E176DF /* LabelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBC5FD31B48C78400E176DF /* LabelManager.swift */; };
 		0CBC5FD61B48C78400E176DF /* TwoStateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBC5FD41B48C78400E176DF /* TwoStateButton.swift */; };
+		0CC3E2931B51656B004544B6 /* PlanetInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC3E28F1B5162D9004544B6 /* PlanetInterfaceController.swift */; };
 		0CE9EAC51B39D58900D76019 /* EarthLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9EAC41B39D58900D76019 /* EarthLevel.swift */; };
-		0D126FDD1B41ADCC008C45B1 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D126FDC1B41ADCC008C45B1 /* InterfaceController.swift */; };
 		0D126FDF1B41ADCC008C45B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D126FDE1B41ADCC008C45B1 /* Images.xcassets */; };
 		0D126FE31B41ADCC008C45B1 /* AstroPlanet WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = 0D126FE21B41ADCC008C45B1 /* AstroPlanet WatchKit App.app */; };
 		0D126FEB1B41ADCC008C45B1 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D126FE91B41ADCC008C45B1 /* Interface.storyboard */; };
@@ -119,10 +119,10 @@
 		0CA0CEE81B1E3F41002282DA /* HadesProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HadesProjectTests.swift; sourceTree = "<group>"; };
 		0CBC5FD31B48C78400E176DF /* LabelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelManager.swift; sourceTree = "<group>"; };
 		0CBC5FD41B48C78400E176DF /* TwoStateButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoStateButton.swift; sourceTree = "<group>"; };
+		0CC3E28F1B5162D9004544B6 /* PlanetInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanetInterfaceController.swift; sourceTree = "<group>"; };
 		0CE9EAC41B39D58900D76019 /* EarthLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EarthLevel.swift; sourceTree = "<group>"; };
 		0D126FD81B41ADCC008C45B1 /* AstroPlanet WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "AstroPlanet WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D126FDB1B41ADCC008C45B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0D126FDC1B41ADCC008C45B1 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
 		0D126FDE1B41ADCC008C45B1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0D126FE21B41ADCC008C45B1 /* AstroPlanet WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AstroPlanet WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D126FE81B41ADCC008C45B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -313,7 +313,7 @@
 		0D126FD91B41ADCC008C45B1 /* HadesProject WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
-				0D126FDC1B41ADCC008C45B1 /* InterfaceController.swift */,
+				0CC3E28F1B5162D9004544B6 /* PlanetInterfaceController.swift */,
 				0D126FDE1B41ADCC008C45B1 /* Images.xcassets */,
 				0D126FDA1B41ADCC008C45B1 /* Supporting Files */,
 			);
@@ -520,7 +520,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D126FDD1B41ADCC008C45B1 /* InterfaceController.swift in Sources */,
+				0CC3E2931B51656B004544B6 /* PlanetInterfaceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -154,6 +154,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     // MARK - Overriden Methods
     override func didMoveToView(view: SKView) {
+        super.didMoveToView(view)
+        
         self.initialize()
         if( self.shouldPresentStartMenu() ) {
             self.createStartMenu()
@@ -177,6 +179,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        super.touchesBegan(touches, withEvent: event)
         
         if( !gameHasBegun ) {
             self.runGame()
@@ -261,6 +264,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         }
     }
     override func update(currentTime: CFTimeInterval) {
+        super.update(currentTime)
         
         if( gameHasBegun && self.timerNode.actionForKey("updateScore") == nil && self.curiosityPopUpMenu != nil && self.curiosityPopUpMenu.hidden == true ) {
             //dispatch_async(dispatch_get_main_queue()) {
@@ -334,6 +338,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+        super.touchesMoved(touches, withEvent: event)
+        
         for touch: AnyObject in touches {
             if let index = self.touchArray.indexOf(touch as! UITouch) {
                 let oldTouch = self.touchArray[ index ] as UITouch
@@ -356,12 +362,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     }
     
     override func touchesCancelled(touches: Set<NSObject>!, withEvent event: UIEvent!) {
+        super.touchesCancelled(touches, withEvent: event)
+        
         self.touchArray.removeAll(keepCapacity: false)
         self.isTouchingLeft = false
         self.isTouchingRight = false
     }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        super.touchesEnded(touches, withEvent: event)
+        
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
             
