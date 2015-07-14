@@ -413,14 +413,15 @@
 				TargetAttributes = {
 					0CA0CEC81B1E3F41002282DA = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = U5ZZWN44AH;
+						DevelopmentTeam = AD5N5Z8433;
 					};
 					0D126FD71B41ADCC008C45B1 = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = AD5N5Z8433;
 					};
 					0D126FE11B41ADCC008C45B1 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = U5ZZWN44AH;
+						DevelopmentTeam = AD5N5Z8433;
 					};
 				};
 			};
@@ -654,13 +655,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Matheus Luz (AD5N5Z8433)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Matheus Luz (AD5N5Z8433)";
 				INFOPLIST_FILE = HadesProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.OurCompany.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = AstroPlanet;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5adb58c0-8b18-4ba1-9b3c-19cf48d0990d";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -668,13 +670,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Matheus Luz (AD5N5Z8433)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Matheus Luz (AD5N5Z8433)";
 				INFOPLIST_FILE = HadesProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.OurCompany.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = AstroPlanet;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5adb58c0-8b18-4ba1-9b3c-19cf48d0990d";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -690,6 +693,7 @@
 				INFOPLIST_FILE = "HadesProject WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "AstroPlanet WatchKit Extension";
+				PROVISIONING_PROFILE = "e93b4103-5c01-4fee-95bb-da6e2e8d9010";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -702,6 +706,7 @@
 				INFOPLIST_FILE = "HadesProject WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "AstroPlanet WatchKit Extension";
+				PROVISIONING_PROFILE = "e93b4103-5c01-4fee-95bb-da6e2e8d9010";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -720,7 +725,7 @@
 				INFOPLIST_FILE = "HadesProject WatchKit App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				PRODUCT_NAME = "AstroPlanet WatchKit App";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "a0bcf971-379b-444e-96be-6575a67d428e";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
 				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
@@ -737,7 +742,7 @@
 				INFOPLIST_FILE = "HadesProject WatchKit App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				PRODUCT_NAME = "AstroPlanet WatchKit App";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "a0bcf971-379b-444e-96be-6575a67d428e";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
 				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";

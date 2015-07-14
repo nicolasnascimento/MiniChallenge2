@@ -63,7 +63,7 @@ class Hero: SKSpriteNode {
         self.respositivitySide = self.respositivitySide == .Right ? .Left : .Right
     }
     func resizeUp() {
-        println("resizing up")
+      //  println("resizing up")
         var grow = SKAction.scaleTo(RESIZING_FACTOR, duration: 0.0)
         var recreatePhysicsBody = SKAction.customActionWithDuration(0.0, actionBlock: { [unowned self] (node, period) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
@@ -76,7 +76,7 @@ class Hero: SKSpriteNode {
         self.runAction(SKAction.sequence([grow, recreatePhysicsBody, wait, restoreSize, recreatePhysicsBody]))
     }
     func resizeDown() {
-        println("resizing down")
+      //  println("resizing down")
         
         var shrink = SKAction.scaleTo(1.0/RESIZING_FACTOR, duration: 0.0)
         var recreatePhysicsBody = SKAction.customActionWithDuration(0.0, actionBlock: { [unowned self]  (node, period) -> Void in
@@ -108,7 +108,7 @@ class Hero: SKSpriteNode {
     }
     
     func activateCoinMagnet() {
-        println("activateCoinMagnet")
+      //  println("activateCoinMagnet")
         self.coinMagnet = SKFieldNode.electricField()
         self.coinMagnet.strength = 10000
         self.parent!.addChild(coinMagnet)

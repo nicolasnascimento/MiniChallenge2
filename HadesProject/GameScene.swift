@@ -206,7 +206,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                         self.hidePausePopUp()
                     }
                 } else if( nodeName == self.labels.MUSIC_ICON_NAME ) {
-                    println("should switch music")
+                   // println("should switch music")
                     self.labels.musicIcon.changeState()
                     if( self.player.playing ) {
                         self.player.pause()
@@ -235,7 +235,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                     
                 }else if( nodeName == self.questionPopUpMenu.leftButtonName() && self.questionPopUpMenu.alpha == 1 ) {
                     if( currentQuestion.answer == true ) {
-                        println("right answer")
+                       // println("right answer")
                         self.restartGameFromPopUpAnswer()
                         
                     }else{
@@ -248,7 +248,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                     
                 }else if( node.name == self.questionPopUpMenu.rightButtonName() && self.questionPopUpMenu.alpha == 1 ) {
                     if( currentQuestion.answer == false ) {
-                        println("right answer")
+                        //println("right answer")
                         self.restartGameFromPopUpAnswer()
                     }else{
                         // GAMBIARRA
@@ -905,7 +905,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     private func createPopUpMenusInBackground() {
         
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            println("1 - Pup")
+           // println("1 - Pup")
             self.curiosityPopUpMenu = PopUp(backgroundImageName: self.popUpBackgroundImageName(), rightButtonImageName: "restartIcon", leftButtonImageName: "questionIcon", distance: "00000 m", planetName: self.planetName(), message: self.messageForPopUp())
             var height = self.HEIGHT * 0.75
             var width = self.getWidthForSpriteWithOriginalHeight(self.curiosityPopUpMenu.size.height, andOriginalWidth: self.curiosityPopUpMenu.size.width, andNewHeight: height)
@@ -925,7 +925,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             
             self.world.addChild(self.curiosityPopUpMenu)
             self.world.addChild(self.questionPopUpMenu)
-            println("2 - Pup")
+            //println("2 - Pup")
         }
     }
     
@@ -956,13 +956,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         self.leftHero.paused = false
         self.rightHero.paused = false
         
-        println("restarting game from pause")
+       // println("restarting game from pause")
         self.timerNode.runAction(SKAction.waitForDuration(0.0), completion: self.onTimerEvent)
     }
     
     private func showRestartPopUp() {
         if( curiosityPopUpMenu != nil ) {
-            println("here3")
+           // println("here3")
             self.curiosityPopUpMenu.hidden = false
             self.curiosityPopUpMenu.rightButtonImage.hidden = false
             self.curiosityPopUpMenu.leftButtonImage.hidden = false
@@ -1028,24 +1028,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         
         if( inBackground ) {
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-                println("1-TI")
+               // println("1-TI")
                 self.transaction = SKSpriteNode(imageNamed: self.transactionImageName())
                 Util.resizeSprite(self.transaction, toFitHeight: self.HEIGHT/2)
                 self.transaction.position.y = self.HEIGHT/2
                 self.transaction.position.x = self.WIDTH
                 
                 //self.world.addChild(self.transaction)
-                println("2-TI")
+               // println("2-TI")
             }
         }else{
-            println("1-TI")
+          //  println("1-TI")
                 self.transaction = SKSpriteNode(imageNamed: self.transactionImageName())
                 Util.resizeSprite(self.transaction, toFitHeight: self.HEIGHT/2)
                 self.transaction.position.y = self.HEIGHT/2
                 self.transaction.position.x = self.WIDTH
                 
                 //self.world.addChild(self.transaction)
-                println("2-TI")
+             //   println("2-TI")
         }
     }
     private func createSounds() {
@@ -1093,7 +1093,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         
         if( ( bodyB.categoryBitMask & HERO_CATEGORY  != 0 ) && ( bodyA.categoryBitMask & GROUND_CATEGORY != 0 ) ) {
             if( bodyB.node == nil ) {
-                println("physics body is not connected to a node")
+              //  println("physics body is not connected to a node")
                 
             }else{
                 var hero = bodyB.node as! Hero
@@ -1101,7 +1101,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             }
         }else if( ( bodyA.categoryBitMask & HERO_CATEGORY  != 0 ) && ( bodyB.categoryBitMask & GROUND_CATEGORY != 0 ) ) {
             if( bodyA.node == nil ) {
-                println("physics body is not connected to a node")
+             //   println("physics body is not connected to a node")
                 
             }else{
                 var hero = bodyA.node as! Hero
@@ -1112,13 +1112,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         if( ( bodyA.categoryBitMask & HERO_CATEGORY != 0 ) && ( bodyB.categoryBitMask & OBSTACLE_CATEGORY != 0 ) ) {
             
             if( bodyA.node == nil || bodyB.node == nil ) {
-                println("physics body is not connected to a node")
+               // println("physics body is not connected to a node")
             }else {
                 self.heroDidTouchObject(bodyA.node as! Hero, object: bodyB.node as! SKSpriteNode)
             }
         }else if( ( bodyA.categoryBitMask & HERO_CATEGORY != 0 ) && ( bodyB.categoryBitMask & PORTAL_CATEGORY != 0 ) ) {
             if( bodyA.node == nil || bodyB.node == nil ) {
-                println("physics body is not connected to a node")
+               // println("physics body is not connected to a node")
             }else {
                 //dispatch_async(dispatch_get_main_queue()) {
                     self.goToNextLevel()
@@ -1133,7 +1133,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         
         if( ( bodyB.categoryBitMask & HERO_CATEGORY  != 0 ) && ( bodyA.categoryBitMask & GROUND_CATEGORY != 0 ) ) {
             if( bodyB.node == nil ) {
-                println("physics body is not connected to a node")
+               // println("physics body is not connected to a node")
                 
             }else{
                 var hero = bodyB.node as! Hero
@@ -1141,7 +1141,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             }
         }else if( ( bodyA.categoryBitMask & HERO_CATEGORY  != 0 ) && ( bodyB.categoryBitMask & GROUND_CATEGORY != 0 ) ) {
             if( bodyA.node == nil ) {
-                println("physics body is not connected to a node")
+              //  println("physics body is not connected to a node")
                 
             }else{
                 var hero = bodyA.node as! Hero
