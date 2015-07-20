@@ -68,8 +68,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
     
     // Objects Probabilities
     let POWER_UP_PROBABILITY: Double = 20
-    let COIN_PROBABILTY: Double = 40
-    let OBSTACLE_PROBILITY: Double = 40
+    let COIN_PROBABILTY: Double = 20
+    let OBSTACLE_PROBILITY: Double = 80
     
     // Objects Names
     let COIN_NAME = "coin"
@@ -408,16 +408,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
         return CGVector(dx: 0, dy: -9.8)
     }
     func objectsForRound() -> [SKSpriteNode] {
-        var probability = arc4random_uniform(4)
-        if( probability == 0 ) {
-            return self.getRandomObject()
-        }else if( probability == 1 ) {
-            return self.createCoinsFromSksFileNamed("CoinLine")
-        }else if( probability == 2 ) {
-            return self.createCoinsFromSksFileNamed("CoinU")
-        }else {
-            return self.createCoinsFromSksFileNamed("CoinH")
-        }
+        
+        return self.getRandomObject()
     }
     
     func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
@@ -601,10 +593,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
             
         } else if( probability1 > UInt32( self.POWER_UP_PROBABILITY ) && probability1 < UInt32( self.POWER_UP_PROBABILITY + self.COIN_PROBABILTY ) ) {
             
-            obstacle = SKSpriteNode(imageNamed: "coinIcon")
-            obstacle.name = COIN_NAME
-        } else {
+            switch(arc4random_uniform(4)){
+            case 0:
+                obstacle = SKSpriteNode(imageNamed: "coinIcon")
+                obstacle.name = COIN_NAME
+            case 1:
+                return self.createCoinsFromSksFileNamed("CoinLine")
+            case 2:
+                return self.createCoinsFromSksFileNamed("CoinU")
+            case 3:
+                return self.createCoinsFromSksFileNamed("CoinH")
+            default:
+                obstacle = SKSpriteNode(imageNamed: "coinIcon")
+                obstacle.name = COIN_NAME
+            }
             
+            
+        } else {
             obstacle = SKSpriteNode(imageNamed: imageNameArray[ Int(arc4random_uniform( UInt32(self.imageNameArray.count))) ])
             obstacle.name = OBSTACLE_NAME
         }
@@ -772,7 +777,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, GameSceneProtocol {
                 self.objects = self.objectsForRound()
             }
             self.objects = nil
-            self.timerNode.runAction(SKAction.waitForDuration(self.randomFrom(5, max: 8)), completion: onTimerEvent)
+            self.timerNode.runAction(SKAction.waitForDuration(self.randomFrom(1, max: 3)), completion: onTimerEvent)
         } else if( !self.rightHero.paused && !self.leftHero.paused  ){
             self.allObjectsHaveBeenCreated()
         }
