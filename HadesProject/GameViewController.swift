@@ -11,12 +11,12 @@ import SpriteKit
 
 extension SKNode {
     class func unarchiveFromFile(file : String) -> SKNode? {
-        if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
-            var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
-            let archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
+        if let path = Bundle.main.url(forResource: file, withExtension: "sks") {//.path(forResource: file, ofType: "sks") {
+            var sceneData = try! Data.init(contentsOf: path)//Data(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
+            let archiver = NSKeyedUnarchiver(forReadingWith: sceneData)
             
             archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! SKScene
+            let scene = archiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as! SKScene
             archiver.finishDecoding()
             return scene
         } else {
@@ -29,8 +29,8 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(0, forKey: "distanceTraveled")
+        let defaults = UserDefaults.standard
+        defaults.set(0, forKey: "distanceTraveled")
         // Configure the view.
         let skView = self.view as! SKView
         //skView.showsFPS = true
@@ -40,16 +40,12 @@ class GameViewController: UIViewController {
         
         // Creates Scene
         let scene = EarthLevel(size: skView.bounds.size)
-        scene.scaleMode = .AspectFill
+        scene.scaleMode = .aspectFill
         
         skView.presentScene(scene)
     }
 
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
+    override var prefersStatusBarHidden: Bool { return true}
     
-    override func shouldAutorotate() -> Bool {
-        return true
-    }
+    override var shouldAutorotate: Bool { return true }
 }

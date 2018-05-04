@@ -10,8 +10,8 @@ import SpriteKit
 
 class ShopScene: SKScene {
     
-    override func didMoveToView(view: SKView) {
-        
+    override func didMove(to view: SKView) {
+        super.didMove(to: view)
     }
     
     func createLabels() {

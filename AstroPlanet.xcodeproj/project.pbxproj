@@ -14,6 +14,8 @@
 		0C17CA651B45B54300D54CF1 /* coinBlink.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0C17CA641B45B54300D54CF1 /* coinBlink.m4a */; };
 		0C2259F71B4606D8005E6E85 /* explosion.mp3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0C2259F61B4606D8005E6E85 /* explosion.mp3.mp3 */; };
 		0C48A2B51B4A15D700571565 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48A2B41B4A15D700571565 /* Util.swift */; };
+		0C5D2CF2209CD140005C27B8 /* AstroPlanet WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0D126FD81B41ADCC008C45B1 /* AstroPlanet WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0C5D2CF5209CD140005C27B8 /* AstroPlanet WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 0D126FE21B41ADCC008C45B1 /* AstroPlanet WatchKit App.app */; };
 		0C6958811B3DE23A00B7C651 /* AstronautRun.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 0C6958801B3DE23A00B7C651 /* AstronautRun.atlas */; };
 		0C7493671B3B06C200A1BA09 /* MoonLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7493661B3B06C200A1BA09 /* MoonLevel.swift */; };
 		0C7493691B3B0F7400A1BA09 /* MercuryLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7493681B3B0F7400A1BA09 /* MercuryLevel.swift */; };
@@ -43,40 +45,49 @@
 		0CC3E2931B51656B004544B6 /* PlanetInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC3E28F1B5162D9004544B6 /* PlanetInterfaceController.swift */; };
 		0CE9EAC51B39D58900D76019 /* EarthLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9EAC41B39D58900D76019 /* EarthLevel.swift */; };
 		0D126FDF1B41ADCC008C45B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D126FDE1B41ADCC008C45B1 /* Images.xcassets */; };
-		0D126FE31B41ADCC008C45B1 /* AstroPlanet WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = 0D126FE21B41ADCC008C45B1 /* AstroPlanet WatchKit App.app */; };
 		0D126FEB1B41ADCC008C45B1 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D126FE91B41ADCC008C45B1 /* Interface.storyboard */; };
 		0D126FED1B41ADCC008C45B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D126FEC1B41ADCC008C45B1 /* Images.xcassets */; };
-		0D126FF01B41ADCC008C45B1 /* AstroPlanet WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0D126FD81B41ADCC008C45B1 /* AstroPlanet WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F4747BAD1B3DB80600822135 /* ShopScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4747BAC1B3DB80600822135 /* ShopScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0D126FE41B41ADCC008C45B1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0CA0CEC11B1E3F41002282DA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0D126FE11B41ADCC008C45B1;
-			remoteInfo = "HadesProject WatchKit App";
-		};
-		0D126FEE1B41ADCC008C45B1 /* PBXContainerItemProxy */ = {
+		0C5D2CF0209CD140005C27B8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0CA0CEC11B1E3F41002282DA /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 0D126FD71B41ADCC008C45B1;
-			remoteInfo = "HadesProject WatchKit Extension";
+			remoteInfo = "AstroPlanet WatchKit Extension";
+		};
+		0C5D2CF3209CD140005C27B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0CA0CEC11B1E3F41002282DA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0D126FE11B41ADCC008C45B1;
+			remoteInfo = "AstroPlanet WatchKit App";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		0D126FF71B41ADCD008C45B1 /* Embed App Extensions */ = {
+		0C5D2CF6209CD140005C27B8 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				0D126FF01B41ADCC008C45B1 /* AstroPlanet WatchKit Extension.appex in Embed App Extensions */,
+				0C5D2CF2209CD140005C27B8 /* AstroPlanet WatchKit Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0C5D2CF7209CD140005C27B8 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				0C5D2CF5209CD140005C27B8 /* AstroPlanet WatchKit App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -356,12 +367,12 @@
 				0CA0CEC51B1E3F41002282DA /* Sources */,
 				0CA0CEC61B1E3F41002282DA /* Frameworks */,
 				0CA0CEC71B1E3F41002282DA /* Resources */,
-				0D126FF71B41ADCD008C45B1 /* Embed App Extensions */,
+				0C5D2CF7209CD140005C27B8 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				0D126FEF1B41ADCC008C45B1 /* PBXTargetDependency */,
+				0C5D2CF4209CD140005C27B8 /* PBXTargetDependency */,
 			);
 			name = AstroPlanet;
 			productName = HadesProject;
@@ -379,27 +390,28 @@
 			buildRules = (
 			);
 			dependencies = (
-				0D126FE51B41ADCC008C45B1 /* PBXTargetDependency */,
 			);
 			name = "AstroPlanet WatchKit Extension";
 			productName = "HadesProject WatchKit Extension";
 			productReference = 0D126FD81B41ADCC008C45B1 /* AstroPlanet WatchKit Extension.appex */;
-			productType = "com.apple.product-type.watchkit-extension";
+			productType = "com.apple.product-type.watchkit2-extension";
 		};
 		0D126FE11B41ADCC008C45B1 /* AstroPlanet WatchKit App */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0D126FF51B41ADCD008C45B1 /* Build configuration list for PBXNativeTarget "AstroPlanet WatchKit App" */;
 			buildPhases = (
 				0D126FE01B41ADCC008C45B1 /* Resources */,
+				0C5D2CF6209CD140005C27B8 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				0C5D2CF1209CD140005C27B8 /* PBXTargetDependency */,
 			);
 			name = "AstroPlanet WatchKit App";
 			productName = "HadesProject WatchKit App";
 			productReference = 0D126FE21B41ADCC008C45B1 /* AstroPlanet WatchKit App.app */;
-			productType = "com.apple.product-type.application.watchapp";
+			productType = "com.apple.product-type.application.watchapp2";
 		};
 /* End PBXNativeTarget section */
 
@@ -408,20 +420,23 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = OurCompany;
 				TargetAttributes = {
 					0CA0CEC81B1E3F41002282DA = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = AD5N5Z8433;
+						DevelopmentTeam = U5ZZWN44AH;
+						ProvisioningStyle = Automatic;
 					};
 					0D126FD71B41ADCC008C45B1 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = AD5N5Z8433;
+						DevelopmentTeam = U5ZZWN44AH;
+						ProvisioningStyle = Automatic;
 					};
 					0D126FE11B41ADCC008C45B1 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = AD5N5Z8433;
+						DevelopmentTeam = U5ZZWN44AH;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -468,7 +483,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D126FE31B41ADCC008C45B1 /* AstroPlanet WatchKit App.app in Resources */,
 				0D126FDF1B41ADCC008C45B1 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -527,15 +541,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0D126FE51B41ADCC008C45B1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0D126FE11B41ADCC008C45B1 /* AstroPlanet WatchKit App */;
-			targetProxy = 0D126FE41B41ADCC008C45B1 /* PBXContainerItemProxy */;
-		};
-		0D126FEF1B41ADCC008C45B1 /* PBXTargetDependency */ = {
+		0C5D2CF1209CD140005C27B8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0D126FD71B41ADCC008C45B1 /* AstroPlanet WatchKit Extension */;
-			targetProxy = 0D126FEE1B41ADCC008C45B1 /* PBXContainerItemProxy */;
+			targetProxy = 0C5D2CF0209CD140005C27B8 /* PBXContainerItemProxy */;
+		};
+		0C5D2CF4209CD140005C27B8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0D126FE11B41ADCC008C45B1 /* AstroPlanet WatchKit App */;
+			targetProxy = 0C5D2CF3209CD140005C27B8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -575,13 +589,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -621,13 +645,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -646,6 +680,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -655,13 +690,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Matheus Luz (AD5N5Z8433)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Matheus Luz (AD5N5Z8433)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = U5ZZWN44AH;
 				INFOPLIST_FILE = HadesProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.OurCompany.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = AstroPlanet;
-				PROVISIONING_PROFILE = "5adb58c0-8b18-4ba1-9b3c-19cf48d0990d";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -670,13 +709,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Matheus Luz (AD5N5Z8433)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Matheus Luz (AD5N5Z8433)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = U5ZZWN44AH;
 				INFOPLIST_FILE = HadesProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.OurCompany.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = AstroPlanet;
-				PROVISIONING_PROFILE = "5adb58c0-8b18-4ba1-9b3c-19cf48d0990d";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -686,15 +729,23 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = U5ZZWN44AH;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "HadesProject WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.OurCompany.HadesProject.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "AstroPlanet WatchKit Extension";
-				PROVISIONING_PROFILE = "e93b4103-5c01-4fee-95bb-da6e2e8d9010";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -703,49 +754,67 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = U5ZZWN44AH;
 				INFOPLIST_FILE = "HadesProject WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.OurCompany.HadesProject.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "AstroPlanet WatchKit Extension";
-				PROVISIONING_PROFILE = "e93b4103-5c01-4fee-95bb-da6e2e8d9010";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
 		0D126FF31B41ADCC008C45B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = U5ZZWN44AH;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				IBSC_MODULE = HadesProject_WatchKit_Extension;
 				INFOPLIST_FILE = "HadesProject WatchKit App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.OurCompany.HadesProject.watchkitapp;
 				PRODUCT_NAME = "AstroPlanet WatchKit App";
-				PROVISIONING_PROFILE = "a0bcf971-379b-444e-96be-6575a67d428e";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
 		0D126FF41B41ADCC008C45B1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = U5ZZWN44AH;
 				IBSC_MODULE = HadesProject_WatchKit_Extension;
 				INFOPLIST_FILE = "HadesProject WatchKit App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.OurCompany.HadesProject.watchkitapp;
 				PRODUCT_NAME = "AstroPlanet WatchKit App";
-				PROVISIONING_PROFILE = "a0bcf971-379b-444e-96be-6575a67d428e";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};

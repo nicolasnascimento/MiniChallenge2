@@ -32,9 +32,6 @@ class MarsLevel: GameScene {
         return super.objectsForRound()
         
     }
-    override func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
-        super.heroDidTouchObject(hero, object: object)
-    }
     override func allObjectsHaveBeenCreated() {
         
         

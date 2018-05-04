@@ -79,19 +79,19 @@ class LabelManager: SKNode {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    func updateDistanceLabelTextTo(value: Int) {
+    func updateDistanceLabelTextTo(_ value: Int) {
         self.distanceLabel.text = self.adaptStringToFitLabel(self.distanceLabel, value: value, complementaryTextForLabel: " meters")
     }
-    func updateCoinLabelTextTo(value: Int) {
+    func updateCoinLabelTextTo(_ value: Int) {
         self.coinsLabel.text = self.adaptStringToFitLabel(self.coinsLabel, value: value, complementaryTextForLabel: " coins")
     }
     // Useful Methods
-    private func adaptStringToFitLabel( label: SKLabelNode, value: Int, complementaryTextForLabel: String ) -> String {
-        var valueAsString = String(format: "%d", arguments: [value])
-        var originalCharacterAmount = count(label.text)
+    private func adaptStringToFitLabel(_ label: SKLabelNode, value: Int, complementaryTextForLabel: String ) -> String {
+        var valueAsString = value.description
+        var originalCharacterAmount = Int(label.text!) ?? 0
         var buffer = valueAsString + complementaryTextForLabel
-        if( originalCharacterAmount > count(buffer) ) {
-            var spaces = String(count: originalCharacterAmount - count(buffer), repeatedValue: Character(" "))
+        if( originalCharacterAmount > buffer.count ) {
+            var spaces = String.init(repeating: " ", count: originalCharacterAmount - buffer.count)
             buffer = spaces + buffer
         }
         return buffer

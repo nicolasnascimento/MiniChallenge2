@@ -35,7 +35,7 @@ class MovingBackground: SKNode {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    func startAnimatingWithTimeInterval(intervalTime: Double) {
+    func startAnimatingWithTimeInterval(_ intervalTime: Double) {
         self.ANIMATION_DURATION = intervalTime
         self.front = SKSpriteNode(imageNamed: self.textureName)
         self.rear = SKSpriteNode(imageNamed: self.textureName)
@@ -47,16 +47,16 @@ class MovingBackground: SKNode {
         self.INITIAL_REAR_POSITION = self.rear.position.x
         self.nextImage.position.x = self.INITIAL_REAR_POSITION
         
-        self.moveLeft = SKAction.moveByX(-self.front.size.width, y: 0, duration: ANIMATION_DURATION)
+        self.moveLeft = SKAction.moveBy(x: -self.front.size.width, y: 0, duration: ANIMATION_DURATION)
         
-        self.front.runAction(self.moveLeft, completion: onMovementFinish)
-        self.rear.runAction(self.moveLeft)
+        self.front.run(self.moveLeft, completion: onMovementFinish)
+        self.rear.run(self.moveLeft)
         
         self.addChild(self.front)
         self.addChild(self.rear)
         
     }
-    private func adaptBackground( background: SKSpriteNode ) {
+    private func adaptBackground(_ background: SKSpriteNode ) {
         if( background.size.width > background.size.height ) {
             let aspectRatio = background.size.width / background.size.height
             background.size.height = maxHeight
@@ -75,15 +75,16 @@ class MovingBackground: SKNode {
         
         self.front = self.rear
         self.rear = self.nextImage
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
+        //dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
+        DispatchQueue.global(qos: .background).async {
             self.nextImage = SKSpriteNode(imageNamed: self.textureName)
             self.adaptBackground(self.nextImage)
             self.nextImage.position.x = self.INITIAL_REAR_POSITION
         }
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)) {
+        DispatchQueue.global(qos: .utility).async {
             self.addChild(self.rear)
-            self.front.runAction(self.moveLeft, completion: self.onMovementFinish)
-            self.rear.runAction(self.moveLeft)
+            self.front.run(self.moveLeft, completion: self.onMovementFinish)
+            self.rear.run(self.moveLeft)
         }
         
             //self.adaptBackground(self.rear)

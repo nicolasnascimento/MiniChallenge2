@@ -21,8 +21,8 @@ class StartMenu: SKNode {
     var gameCenterButton: SKSpriteNode
     var storeButton: SKSpriteNode
     
-    let fadeIn = SKAction.fadeAlphaTo(1, duration: 0.5)
-    let fadeOut = SKAction.fadeAlphaTo(0, duration: 0.5)
+    let fadeIn = SKAction.fadeAlpha(to: 1, duration: 0.5)
+    let fadeOut = SKAction.fadeAlpha(to: 0, duration: 0.5)
     
     init(playButtonImageName: String, gameCenterButtonImageName: String, storeButtonImageName: String) {
         self.playButton = SKSpriteNode(imageNamed: playButtonImageName)
@@ -36,7 +36,7 @@ class StartMenu: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func startAnimating( maxHeight: CGFloat, maxWidth: CGFloat ) {
+    func startAnimating(_ maxHeight: CGFloat, maxWidth: CGFloat ) {
         self.addChild(self.playButton)
         self.addChild(self.tapToPlayButton)
         self.addChild(self.gameCenterButton)
@@ -52,7 +52,7 @@ class StartMenu: SKNode {
         
         //self.playButton.position.y = self.playButton.frame.size.height/2
         self.tapToPlayButton.position.y = -self.playButton.frame.size.height/2
-        self.tapToPlayButton.runAction(SKAction.repeatActionForever(SKAction.sequence([fadeOut, fadeIn])))
+        self.tapToPlayButton.run(SKAction.repeatForever(SKAction.sequence([fadeOut, fadeIn])))
         
         self.gameCenterButton.position.y = self.playButton.position.y
         self.gameCenterButton.position.x = -(self.playButton.frame.size.width/1.5)

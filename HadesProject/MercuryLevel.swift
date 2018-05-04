@@ -32,7 +32,7 @@ class MercuryLevel: GameScene {
         return super.objectsForRound()
         
     }
-    override func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
+    override func heroDidTouchObject(_ hero: Hero, object: SKSpriteNode) {
         super.heroDidTouchObject(hero, object: object)
     }
     override func allObjectsHaveBeenCreated() {

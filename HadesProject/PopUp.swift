@@ -40,15 +40,15 @@ class PopUp: SKSpriteNode {
         self.messageLabel = SKLabelNode(fontNamed: self.FONT_NAME)
         
         let aTexture = SKTexture(imageNamed: backgroundImageName)
-        super.init(texture: aTexture, color: UIColor.clearColor(), size: aTexture.size())
+        super.init(texture: aTexture, color: UIColor.clear, size: aTexture.size())
         
         self.distanceLabel.text = distance
         self.planetNameLabel.text = planetName
         self.messageLabel.text = message
         
-        self.distanceLabel.color = SKColor.blackColor()
-        self.planetNameLabel.color = SKColor.blackColor()
-        self.messageLabel.color = SKColor.blackColor()
+        self.distanceLabel.color = SKColor.black
+        self.planetNameLabel.color = SKColor.black
+        self.messageLabel.color = SKColor.black
         
         self.addChild(rightButtonImage)
         self.addChild(leftButtonImage)

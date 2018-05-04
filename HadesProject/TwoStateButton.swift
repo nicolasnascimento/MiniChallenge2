@@ -23,7 +23,7 @@ class TwoStateButton: SKSpriteNode {
         self.state = initialState
         
         var aTexture = SKTexture(imageNamed: ( initialState ? onTextureName : offTextureName ) )
-        super.init(texture: aTexture, color: SKColor.clearColor(), size: aTexture.size())
+        super.init(texture: aTexture, color: SKColor.clear, size: aTexture.size())
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -32,6 +32,6 @@ class TwoStateButton: SKSpriteNode {
     func changeState() {
         self.state = !self.state
         var aTexture = SKTexture(imageNamed: ( self.state ? onTextureName : offTextureName ))
-        self.runAction(SKAction.setTexture(aTexture))
+        self.run(SKAction.setTexture(aTexture))
     }
 }

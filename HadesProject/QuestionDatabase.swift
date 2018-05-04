@@ -80,14 +80,14 @@ class QuestionDatabase: NSObject {
         TrueFalseQuestion(planetName: "Venus", question: "One day in Venus is equal 243 days on Earth.", answer: false)
     ]
 
-    static func questionsForPlanetNamed(name: String) -> [TrueFalseQuestion] {
+    static func questionsForPlanetNamed(_ name: String) -> [TrueFalseQuestion] {
         var questionsForPlanet: [TrueFalseQuestion] = [TrueFalseQuestion]()
         for i in 0 ..< QuestionDatabase.questions.count {
             questionsForPlanet.append( QuestionDatabase.questions[i] as TrueFalseQuestion )
         }
         return questionsForPlanet
     }
-    static func factsForPlanetNamed(name: String) -> [TrueFalseQuestion] {
+    static func factsForPlanetNamed(_ name: String) -> [TrueFalseQuestion] {
         var factsForPlanet: [TrueFalseQuestion] = [TrueFalseQuestion]()
         for i in 0 ..< QuestionDatabase.facts.count {
             factsForPlanet.append( QuestionDatabase.facts[i] as TrueFalseQuestion )

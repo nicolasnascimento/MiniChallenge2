@@ -31,9 +31,6 @@ class NeptuneLevel: GameScene {
     override func objectsForRound() -> [SKSpriteNode] {
         return super.objectsForRound()
     }
-    override func heroDidTouchObject(hero: Hero, object: SKSpriteNode) {
-        super.heroDidTouchObject(hero, object: object)
-    }
     override func allObjectsHaveBeenCreated() {
         
         super.allObjectsHaveBeenCreated()
